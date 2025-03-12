@@ -13,7 +13,7 @@ const BusesBuses = () => {
   return (
     <div>
       <NavBuses/>   
-<ThreeThing navGo="/AddBuses"/>     
+<ThreeThing navGo='/Buses/AddBuses'/>     
 <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">

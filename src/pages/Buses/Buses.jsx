@@ -5,6 +5,8 @@ import TypeBuses from './TypeBuses.jsx'
 import Operation from './Operation.jsx'
 import BusesHistory from './BusesHistory.jsx'
 import AddBuses from './addbuses/AddBuses.jsx';
+import AddTypeBuses from './addbuses/AddTypeBuses.jsx';
+import AddBusesHistory from './addbuses/AddBusesHistory.jsx'
 const Buses = () => {
   return (
     <div>
@@ -15,6 +17,8 @@ const Buses = () => {
         <Route path="/BusesHistory" element={<BusesHistory />} />
         <Route path="/Operation" element={<Operation />} />
         <Route path="/AddBuses" element={<AddBuses />} />
+        <Route path="/AddTypeBuses" element={<AddTypeBuses />} />
+        <Route path="/AddBusesHistory" element={<AddBusesHistory />} />
    
       </Routes>
     </div>

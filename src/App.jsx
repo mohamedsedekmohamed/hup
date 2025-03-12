@@ -10,7 +10,7 @@ function App() {
   return (
     <BrowserRouter>
 
-      <div className='flex'>
+      <div className='flex overflow-hidden'>
        <Dash/>
        <div className='w-full  justify-center flex-col'>
        <Home/>

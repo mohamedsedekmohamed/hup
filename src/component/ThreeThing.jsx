@@ -2,7 +2,7 @@ import React from 'react'
 import IconAdd from '../ui/IconAdd'
 import filter from '../assets/filter.svg'
 import { CiSearch } from "react-icons/ci";
-const TheeThing = ({navGo}) => {
+const TheeThing = ({navGo,like}) => {
   return (
     <div>
       <div className='w-[1098px] h-[48px]  mt-10 px-[26px] justify-between flex'>
@@ -15,7 +15,7 @@ const TheeThing = ({navGo}) => {
       <img src={filter} className='w-6 h-6'/>
       <span className='text-[20px] font-medium text-white '>Filter</span>
          </button>
-        <IconAdd nav={navGo}/>
+      {!like&&(<IconAdd nav={navGo}/>)}  
         </div>
         </div>
     </div>
