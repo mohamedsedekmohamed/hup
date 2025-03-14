@@ -2,25 +2,25 @@ import React, { useState } from 'react';
 import mainicon from "../../assets/mainicon.svg";
 import { NavLink } from 'react-router-dom';
 import ro from "../../assets/ro.svg";
-
+import { FaHome, FaUser, FaMapMarkerAlt, FaBus, FaBook, FaWallet, FaMoneyBillAlt, FaUsers, FaCog } from 'react-icons/fa';
 const Dash = () => {
-  const [activeLink, setActiveLink] = useState('/');  // حالة لتخزين الرابط النشط
+  const [activeLink, setActiveLink] = useState('/Homepage');  // حالة لتخزين الرابط النشط
 
   const menuItems = [
-    { icon: <></>, text: "Home", href: "/" },
-    { icon: <></>, text: "User", href: "/User" },
-    { icon: <></>, text: "Location", href: "/Location" },
-    { icon: <></>, text: "Buses", href: "/Buses" },
-    { icon: <></>, text: "Bookings", href: "/Bookings" },
-    { icon: <></>, text: "Trips", href: "/Trips" },
-    { icon: <></>, text: "Wallet Requests", href: "/WalletRequests" },
-    { icon: <></>, text: "Wallet", href: "/Wallet" },
-    { icon: <></>, text: "Financial", href: "/Financial" },
-    { icon: <></>, text: "Agents", href: "/Agents" },
-    { icon: <></>, text: "Commission Setup", href: "/CommissionSetup" },
-    { icon: <></>, text: "Payout Account", href: "/PayoutAccount" },
-    { icon: <></>, text: "Currency", href: "/Currency" },
-    { icon: <></>, text: "Settings", href: "/Settings" },
+    { icon: <FaHome />, text: "Home", href: "/Homepage" },
+    { icon: <FaUser />, text: "User", href: "/User" },
+    { icon: <FaMapMarkerAlt />, text: "Location", href: "/Location" },
+    { icon: <FaBus />, text: "Buses", href: "/Buses" },
+    { icon: <FaBook />, text: "Bookings", href: "/Booking" },
+    { icon: <FaBook />, text: "Trips", href: "/Trips" },
+    { icon: <FaWallet />, text: "Wallet Requests", href: "/WalletRequests" },
+    { icon: <FaWallet />, text: "Wallet", href: "/Wallet" },
+    { icon: <FaMoneyBillAlt />, text: "Financial", href: "/Financial" },
+    { icon: <FaUsers />, text: "Agents", href: "/Agents" },
+    { icon: <FaCog />, text: "Commission Setup", href: "/CommissionSetup" },
+    { icon: <FaCog />, text: "Payout Account", href: "/PayoutAccount" },
+    { icon: <FaCog />, text: "Currency", href: "/Currency" },
+    { icon: <FaCog />, text: "Settings", href: "/Settings" },
   ];
 
   const handleClick = (href) => {
@@ -47,6 +47,7 @@ const Dash = () => {
             className={`flex justify-start items-center mx-3  w-[250px] relative h-[48px] my-2 rounded-[8px] group  overflow-hidden
             ${activeLink === item.href ? 'bg-white ' : ''}`}
           >
+            
             {activeLink === item.href && (
               <img
                 src={ro}
@@ -54,7 +55,11 @@ const Dash = () => {
                 alt="Icon"
               />
             )}
-
+  <i
+              className={` text-[16px] font-medium ml-4 ${activeLink === item.href ? 'text-one' : 'text-white'}`}
+            >
+              {item.icon}
+            </i>
               <span
               className={` text-[16px] font-medium ml-4 ${activeLink === item.href ? 'text-one' : 'text-white'}`}
             >
