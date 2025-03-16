@@ -1,14 +1,13 @@
 import React from 'react'
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
-import ThreeThing from '../../component/ThreeThing'
-const Agents = () => {
+const Payments = () => {
     const data = [
-        {  User: 'Downtone', ClientName: 'Cairo', Country:"Egypt",Status:"Active", Action:"" },
+        {  Name: 'Downtone', Zone: 'Cairo', City:"Egypt",Country:"Active",Location:"location", Action:"" },
        ];
   return (
     <div>
-        <ThreeThing navGo='/AddAgents' />
+         <ThreeThing navGo='/Location/AddZones'/>
        <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">
@@ -39,8 +38,9 @@ const Agents = () => {
               </tbody>
             </table>
           </div>
+      
     </div>
   )
 }
 
-export default Agents
+export default Payments

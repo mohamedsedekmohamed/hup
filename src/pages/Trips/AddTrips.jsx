@@ -8,7 +8,7 @@ const AddTrips = () => {
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
         <AddAll navGo='/Trips' name='add Trips'/>
-        <div className='flex flex-wrap gap-6  mt-6'>
+          <div className='flex flex-wrap gap-6  mt-6'>
         <InputField placeholder="Trip ID"/>
         <InputArrow placeholder="Bus Name"/>
         <InputArrow placeholder="Pick-up Point"/>

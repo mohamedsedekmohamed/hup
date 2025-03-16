@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import mainicon from "../../assets/mainicon.svg";
 import ro from "../../assets/ro.svg";
@@ -14,8 +14,10 @@ import IconFinancial from '../../IconsImprot/IconFinancial';
 import IconAgents from '../../IconsImprot/IconAgents';
 import IconComplaints from '../../IconsImprot/IconComplaints';
 import IconCommissionSetup from '../../IconsImprot/IconCommissionSetup';
+import IconCurrency from '../../IconsImprot/IconCurrency';
 
 const Dash = ({ activeLink }) => {
+  // const [open , setOpen] =useState(false);
   const menuItems = [
     { icon: <IconHome />, iconactive: <IconHome active />, text: "Home", href: "/" },
     { icon: <IconUser />, iconactive: <IconUser active />, text: "User", href: "/User" },
@@ -25,20 +27,20 @@ const Dash = ({ activeLink }) => {
     { icon: <IconTrips />, iconactive: <IconTrips active />, text: "Trips", href: "/Trips" },
     { icon: <IconWalletRequests />, iconactive: <IconWalletRequests active />, text: "Wallet Requests", href: "/WalletRequsts" },
     { icon: <IconWallet />, iconactive: <IconWallet active />, text: "Wallet", href: "/Wallet" },
-    { icon: <IconFinancial />, iconactive: <IconFinancial active />, text: "Financial", href: "/Financial" },
-    { text: "1", href: "/1" },
-    { text: "2", href: "/2" },
-    { text: "3", href: "/3" },
+    { icon: <IconFinancial />, iconactive: <IconFinancial active />, text: "Financial"},
+    { text: "Payments", href: "/Payments" },
+    { text: "Commissions", href: "/2" },
+    { text: "Pending Payments", href: "/3" },
     { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Agents", href: "/Agents" },
-    { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Complaints", href: "/Complaints" },
+    { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Commission", href: "/Commission" },
     { icon: <IconCommissionSetup />, iconactive: <IconCommissionSetup active />, text: "Commission Setup", href: "/CommissionSetup" },
-    { icon: <IconHome />, iconactive: <IconHome active />, text: "Payout Account", href: "/PayoutAccount" },
-    { icon: <IconHome />, iconactive: <IconHome active />, text: "Currency", href: "/Currency" },
+    { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Currency", href: "/Currency" },
+    { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Payout Account", href: "/PayoutAccount" },
     { icon: <IconHome />, iconactive: <IconHome active />, text: "Settings", href: "/Settings" },
   ];
 
   return (
-    <div className='flex-col w-[290px] h-fit bg-one text-center py-4'>
+    <div className='flex-col w-[290px] h-fit bg-one text-center '>
       <div className='flex mx-auto justify-center gap-2 my-3'>
         <span className='font-[400] text-white text-[32px]'>Ticket hub</span>
         <img src={mainicon} className='rounded-full p-1 bg-three' alt="Main Icon" />
@@ -48,7 +50,7 @@ const Dash = ({ activeLink }) => {
       <div className='bg-white w-[240px] h-0.5 text-center mx-auto'></div>
 
       {/* Main Menu Items */}
-      <div>
+      <div >
         {menuItems.map((item, index) => (
           <React.Fragment key={index}>
             <NavLink

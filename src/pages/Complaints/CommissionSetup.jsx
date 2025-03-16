@@ -2,13 +2,13 @@ import React from 'react'
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing'
-const Agents = () => {
+const CommissionSetup = () => {
     const data = [
         {  User: 'Downtone', ClientName: 'Cairo', Country:"Egypt",Status:"Active", Action:"" },
        ];
   return (
     <div>
-        <ThreeThing navGo='/AddAgents' />
+        <ThreeThing navGo='/AddCommissionSetup' />
        <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">
@@ -43,4 +43,4 @@ const Agents = () => {
   )
 }
 
-export default Agents
+export default CommissionSetup

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import SignupButtonContainer from '../assets/SignupButtonContainer.svg';
 import Loginpic from '../assets/Loginpic.png';
 import { FaRegEyeSlash } from "react-icons/fa6";
@@ -9,7 +9,6 @@ function LoginIn({ setIsLoggedIn }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [showPassword, setShowPassword] = useState(false); 
@@ -23,7 +22,7 @@ function LoginIn({ setIsLoggedIn }) {
     axios
       .post('https://ticket-hub.net/api/login', { 
         email: username, 
-        password: password 
+        password: password
       })
       .then((response) => {
         setData(response.data);

@@ -9,8 +9,8 @@ const AddCountries = () => {
 
       <AddAll navGo='/Location' name="add Countries"  />
 
-      <InputArrow like  placeholder="Country Name"/>
-      <InputArrow like placeholder="Country Code"/>
+      <InputArrow  like placeholder="Country Name"/>
+      <InputArrow like  placeholder="Country Code"/>
       <Picdone src={picdone} navGo='/Location'/>
 
 

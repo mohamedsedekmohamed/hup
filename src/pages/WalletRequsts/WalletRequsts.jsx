@@ -25,13 +25,33 @@ const WalletRequsts = () => {
       Status: "Reject",
       Action: "",
     },
+    {
+      RequestID: "WR-1001",
+      UserName: "Ahmed Khaled",
+      RequestedAmount: "500 SAR",
+      CurrentWalletBalance: "1,200 SAR",
+      RequestDate: '2025-03-05',
+      Withdraw: "done",
+      Status: "Reject",
+      Action: "",
+    },
+    {
+      RequestID: "WR-1001",
+      UserName: "Ahmed Khaled",
+      RequestedAmount: "500 SAR",
+      CurrentWalletBalance: "1,200 SAR",
+      RequestDate: '2025-03-05',
+      Withdraw: "done",
+      Status: "Reject",
+      Action: "",
+    },
   ];
 
   return (
-    <div className='relative'>
+    <div className='relative flex justify-center items-end '>
       <div
         ref={ref}
-        className={`absolute top-0 w-full h-full  bg-white z-10 ${isAlertVisible ? "block" : "hidden"} flex items-center justify-center`}  
+        className={`absolute top-0 w-200 h-50   bg-white z-10 ${isAlertVisible ? "block" : "hidden"} flex items-center justify-center`}  
       >
         <div className='flex-col'>
 
