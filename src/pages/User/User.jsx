@@ -73,14 +73,14 @@ const User = () => {
             {data.map((item, index) => (
               <tr key={index} className='border-y relative hover:bg-six hover:border-y-2'>
                 <td className="flex flex-col w-[143px] h-[56px] absolute top-1 items-start justify-start">
-                  <span className="text-[16px] font-normal text-five px-4">{item.name}</span>
-                  <span className="text-[16px] font-normal text-five px-4">{item.phone}</span>
+                  <span className="text-[16px] font-normal text-five px-1">{item.name}</span>
+                  <span className="text-[16px] font-normal text-five px-1">{item.phone}</span>
                 </td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.email}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.country}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.city}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.zone}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.bookings}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-1">{item.email}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-1">{item.country}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-1">{item.city}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-1">{item.zone}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-1">{item.bookings}</td>
                 <td className="w-[143px] h-[56px] text-[16px] flex justify-start items-center">
                   <img className='w-[24px] h-[24px]' src={pin} 
                   onClick={()=>handleEdit(item.id)}/>

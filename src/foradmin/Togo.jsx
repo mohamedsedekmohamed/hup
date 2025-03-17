@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation } from 'react-router-dom';
+import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Dash from '../pages/Dash/Dash.jsx';
 import Home from '../pages/Home/Home.jsx';
 import User from '../pages/User/User.jsx';
@@ -11,7 +11,6 @@ import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
 import Wallet from '../pages/Wallet/Wallet.jsx';
 import WalletRequsts from '../pages/WalletRequsts/WalletRequsts.jsx';
-// import Payments from '../pages/Financial/Payments.jsx'
 import Agents from '../pages/Agents/Agents.jsx';
 import AddAgents from '../pages/Agents/AddAgents.jsx'
 import Commission from '../pages/Commission/Commission.jsx';
@@ -22,8 +21,16 @@ import Currency from '../pages/Currency/Currency.jsx';
 import AddCurrency from '../pages/Currency/AddCurrency.jsx';
 import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
 import AddPayoutAccount from '../pages/Payout/AddPayoutAccount.jsx';
-const Togo = () => {
+const Togo = ({isLoggedIn,setIsLoggedIn}) => {
   const [activeLink, setActiveLink] = useState('/');
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (!isLoggedIn) {
+      localStorage.removeItem('isLoggedIn'); 
+    } else {
+      localStorage.setItem('isLoggedIn', 'true');  
+    }
+  }, [isLoggedIn, navigate]);
   const location = useLocation(); 
 
   
@@ -35,7 +42,7 @@ const Togo = () => {
     <div className='flex overflow-hidden'>
       <Dash activeLink={activeLink}  />
       <div className='w-full'>
-        <Home />
+        <Home setIsLoggedIn={setIsLoggedIn} />
         <Routes>
           <Route path='/' element={<></>} />
           <Route path='/User' element={<User />} />
