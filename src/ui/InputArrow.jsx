@@ -13,7 +13,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
   useEffect(() => {
     const token = localStorage.getItem('token');
 
-    axios.get(`https://ticket-hub.net/api/admin/${name}`, {
+    axios.get(`https://bcknd.ticket-hub.net/api/admin/${name}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       }

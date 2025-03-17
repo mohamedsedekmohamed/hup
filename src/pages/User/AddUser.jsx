@@ -90,7 +90,7 @@ const AddUser = () => {
 
     if (edit) {
       const { snedData } = location.state || {};
-      axios.put(`https://ticket-hub.net/api/admin/user/update/${snedData.id}`, newUser, {
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/user/update/${snedData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -105,7 +105,7 @@ const AddUser = () => {
       return;
     }
 
-    axios.post('https://ticket-hub.net/api/admin/user/add', newUser, {
+    axios.post('https://bcknd.ticket-hub.net/api/admin/user/add', newUser, {
       headers: {
         Authorization: `Bearer ${token}`,
       },

@@ -11,7 +11,7 @@ const User = () => {
   useEffect(()=>{
     const token = localStorage.getItem('token');
 
-    axios.get("https://ticket-hub.net/api/admin/users", {
+    axios.get("https://bcknd.ticket-hub.net/api/admin/users", {
       headers: {
         Authorization: `Bearer ${token}`, 
       }
@@ -32,7 +32,7 @@ const User = () => {
   const handleDelete = (index) => {
     const token = localStorage.getItem('token');
 
-    axios.delete(`https://ticket-hub.net/api/admin/user/delete/${index}`, {
+    axios.delete(`https://bcknd.ticket-hub.net/api/admin/user/delete/${index}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
