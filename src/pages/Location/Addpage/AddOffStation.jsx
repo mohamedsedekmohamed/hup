@@ -10,7 +10,7 @@ const AddOffStation= () => {
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
 
-      <AddAll navGo='/Location/Stations' name="add Drop-off"  />
+      <AddAll navGo='/Location/Stations' name="add Stations"  />
       <div className='flex flex-wrap gap-6  mt-6'>
       <InputField placeholder="Name"/>
       <InputArrow like placeholder=" zone"/>

@@ -47,7 +47,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         }}
         className="w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
       >
-        <option value="">{placeholder}</option>
+        <option value="null">{placeholder}</option>
         {arrayof && arrayof.length > 0 && arrayof.map((item) => {
           if (control === "countries") {
             return (

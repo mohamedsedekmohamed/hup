@@ -8,7 +8,6 @@ import Zones from './Zones.jsx';
 import Addzones from './Addpage/AddZones.jsx';
 import Stations from './Stations.jsx';
 import AddOffStation from './Addpage/AddOffStation.jsx'
-import AddOnStation from './Addpage/AddOnStation.jsx'
 
 const Location = () => {
   return (
@@ -24,7 +23,6 @@ const Location = () => {
         <Route path="/Addzones" element={<Addzones/>} />
         <Route path="/Stations" element={<Stations/>} />
         <Route path="/AddOffStation" element={<AddOffStation/>} />
-        <Route path="/AddOnStation" element={<AddOnStation/>} />
       </Routes>
 </div>
   );

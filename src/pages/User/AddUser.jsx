@@ -20,7 +20,6 @@ const AddUser = () => {
   const [password, setPassword] = useState('');
   const [edit, setEdit] = useState(false);
 
-  // Error state to handle validation
   const [errors, setErrors] = useState({
     name: '',
     phone: '',

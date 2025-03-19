@@ -1,6 +1,7 @@
 import React from 'react'
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
+import ThreeThing from '../../component/ThreeThing'
 const Payments = () => {
     const data = [
         {  Name: 'Downtone', Zone: 'Cairo', City:"Egypt",Country:"Active",Location:"location", Action:"" },

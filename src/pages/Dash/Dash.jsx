@@ -15,10 +15,13 @@ import IconAgents from '../../IconsImprot/IconAgents';
 import IconComplaints from '../../IconsImprot/IconComplaints';
 import IconCommissionSetup from '../../IconsImprot/IconCommissionSetup';
 import IconCurrency from '../../IconsImprot/IconCurrency';
+import IconPayoutAccount from '../../IconsImprot/IconPayoutAccount';
+import IconSetting from '../../IconsImprot/IconSetting';
+
 
 const Dash = ({ activeLink }) => {
-  const [openFinancial, setOpenFinancial] = useState(false); // State to toggle financial menu
-  const [openSettings, setOpenSettings] = useState(false); // State to toggle settings menu
+  const [openFinancial, setOpenFinancial] = useState(false); 
+  const [openSettings, setOpenSettings] = useState(false); 
   const menuItems = [
     { icon: <IconHome />, iconactive: <IconHome active />, text: "Home", href: "/" },
     { icon: <IconUser />, iconactive: <IconUser active />, text: "User", href: "/User" },
@@ -28,26 +31,24 @@ const Dash = ({ activeLink }) => {
     { icon: <IconTrips />, iconactive: <IconTrips active />, text: "Trips", href: "/Trips" },
     { icon: <IconWalletRequests />, iconactive: <IconWalletRequests active />, text: "Wallet Requests", href: "/WalletRequsts" },
     { icon: <IconWallet />, iconactive: <IconWallet active />, text: "Wallet", href: "/Wallet" },
-    { icon: <IconFinancial />, iconactive: <IconFinancial active />, text: "Financial", href: "/Financial/1" },
+    { icon: <IconFinancial />, iconactive: <IconFinancial active />,text: "Financial", options :[
+      { text: "● Payments", href: "/Financial/Payments" },
+      { text: "● Commissions", href: "/Financial/Commissions" },
+      { text:"● Pending Payments", href: "/Financial/PendingPayments" }
+    ] },
     { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Agents", href: "/Agents" },
     { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Commission", href: "/Commission" },
     { icon: <IconCommissionSetup />, iconactive: <IconCommissionSetup active />, text: "Commission Setup", href: "/CommissionSetup" },
     { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Currency", href: "/Currency" },
-    { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Payout Account", href: "/PayoutAccount" },
-    { icon: <IconHome />, iconactive: <IconHome active />, text: "Settings", href: "/Settings/1" },
+    { icon: <IconPayoutAccount />, iconactive: <IconPayoutAccount active />, text: "Payout Account", href: "/PayoutAccount" },
+    { icon: <IconSetting />, iconactive: <IconSetting active />, text: "Settings",settingsOptions:
+      [
+        { text: "● Payment Methods", href: "/Settings/PaymentMethods" },
+        { text: "● Cancellation Policy", href: "/Settings/CancellationPolicy" },
+      ]}
   ];
 
-  const options = [
-    { text: "Option 1", href: "/Financial/1" },
-    { text: "Option 2", href: "/Financial/2" },
-    { text: "Option 3", href: "/Financial/3" }
-  ];
-
-  const settingsOptions = [
-    { text: "Setting 1", href: "/Settings/1" },
-    { text: "Setting 2", href: "/Settings/2" },
-    { text: "Setting 3", href: "/Settings/3" }
-  ];
+ 
 
   return (
     <div className='direction-rtl hidden md:block'>
@@ -61,7 +62,7 @@ const Dash = ({ activeLink }) => {
         <div className='bg-white w-[240px] h-0.5 text-center mx-auto'></div>
 
         {/* Main Menu Items */}
-        <ul className='list-none p-0'>
+        <ul className=' p-0'>
           {menuItems.map((item, index) => (
             item.text === "Financial" || item.text === "Settings" ? (
               <li key={index}>
@@ -88,7 +89,7 @@ const Dash = ({ activeLink }) => {
                 {/* Dropdown Menu for Financial */}
                 {item.text === "Financial" && (
                   <ul className={`flex-col gap-2 mx-6 mt-2 ${openFinancial ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
-                    {options.map((option, index) => (
+                    {item.options.map((option, index) => (
                       <li key={index}>
                         <NavLink
                           to={option.href}
@@ -96,7 +97,7 @@ const Dash = ({ activeLink }) => {
                             activeLink === option.href ? 'bg-white' : ''
                           } relative h-[48px] my-2 rounded-[8px] group overflow-hidden`}
                         >
-                          <span className={`${
+                          <span className={`ml-2 ${
                             activeLink === option.href ? 'text-one' : 'text-white'
                           }`}>
                             {option.text}
@@ -114,10 +115,9 @@ const Dash = ({ activeLink }) => {
                   </ul>
                 )}
 
-                {/* Dropdown Menu for Settings */}
                 {item.text === "Settings" && (
                   <ul className={`flex-col gap-2 mx-6 mt-2 ${openSettings ? 'max-h-screen' : 'max-h-0 overflow-hidden'}`}>
-                    {settingsOptions.map((option, index) => (
+                    {item.settingsOptions.map((option, index) => (
                       <li key={index}>
                         <NavLink
                           to={option.href}
@@ -125,7 +125,7 @@ const Dash = ({ activeLink }) => {
                             activeLink === option.href ? 'bg-white' : ''
                           } relative h-[48px] my-2 rounded-[8px] group overflow-hidden`}
                         >
-                          <span className={`${
+                          <span className={` ml-2 ${
                             activeLink === option.href ? 'text-one' : 'text-white'
                           }`}>
                             {option.text}

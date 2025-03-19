@@ -21,6 +21,8 @@ import Currency from '../pages/Currency/Currency.jsx';
 import AddCurrency from '../pages/Currency/AddCurrency.jsx';
 import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
 import AddPayoutAccount from '../pages/Payout/AddPayoutAccount.jsx';
+import Financial from '../pages/Financial/Financial.jsx';
+import Settings from '../pages/Settings/Settings.jsx';
 const Togo = ({isLoggedIn,setIsLoggedIn}) => {
   const [activeLink, setActiveLink] = useState('/');
   const navigate = useNavigate();
@@ -64,6 +66,9 @@ const Togo = ({isLoggedIn,setIsLoggedIn}) => {
           <Route path='/AddCurrency' element={<AddCurrency />} />
           <Route path='/PayoutAccount' element={<PayoutAccount />} />
           <Route path='/AddPayoutAccount' element={<AddPayoutAccount />} />
+          <Route path='/Financial/*' element={<Financial />} />
+          <Route path='/Settings/*' element={<Settings />} />
+
         </Routes>
       </div>
     </div>
