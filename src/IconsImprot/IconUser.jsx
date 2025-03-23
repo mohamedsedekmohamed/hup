@@ -5,7 +5,7 @@ const IconUser = ({active}) => {
 
   return (
     <div>
-      <svg width="24" height="24" viewBox="0 0 24 24" fill={iconColor}   xmlns="http://www.w3.org/2000/svg">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill={iconColor}   xmlns="http://www.w3.org/2000/svg">
 <g clipPath="url(#clip0_122_1975)">
 <path  fill={iconColor} 
         stroke={iconColor} d="M12.25 13.5C14.3211 13.5 16 11.8211 16 9.75C16 7.67893 14.3211 6 12.25 6C10.1789 6 8.5 7.67893 8.5 9.75C8.5 11.8211 10.1789 13.5 12.25 13.5Z"  strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>

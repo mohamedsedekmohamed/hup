@@ -25,6 +25,7 @@ import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
 const Togo = ({isLoggedIn,setIsLoggedIn}) => {
   const [activeLink, setActiveLink] = useState('/');
+  const [open,setopen]=useState(false)
   const navigate = useNavigate();
   useEffect(() => {
     if (!isLoggedIn) {
@@ -42,9 +43,12 @@ const Togo = ({isLoggedIn,setIsLoggedIn}) => {
 
   return (
     <div className='flex overflow-hidden'>
-      <Dash activeLink={activeLink}  />
+      <div>
+     <Dash activeLink={activeLink} open={open}  />
+
+      </div>
       <div className='w-full'>
-        <Home setIsLoggedIn={setIsLoggedIn} />
+        <Home setIsLoggedIn={setIsLoggedIn} setopen={setopen}  open={open} />
         <Routes>
           <Route path='/' element={<></>} />
           <Route path='/User' element={<User />} />

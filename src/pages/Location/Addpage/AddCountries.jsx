@@ -19,7 +19,7 @@ const AddCountries = () => {
 
     const handleFileChange = (file) => {
         if (file) {
-            setFlag(file); // تحديث العلم فقط إذا تم اختيار ملف جديد
+            setFlag(file);
         }
     };
 
@@ -27,14 +27,39 @@ const AddCountries = () => {
         country: '',
         flag: '',
     });
-
+ 
+    function convertImageUrlToBase64(url) {
+        return fetch(url)
+          .then((response) => response.blob())
+          .then((blob) => {
+            return new Promise((resolve, reject) => {
+              const reader = new FileReader();
+              reader.onloadend = () => resolve(reader.result); 
+              reader.onerror = reject;
+              reader.readAsDataURL(blob); 
+            });
+          })
+          .catch((error) => {
+            console.error("Error converting image to Base64", error);
+          });
+      }
+      
     useEffect(() => {
         const { snedData } = location.state || {};
         if (snedData) {
             setCountry(snedData.name);
-            setFlag(snedData.flag);
             setValue(snedData.status);
             setEdit(true);
+
+            if (snedData.flag) {
+                convertImageUrlToBase64(snedData.flag)
+                    .then((base64Flag) => {
+                        setFlag(base64Flag);  
+                    })
+                    .catch((error) => {
+                        console.error("Error converting flag image:", error);
+                    });
+            }
         }
     }, [location.state]);
 
@@ -46,7 +71,7 @@ const AddCountries = () => {
     const validateForm = () => {
         let formErrors = {};
         if (!country) formErrors.country = 'Country is required';
-        if (!flag && !edit) formErrors.flag = 'Flag is required'; // العلم مطلوب فقط إذا لم تكن في وضع التحرير
+        if (!flag && !edit) formErrors.flag = 'Flag is required'; // Flag required only when not editing
         setErrors(formErrors);
         Object.values(formErrors).forEach((error) => {
             toast.error(error);
@@ -58,19 +83,20 @@ const AddCountries = () => {
         if (!validateForm()) {
             return;
         }
+
         const token = localStorage.getItem('token');
         
-        const newUser   = {
+        const newCountryData = {
             name: country,
-            flag: flag || (edit ? location.state.snedData.flag : null), // الاحتفاظ بالعلم الحالي إذا كنت في وضع التحرير
+            flag: flag,  // This will contain either Base64 or a URL (depending on the file upload)
             status: valuee,
         };
 
-        console.log("Data to be sent:", newUser  ); // تحقق من البيانات المرسلة
+        console.log("Data to be sent:", newCountryData); // Check the data before sending
 
         if (edit) {
             const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/country/update/${snedData.id}`, newUser  , {
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/country/update/${snedData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },
@@ -85,7 +111,8 @@ const AddCountries = () => {
             return;
         }
 
-        axios.post('https://bcknd.ticket-hub.net/api/admin/country/add', newUser  , {
+        // Add new country
+        axios.post('https://bcknd.ticket-hub.net/api/admin/country/add', newCountryData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
@@ -98,8 +125,10 @@ const AddCountries = () => {
             console.error('Error adding country:', error);
         });
 
+        // Reset the form for a new entry
         setCountry('');
         setFlag(null);
+        setValue('inactive');
         setEdit(false);
     };
 
@@ -114,6 +143,7 @@ const AddCountries = () => {
             />
             <FileUploadButton
                 name="flag"
+                kind="flag"
                 flag={flag}
                 onFileChange={handleFileChange}
             />

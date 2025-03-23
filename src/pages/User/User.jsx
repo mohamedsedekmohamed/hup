@@ -53,10 +53,12 @@ const User = () => {
     navigate('/AddUser', { state: { snedData}});  
   }
 
+    const names=["Uesr","email","Country","Cities","Zones","Booking","Action"]
+    const fieldsToShow = ["name", "email", "country", "city", "zone"];
   return (
     <div>
       <ThreeThing navGo='/AddUser' />
-      <div className="mt-10 ml-5">
+      <div className="mt-10 ml-5  hidden lg:block">
         <table className="w-full border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
@@ -76,12 +78,12 @@ const User = () => {
                   <span className="text-[16px] font-normal text-five px-1">{item.name}</span>
                   <span className="text-[16px] font-normal text-five px-1">{item.phone}</span>
                 </td>
-                <td className="w-[143px] h-[56px] text-[16px] px-1 ">{item.email}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-1 ">{item.country}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-1 ">{item.city}</td> 
-                <td className="w-[143px] h-[56px] text-[16px] px-1 ">{item.zone}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-1 ">********</td>
-                <td className="w-[143px] h-[56px] text-[16px] flex justify-start items-center">
+                <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px]   px-1 ">{item.email}</td>
+                <td className="w-[143px] h-[56px]   lg:text-[12px] xl:text-[16px] px-1 ">{item.country}</td>
+                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">{item.city}</td> 
+                <td className="w-[143px] h-[56px]   lg:text-[12px] xl:text-[16px] px-1 ">{item.zone}</td>
+                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">********</td>
+                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] flex justify-start items-center">
                   <img className='w-[24px] h-[24px]' src={pin} 
                   onClick={()=>handleEdit(item.id)}/>
                   <img
@@ -96,6 +98,32 @@ const User = () => {
           </tbody>
         </table>
       </div>
+
+      <div className="mt-10 ml-5 lg:hidden">
+  <div className='w-[95%] bg-six'>
+    {data.map((item, index) => (
+      <div key={index} className='flex flex-col gap-4 p-3'>
+        
+        {fieldsToShow.map((field, i) => (
+                <div key={i} className="flex gap-4">
+                  <span><strong>{names[i]}:</strong></span>
+                  <span>{item[field] ? item[field] : "   "}</span>
+                </div>
+              ))}
+        <div className='flex'><img className='w-[24px] h-[24px]' src={pin} 
+                  onClick={()=>handleEdit(item.id)}/>
+                  <img
+                    className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                    src={delet}
+                    onClick={() => handleDelete(item.id)}   
+                    alt="delete"
+                  /> </div>
+        <div className='w-full bg-white h-2'></div>
+      </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 };

@@ -1,4 +1,4 @@
-import React, { use, useEffect, useState } from 'react';
+import React, {  useEffect, useState } from 'react';
 import AddAll from '../../../ui/AddAll';
 import picdone from '../../../assets/picdone.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -18,7 +18,6 @@ const Addzones= () => {
       const [name, setName] = useState('');
       const [valuee, setValue] = useState("inactive");
       const [edit, setEdit] = useState(false);
-      const[shara,setshara]=useState(country);
       const [errors, setErrors] = useState({
         country: '',
         city:"",
@@ -80,7 +79,7 @@ const Addzones= () => {
         })
           .then(response => {
             console.log('Country updated successfully:', response.data);
-            navigate('/Location/Cities');
+            navigate('/Location/Zones');
           })
           .catch(error => {
             console.error('Error updating country:', error);

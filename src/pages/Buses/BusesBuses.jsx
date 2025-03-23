@@ -1,14 +1,58 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 import NavBuses from './NavBuses.jsx'
 import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 const BusesBuses = () => {
-    const data = [
-        {  BlusNumber: 'bus 101', BlusType: 'Traveler', Capaclty:"Active",Operator:"cairo",Route:"***",Status:"Active", Action:"" },
-      
-      ];
+    const [data, setData] = useState([]);
+    const [update, setUpdate] = useState(false);
+    const navigate = useNavigate();
+  
+    useEffect(() => {
+      const token = localStorage.getItem('token');
+  
+      axios.get("https://bcknd.ticket-hub.net/api/admin/busses", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+        .then(response => {
+          setData(response.data.buses);
+          console.log(response.data.buses);
+  
+        })
+        .catch(error => {
+          console.log(token);
+          console.error('Error fetching data:', error);
+        });
+    }, [update])
+  
      
+  const handleDelete = (index) => {
+    const token = localStorage.getItem('token');
+
+    axios.delete(`https://bcknd.ticket-hub.net/api/admin/bus/delete/${index}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then(response => {
+        console.log('User deleted successfully:', response.data);
+        setUpdate(!update);
+
+      })
+      .catch(error => {
+        console.error('Error deleting user:', error);
+      });
+  }
+
+  const handleEdit = (index) => {
+    const snedData = data.find((item) => item.id === index);
+    
+    navigate('/Buses/AddBuses', { state: { snedData } });
+  }
       
   return (
     <div>
@@ -21,6 +65,7 @@ const BusesBuses = () => {
                   <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">BlusNumber</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left"> BlusType</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Capaclty</th>
+                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">busImage</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Operator (Agent)</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Route</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
@@ -30,18 +75,23 @@ const BusesBuses = () => {
               <tbody>
                
               {data.map((item,index) => (
-                  <tr key={index} className='border-y relative hover:bg-six hover:border-y-2'>
-        <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.BlusNumber}</td>
-      
-                  
-                    <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.BlusType}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.Capaclty}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.Operator}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.Route}</td>
-                    <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.Status }</span></td>
+              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
+                   <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.bus_number}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.bus_type_name}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.capacity}</td>
+              <td>  <img  className="w-5 h-5" src={item.bus_image===null?`data:image/png;base64,${item.bus_image}`:item.bus_image}/></td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.agent_name}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">****</td>
+                    <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                     <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
-                      <img className='w-[24px] h-[24px]' src={pin}/>
-                      <img  className='w-[24px] h-[24px]' src={delet}/>
+                    <img className='w-[24px] h-[24px]' src={pin}
+                                       onClick={() => handleEdit(item.id)} />
+                                     <img
+                                       className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                                       src={delet}
+                                       onClick={() => handleDelete(item.id)}
+                                       alt="delete"
+                                     />
                     </td>
                   </tr>
                 ))}

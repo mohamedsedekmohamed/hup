@@ -9,8 +9,8 @@ import Tiglebutton from '../../ui/Tiglebutton';
 
 const Stations = () => {
   const [data, setData] = useState([]);
+  const [datatwo, setDatatwo] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [feel,setFeel]=useState()
   const [action, setAction] = useState(() => localStorage.getItem('action') || 'on');
   const navigate = useNavigate();
 
@@ -20,8 +20,8 @@ const Stations = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(response => {
-        setData(response.data.stations);
-        
+        setData(response.data.dropoff);
+        setDatatwo(response.data.pickup);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -30,7 +30,7 @@ const Stations = () => {
 
   const handleDelete = (index) => {
     const token = localStorage.getItem('token');
-    axios.delete(`https://bcknd.ticket-hub.net/api/admin/stations/delete/${index}`, {
+    axios.delete(`https://bcknd.ticket-hub.net/api/admin/station/delete/${index}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(response => {
@@ -67,7 +67,7 @@ const Stations = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
+            {datatwo.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
                 <td className="w-[143px] h-[56px] text-[16px] ">{item.name}</td>
                 <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>

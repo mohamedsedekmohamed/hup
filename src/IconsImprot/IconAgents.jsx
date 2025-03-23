@@ -4,7 +4,7 @@ const IconAgents =({ active }) => {
     const iconColor = active ? "#1E1E2F" : "#fff"; 
   return (
     <div>
-      <svg width="24" height="24" viewBox="0 0 24 24"         fill={iconColor} 
+      <svg width="20" height="20" viewBox="0 0 24 24"         fill={iconColor} 
 xmlns="http://www.w3.org/2000/svg">
 <path d="M18 21C18 19.3425 19.3425 18 21 18C22.6575 18 24 19.3425 24 21C24 22.6575 22.6575 24 21 24C19.3425 24 18 22.6575 18 21ZM19.5 21C19.5015 21.8273 20.172 22.4985 21 22.5C21.8273 22.4985 22.4985 21.8273 22.5 21C22.4985 20.172 21.8273 19.5015 21 19.5C20.172 19.5015 19.5015 20.172 19.5 21Z"         fill={iconColor} 
 />

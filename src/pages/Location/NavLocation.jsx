@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NavLocation = () => {
   return (
     <div>
-      <nav className="grid grid-cols-4 gap-6 p-5">
+      <nav className=" flex flex-col md:grid md:grid-cols-4 gap-6 p-5">
       <NavLink 
   to="/Location" 
   end

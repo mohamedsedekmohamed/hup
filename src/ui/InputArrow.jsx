@@ -22,6 +22,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         if (name === "countries") return setArray(response.data.countries);
         if (name === "cities") return setArray(response.data.cities);
         if (name === "zones") return setArray(response.data.zones);
+       
       })
       .catch(error => {
         console.log(token);
@@ -45,7 +46,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
           paddingRight: '20px',
           backgroundImage: 'none',
         }}
-        className="w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
+        className="w-[200px] md:w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
       >
         <option value="null">{placeholder}</option>
         {arrayof && arrayof.length > 0 && arrayof.map((item) => {
@@ -62,6 +63,12 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
               </option>
             );
           } else if (control === "zones") {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            );
+          } else if (control === "bus_types") {
             return (
               <option key={item.id} value={item.id}>
                 {item.name}
