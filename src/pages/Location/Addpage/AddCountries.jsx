@@ -8,12 +8,12 @@ import { useNavigate, useLocation } from 'react-router-dom';
 import InputField from '../../../ui/InputField';
 import FileUploadButton from '../../../ui/FileUploadButton';
 import SwitchButton from '../../../ui/SwitchButton';
-
 const AddCountries = () => {
     const navigate = useNavigate();
     const location = useLocation();
     const [country, setCountry] = useState('');
     const [flag, setFlag] = useState(null);
+    const [originalFlag, setOriginalFlag] = useState(null); 
     const [edit, setEdit] = useState(false);
     const [valuee, setValue] = useState("inactive");
 
@@ -27,7 +27,7 @@ const AddCountries = () => {
         country: '',
         flag: '',
     });
- 
+
     function convertImageUrlToBase64(url) {
         return fetch(url)
           .then((response) => response.blob())
@@ -55,6 +55,7 @@ const AddCountries = () => {
                 convertImageUrlToBase64(snedData.flag)
                     .then((base64Flag) => {
                         setFlag(base64Flag);  
+                        setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                     })
                     .catch((error) => {
                         console.error("Error converting flag image:", error);
@@ -71,7 +72,7 @@ const AddCountries = () => {
     const validateForm = () => {
         let formErrors = {};
         if (!country) formErrors.country = 'Country is required';
-        if (!flag && !edit) formErrors.flag = 'Flag is required'; // Flag required only when not editing
+        if (!flag && !edit) formErrors.flag = 'Flag is required'; 
         setErrors(formErrors);
         Object.values(formErrors).forEach((error) => {
             toast.error(error);
@@ -85,14 +86,16 @@ const AddCountries = () => {
         }
 
         const token = localStorage.getItem('token');
-        
         const newCountryData = {
             name: country,
-            flag: flag,  // This will contain either Base64 or a URL (depending on the file upload)
             status: valuee,
         };
 
-        console.log("Data to be sent:", newCountryData); // Check the data before sending
+        if (flag !== originalFlag) {
+            newCountryData.flag = flag;
+        }
+
+        console.log("Data to be sent:", newCountryData); 
 
         if (edit) {
             const { snedData } = location.state || {};
@@ -111,7 +114,6 @@ const AddCountries = () => {
             return;
         }
 
-        // Add new country
         axios.post('https://bcknd.ticket-hub.net/api/admin/country/add', newCountryData, {
             headers: {
                 Authorization: `Bearer ${token}`,

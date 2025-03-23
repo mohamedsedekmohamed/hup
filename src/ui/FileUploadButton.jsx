@@ -9,13 +9,13 @@ const FileUploadButton = ({ onFileChange, kind }) => {
     if (selectedFile) {
       const fileType = selectedFile.type.split('/')[0];
       if (fileType === 'image') {  
-        setFile(selectedFile); // تخزين الملف في حالة `file`
+        setFile(selectedFile); // Store the file in the state
 
         const reader = new FileReader();
 
         reader.onloadend = () => {
           const base64String = reader.result;  
-          if (onFileChange) onFileChange(base64String, kind); // إرسال الـ base64 إلى الدالة `onFileChange`
+          if (onFileChange) onFileChange(base64String, kind); // Send the base64 string to onFileChange
         };
 
         reader.readAsDataURL(selectedFile); 
@@ -31,21 +31,21 @@ const FileUploadButton = ({ onFileChange, kind }) => {
       <input 
         type="file" 
         accept="image/*" 
-        id="file-upload" 
+        id={`file-upload-${kind}`} // Unique ID for each file input
         onChange={handleFileChange} 
         style={{ display: 'none' }} 
       />
       <button
         className='w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven'
-        onClick={() => document.getElementById('file-upload').click()}
+        onClick={() => document.getElementById(`file-upload-${kind}`).click()}
       >
         {kind}
       </button>
       
-      {error && <p style={{ color: 'red' }}>{error}</p>}  {/* عرض رسالة الخطأ */}
+      {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
 
-      {/* عرض الصورة التي تم تحميلها إذا كانت موجودة */}
-      {file && (
+      {/* Display the uploaded image preview if the file exists */}
+      {/* {file && (
         <div>
           <img 
             src={URL.createObjectURL(file)} 
@@ -53,9 +53,8 @@ const FileUploadButton = ({ onFileChange, kind }) => {
             width={100} 
             height={100} 
           />
-          
         </div>
-      )}
+      )} */}
     </div>
   );
 };

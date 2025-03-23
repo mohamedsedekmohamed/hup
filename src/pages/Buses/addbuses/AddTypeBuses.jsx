@@ -14,6 +14,10 @@ const AddTypeBuses = () => {
   const [busImage, setBusImage] = useState(null);
   const [planImage, setPlanImage] = useState(null);
   const [seatsImage, setSeatsImage] = useState(null);
+  const [busImageor, setBusImageor] = useState(null);
+  const [planImageor, setPlanImageor] = useState(null);
+  const [seatsImageor, setSeatsImageor] = useState(null);
+
     const [name, setName] = useState('');
     const [ Count, setCount] = useState('');
     const [valuee, setValue] = useState("inactive");
@@ -26,24 +30,67 @@ const AddTypeBuses = () => {
   Count: '',
     });
 
-    const handleFileChange = (base64String, kind) => {
-      if (kind === 'busImage') {
-        setBusImage(base64String);
-      } else if (kind === 'planImage') {
-        setPlanImage(base64String);
-      } else if (kind === 'seatsImage') {
-        setSeatsImage(base64String);
+    function convertImageUrlToBase64(url) {
+      return fetch(url)
+        .then((response) => response.blob())
+        .then((blob) => {
+          return new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onloadend = () => resolve(reader.result); 
+            reader.onerror = reject;
+            reader.readAsDataURL(blob); 
+          });
+        })
+        .catch((error) => {
+          console.error("Error converting image to Base64", error);
+        });
+    }
+    
+    const handleFileChange = (file, type) => {
+      if (file) {
+        if (type === 'busImage') setBusImage(file);
+        if (type === 'planImage') setPlanImage(file);
+        if (type === 'seatsImage') setSeatsImage(file);
       }
     };
-  
       useEffect(() => {
             const { snedData } = location.state || {};
             if (snedData) {
-              setCount(snedData.name);
-              setName(snedData.flag);
-              // setBusImage(snedData)
-              // setPlanImage(snedData)
-              // setSeatsImage(snedData)
+              setCount(snedData.seat_count);
+              setName(snedData.name);
+              if(snedData.bus_image){
+                convertImageUrlToBase64(snedData.bus_image)
+                .then((base64Flag) => {
+                    setBusImage(base64Flag);  
+                    setBusImageor(base64Flag); 
+                })
+                .catch((error) => {
+                    console.error("Error converting flag image:", error);
+                });
+              }
+              //
+              if(snedData.plan_image){
+                convertImageUrlToBase64(snedData.plan_image)
+                .then((base64Flag) => {
+                    setPlanImage(base64Flag);  
+                    setPlanImageor(base64Flag);  
+                })
+                .catch((error) => {
+                    console.error("Error converting flag image:", error);
+                });
+              }
+              //
+              if(snedData.seats_image){
+                convertImageUrlToBase64(snedData.seats_image)
+                .then((base64Flag) => {
+                    setSeatsImage(base64Flag);  
+                    setSeatsImageor(base64Flag);  
+                })
+                .catch((error) => {
+                    console.error("Error converting flag image:", error);
+                });
+              }
+
                 setValue(snedData.status);
                 setEdit(true);
             }
@@ -60,9 +107,9 @@ const AddTypeBuses = () => {
         let formErrors = {};
         if (!name) formErrors.name = 'name is required';
         if (!Count) formErrors.Count = 'Count is required'; 
-        if (!busImage) formErrors.busImage = 'busImage is required'; 
-        if (!planImage) formErrors.planImage = 'planImage is required'; 
-        if (!seatsImage) formErrors.seatsImage = 'seatsImage is required'; 
+        if (!busImage && !edit) formErrors.busImage = 'busImage is required'; 
+        if (!planImage && !edit) formErrors.planImage = 'planImage is required'; 
+        if (!seatsImage && !edit) formErrors.seatsImage = 'seatsImage is required'; 
 
         setErrors(formErrors);
         Object.values(formErrors).forEach((error) => {
@@ -80,13 +127,22 @@ const AddTypeBuses = () => {
         const newUser   = {
             name: name,
             seat_count: Count,
-            bus_image: busImage || (edit ? location.state.snedData.busImage : null), 
-            plan_image: planImage || (edit ? location.state.snedData.planImage : null), 
-            seats_image: seatsImage || (edit ? location.state.snedData.seatsImage : null), 
             status: valuee,
         };
+        
+if(busImage!=busImageor){
+  newUser.bus_image=busImage
+}
 
-        console.log("Data to be sent:", newUser  ); // تحقق من البيانات المرسلة
+if(planImage!=planImageor){
+  newUser.plan_image=planImage
+}
+
+if(seatsImage!=seatsImageor){
+  newUser.seats_image=seatsImage
+}
+
+        console.log("Data to be sent:", newUser  ); 
 
         if (edit) {
             const { snedData } = location.state || {};
@@ -97,7 +153,9 @@ const AddTypeBuses = () => {
             })
             .then(response => {
                 console.log('Country updated successfully:', response.data);
-                navigate('/Location');
+                navigate('/Buses/TypeBuses');
+                resetForm();
+
             })
             .catch(error => {
                 console.error('Error updating country:', error);
@@ -105,14 +163,16 @@ const AddTypeBuses = () => {
             return;
         }
 
-        axios.post('https://bcknd.ticket-hub.net/apiadmin/bus_type/add', newUser  , {
+        axios.post('https://bcknd.ticket-hub.net/api/admin/bus_type/add', newUser  , {
             headers: {
                 Authorization: `Bearer ${token}`,
             },
         })
         .then(response => {
             console.log('Country added successfully:', response.data);
-            navigate('/Location');
+            navigate('/Buses/TypeBuses');
+            resetForm();
+
         })
         .catch(error => {
             console.error('Error adding country:', error);
@@ -125,6 +185,18 @@ setValue('inactive')
         setSeatsImage(null);
         setEdit(false);
     };
+    const resetForm = () => {
+      setBusImage(null);
+      setPlanImage(null);
+      setSeatsImage(null);
+      setBusImageor(null);
+      setPlanImageor(null);
+      setSeatsImageor(null);
+      setName('');
+      setCount('');
+      setValue('inactive')
+      setEdit(false);
+    };
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
       <AddAll navGo='/Buses/TypeBuses' name="Add Type Buses " />
@@ -136,26 +208,26 @@ setValue('inactive')
                 onChange={handleChange}
             />
               <InputField
-                placeholder="Country Name"
+                placeholder="seat count"
                 name="Count"
                 value={Count}
                 onChange={handleChange}
             />
                <FileUploadButton
                 name="busImage"
-                // flag={busImage}
                 kind="busImage"
+                flag={busImage}
                 onFileChange={handleFileChange}
               />
                 <FileUploadButton
                 name="planImage"
-                // flag={planImage}
                 kind="planImage"
+                flag={planImage}
                 onFileChange={handleFileChange}
             />
               <FileUploadButton
                 name="seatsImage"
-                // flag={seatsImage}
+                flag={seatsImage}
                 onFileChange={handleFileChange}
                 kind="seatsImage"
             />

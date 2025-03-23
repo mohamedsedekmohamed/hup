@@ -19,6 +19,7 @@ const AddBuses = () => {
   const [agent, setAgent] = useState('');
   const [type, setType] = useState('');
   const [pic, setPic] = useState(null);
+   const [originalFlag, setOriginalFlag] = useState(null); 
   const [status, setStatus] = useState('inactive');
   const [edit, setEdit] = useState(false);
   const [errors, setErrors] = useState({
@@ -29,6 +30,22 @@ const AddBuses = () => {
     agent: "",
     type: "",
   });
+  function convertImageUrlToBase64(url) {
+    return fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result); 
+          reader.onerror = reject;
+          reader.readAsDataURL(blob); 
+        });
+      })
+      .catch((error) => {
+        console.error("Error converting image to Base64", error);
+      });
+  }
+  
 
   const handleFileChange = (file) => {
     if (file) {
@@ -67,43 +84,30 @@ const AddBuses = () => {
       if (name === 'agents') setAgent(value);
     }
   };
-  async function convertImageUrlToBase64(url) {
-    try {
-      const response = await fetch(url);
-      const blob = await response.blob();
-      const reader = new FileReader();
-  
-      return new Promise((resolve, reject) => {
-        reader.onloadend = () => resolve(reader.result);
-        reader.onerror = reject;
-        reader.readAsDataURL(blob);
-      });
-    } catch (error) {
-      console.error("Error converting image to Base64", error);
-    }
-  }
+ 
   
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
       setBusNumber(snedData.bus_number);
-      // setPic(snedData.bus_image);
+      setPic(snedData.bus_image);
       setCapacity(snedData.capacity);
       setBusType(snedData.bus_type_id);
       setStatus(snedData.status);
       setType(snedData.type);
       setAgent(snedData.agent_id);
       setEdit(true);
-      if (snedData.flag) {
-        convertImageUrlToBase64(snedData.bus_image)
-            .then((base64Flag) => {
-              setPic(base64Flag);  
-            })
-            .catch((error) => {
-                console.error("Error converting flag image:", error);
-            });
-    }
-    }
+        if (snedData.bus_image) {
+          convertImageUrlToBase64(snedData.bus_image)
+              .then((base64Flag) => {
+                  setPic(base64Flag);  
+                  setOriginalFlag(base64Flag); 
+              })
+              .catch((error) => {
+                  console.error("Error converting flag image:", error);
+              });
+      
+    }}
   }, [location.state]);
 
   const handleSave = () => {
@@ -116,10 +120,14 @@ const AddBuses = () => {
       bus_type_id: busType,
       agent_id: agent,
       capacity: capacity,
-      bus_image: pic,
       status: status,
     };
 
+    if(pic!=originalFlag){
+      newBus.bus_image=pic
+    }
+ 
+    
     const { snedData } = location.state || {};
     const token = localStorage.getItem('token');
 

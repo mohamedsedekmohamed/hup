@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
-import { useNavigate } from 'react-router-dom'; 
+import { useNavigate } from 'react-router-dom';
 import NavBuses from './NavBuses.jsx'
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
@@ -10,12 +10,10 @@ import styled from 'styled-components';
 const TypeBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [thing,setThing]=useState("active")
   const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
-
     axios.get("https://bcknd.ticket-hub.net/api/admin/bus_types", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -26,40 +24,47 @@ const TypeBuses = () => {
         console.log(response.data.bus_type);
       })
       .catch(error => {
-        console.log(token);
         console.error('Error fetching data:', error);
       });
   }, [update]);
 
-  const handleDelete = (index) => {
+  const handleDelete = (id) => {
     const token = localStorage.getItem('token');
-
-    axios.delete(`https://bcknd.ticket-hub.net/api/admin/bus_type/delete/${index}`, {
+    axios.delete(`https://bcknd.ticket-hub.net/api/admin/bus_type/delete/${id}`, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
       .then(response => {
-        console.log('User deleted successfully:', response.data);
+        console.log('Bus deleted successfully:', response.data);
         setUpdate(!update);
-
       })
       .catch(error => {
-        console.error('Error deleting user:', error);
+        console.error('Error deleting bus:', error);
       });
-  }
-  const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    
+  };
+
+  const handleEdit = (id) => {
+    const snedData = data.find((item) => item.id === id);
     navigate('/Buses/AddTypeBuses', { state: { snedData } });
-  }
+  };
 
-  const onchangething=()=>{
-setThing(!thing)
-console.log(thing?"active":"inactive")
-  }
+  const onchangething = (id, currentStatus) => {
+    const token = localStorage.getItem('token');
+    const newStatus = currentStatus === "active" ? "inactive" : "active";
+
+    axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_type/update${id}`, { status: newStatus },
+      { headers: { Authorization: `Bearer ${token}` } })
+      .then(response => {
+        console.log(`Status updated to ${newStatus}`);
+        setUpdate(!update);
+      })
+      .catch(error => {
+        console.error('Error updating status:', error);
+      });
+  };
+
   return (
-
     <div>
       <NavBuses />
       <ThreeThing navGo='/Buses/AddTypeBuses' />
@@ -68,7 +73,7 @@ console.log(thing?"active":"inactive")
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Name</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">bus image</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Bus Image</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Seats Count</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Plan Image</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Seats Image</th>
@@ -78,39 +83,32 @@ console.log(thing?"active":"inactive")
           </thead>
           <tbody>
             {data.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
+              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six'>
                 <td className="w-[143px] h-[56px] text-[16px]">{item.name}</td>
-                <td><img className="w-5 h-5" src={item.bus_image === null ? `data:image/png;base64,${item.bus_image}` : item.bus_image} /></td>
-                <td className="w-[143px] h-[56px] text-[16px]">{item.seat_count?item.seat_count:"null"}</td>
-                <td><img className="w-5 h-5" src={item.plan_image === null ? `data:image/png;base64,${item.plan_image}` : item.plan_image} /></td>
-                <td><img className="w-5 h-5" src={item.seats_image === null ? `data:image/png;base64,${item.seats_image}` : item.seats_image} /></td>
-                
-                 
-                  <td className="w-[143px] h-[56px] text-[16px] flex items-center gap-0.5">
-                    <span>Accept</span>
-                    <div className='flex my-auto'>
-                      <StyledWrapper>
-                        <label className="switch">
-                          <input type="checkbox"
-                          onClick={onchangething}
-                          value={thing}
-                          />
-                          <span className="slider" />
-                        </label>
-                      </StyledWrapper>
-                    </div>
-                    <span>Reject</span>
-                  </td>
-                  <td className="w-[143px] h-[56px] text-[16px] text-twelve ">
-                    <span className="font-normal p-2 rounded-[8px] flex"> <img className='w-[24px] h-[24px]' src={pin}
-                                        onClick={() => handleEdit(item.id)} />
-                      <img
-                                        className='w-[24px] h-[24px] ml-2 cursor-pointer'
-                                        src={delet}
-                                        onClick={() => handleDelete(item.id)}
-                                        alt="delete"
-                                      /></span>
-                  </td>
+                <td><img className="w-5 h-5" src={item.bus_image} alt="Bus" /></td>
+                <td className="w-[143px] h-[56px] text-[16px]">{item.seat_count}</td>
+                <td><img className="w-5 h-5" src={item.plan_image} alt="Plan" /></td>
+                <td><img className="w-5 h-5" src={item.seats_image} alt="Seats" /></td>
+                <td className="w-[143px] h-[56px] text-[16px] flex items-center gap-0.5">
+                  <div className='flex my-auto'>
+                    <StyledWrapper>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={item.status === "active"}  // Set the switch state based on the current status
+                          onClick={() => onchangething(item.id, item.status)}  // Call the function to toggle status
+                        />
+                        <span className="slider" />
+                      </label>
+                    </StyledWrapper>
+                  </div>
+                </td>
+                <td className="w-[143px] h-[56px] text-[16px] text-twelve">
+                  <span className="font-normal p-2 rounded-[8px] flex">
+                    <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                    <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet} onClick={() => handleDelete(item.id)} alt="delete" />
+                  </span>
+                </td>
               </tr>
             ))}
           </tbody>
@@ -118,7 +116,7 @@ console.log(thing?"active":"inactive")
       </div>
     </div>
   );
-}
+};
 
 const StyledWrapper = styled.div`
   .switch {
