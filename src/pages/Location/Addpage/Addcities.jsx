@@ -70,8 +70,11 @@ const AddCities = () => {
         },
       })
         .then(response => {
-          console.log('Country updated successfully:', response.data);
-          navigate('/Location/Cities');
+          console.log('city updated successfully:', response.data);
+          toast.success('city updated successfully'); 
+                    setTimeout(() => {
+                      navigate('/Location/Cities');
+                    }, 3000);
         })
         .catch(error => {
           console.error('Error updating country:', error);
@@ -85,8 +88,12 @@ const AddCities = () => {
       },
     })
       .then(response => {
-        console.log('Country added successfully:', response.data);
-        navigate('/Location/Cities');
+        console.log('city added successfully:', response.data);
+                toast.success('city added  successfully'); 
+              
+                setTimeout(() => {
+                  navigate('/Location/Cities');
+                }, 3000);
       })
       .catch(error => {
         console.error('Error adding country:', error);

@@ -78,8 +78,12 @@ const Addzones= () => {
           },
         })
           .then(response => {
-            console.log('Country updated successfully:', response.data);
-            navigate('/Location/Zones');
+            console.log('zone updated successfully:', response.data);
+             toast.success('zone added  successfully'); 
+                  
+                    setTimeout(() => {
+                      navigate('/Location/Zones');
+                    }, 3000);
           })
           .catch(error => {
             console.error('Error updating country:', error);
@@ -93,8 +97,12 @@ const Addzones= () => {
         },
       })
         .then(response => {
-          console.log('Country added successfully:', response.data);
-          navigate('/Location/Zones');
+          console.log('zone added successfully:', response.data);
+           toast.success('zone added  successfully'); 
+                
+                  setTimeout(() => {
+                    navigate('/Location/Zones');
+                  }, 3000);
         })
         .catch(error => {
           console.error('Error adding country:', error);
@@ -122,7 +130,7 @@ const Addzones= () => {
   name="cities"
   value={city}
   onChange={handleChange}
-  shara={country}  // تمرير معرف البلد هنا
+  shara={country}
   required
 />
     

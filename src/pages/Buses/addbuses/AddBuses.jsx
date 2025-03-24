@@ -140,7 +140,11 @@ const AddBuses = () => {
       })
         .then(response => {
           console.log('Bus updated successfully:', response.data);
-          navigate('/Buses');
+           toast.success('bus updated  successfully'); 
+                          
+                            setTimeout(() => {
+                              navigate('/Buses');
+                            }, 3000);
           resetForm();
         })
         .catch(error => {
@@ -155,7 +159,11 @@ const AddBuses = () => {
       })
         .then(response => {
           console.log('Bus added successfully:', response.data);
-          navigate('/Buses');
+          toast.success('bus added  successfully'); 
+                          
+          setTimeout(() => {
+            navigate('/Buses');
+          }, 3000);
           resetForm();
         })
         .catch(error => {

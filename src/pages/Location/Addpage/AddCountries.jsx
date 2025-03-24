@@ -13,7 +13,7 @@ const AddCountries = () => {
     const location = useLocation();
     const [country, setCountry] = useState('');
     const [flag, setFlag] = useState(null);
-    const [originalFlag, setOriginalFlag] = useState(null); 
+    const [originalFlag, setOriginalFlag] = useState(null);
     const [edit, setEdit] = useState(false);
     const [valuee, setValue] = useState("inactive");
 
@@ -30,20 +30,20 @@ const AddCountries = () => {
 
     function convertImageUrlToBase64(url) {
         return fetch(url)
-          .then((response) => response.blob())
-          .then((blob) => {
-            return new Promise((resolve, reject) => {
-              const reader = new FileReader();
-              reader.onloadend = () => resolve(reader.result); 
-              reader.onerror = reject;
-              reader.readAsDataURL(blob); 
+            .then((response) => response.blob())
+            .then((blob) => {
+                return new Promise((resolve, reject) => {
+                    const reader = new FileReader();
+                    reader.onloadend = () => resolve(reader.result);
+                    reader.onerror = reject;
+                    reader.readAsDataURL(blob);
+                });
+            })
+            .catch((error) => {
+                console.error("Error converting image to Base64", error);
             });
-          })
-          .catch((error) => {
-            console.error("Error converting image to Base64", error);
-          });
-      }
-      
+    }
+
     useEffect(() => {
         const { snedData } = location.state || {};
         if (snedData) {
@@ -54,7 +54,7 @@ const AddCountries = () => {
             if (snedData.flag) {
                 convertImageUrlToBase64(snedData.flag)
                     .then((base64Flag) => {
-                        setFlag(base64Flag);  
+                        setFlag(base64Flag);
                         setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                     })
                     .catch((error) => {
@@ -72,7 +72,7 @@ const AddCountries = () => {
     const validateForm = () => {
         let formErrors = {};
         if (!country) formErrors.country = 'Country is required';
-        if (!flag && !edit) formErrors.flag = 'Flag is required'; 
+        if (!flag && !edit) formErrors.flag = 'Flag is required';
         setErrors(formErrors);
         Object.values(formErrors).forEach((error) => {
             toast.error(error);
@@ -95,7 +95,7 @@ const AddCountries = () => {
             newCountryData.flag = flag;
         }
 
-        console.log("Data to be sent:", newCountryData); 
+        console.log("Data to be sent:", newCountryData);
 
         if (edit) {
             const { snedData } = location.state || {};
@@ -104,13 +104,16 @@ const AddCountries = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-            .then(response => {
-                console.log('Country updated successfully:', response.data);
-                navigate('/Location');
-            })
-            .catch(error => {
-                console.error('Error updating country:', error);
-            });
+                .then(response => {
+                    console.log('Country updated successfully:', response.data);
+                    toast.success('Country updated successfully');
+                    setTimeout(() => {
+                        navigate('/Location');
+                    }, 3000);
+                })
+                .catch(error => {
+                    console.error('Error updating country:', error);
+                });
             return;
         }
 
@@ -119,13 +122,17 @@ const AddCountries = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then(response => {
-            console.log('Country added successfully:', response.data);
-            navigate('/Location');
-        })
-        .catch(error => {
-            console.error('Error adding country:', error);
-        });
+            .then(response => {
+                console.log('Country added successfully:', response.data);
+                toast.success('Country added  successfully');
+
+                setTimeout(() => {
+                    navigate('/Location');
+                }, 3000);
+            })
+            .catch(error => {
+                console.error('Error adding country:', error);
+            });
 
         // Reset the form for a new entry
         setCountry('');

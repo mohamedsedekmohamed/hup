@@ -46,7 +46,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
           paddingRight: '20px',
           backgroundImage: 'none',
         }}
-        className="w-[200px] md:w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
+        className="w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
       >
         <option value="null">{placeholder}</option>
         {arrayof && arrayof.length > 0 && arrayof.map((item) => {

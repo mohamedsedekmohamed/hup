@@ -152,8 +152,12 @@ if(seatsImage!=seatsImageor){
                 },
             })
             .then(response => {
-                console.log('Country updated successfully:', response.data);
-                navigate('/Buses/TypeBuses');
+                console.log('TypeBuses updated successfully:', response.data);
+                toast.success('TypeBuses updated  successfully'); 
+                                
+                                  setTimeout(() => {
+                                    navigate('/Buses/TypeBuses');
+                                  }, 3000);
                 resetForm();
 
             })
@@ -169,9 +173,12 @@ if(seatsImage!=seatsImageor){
             },
         })
         .then(response => {
-            console.log('Country added successfully:', response.data);
-            navigate('/Buses/TypeBuses');
-            resetForm();
+            console.log('TypeBuses added successfully:', response.data);
+            toast.success('TypeBuses added  successfully'); 
+
+            setTimeout(() => {
+              navigate('/Buses/TypeBuses');
+            }, 3000);            resetForm();
 
         })
         .catch(error => {

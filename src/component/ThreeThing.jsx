@@ -12,7 +12,7 @@ const TheeThing = ({navGo,like}) => {
               </div>
           <div className='flex justify-center items-center gap-4'> 
          <button className=' flex justify-center items-center bg-one py-1 px-2 rounded-[8px] gap-1'>
-      <img src={filter} className='w-6 h-6 hidden'/>
+      <img src={filter} className='w-6 h-6 '/>
       <span className='text-[20px] font-medium text-white '>Filter</span>
          </button>
       {!like&&(<IconAdd nav={navGo}/>)}  

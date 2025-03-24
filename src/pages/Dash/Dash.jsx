@@ -37,7 +37,7 @@ const Dash = ({ activeLink ,open}) => {
         { text: "● Pending Payments", href: "/Financial/PendingPayments" }
       ]
     },
-    { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Agents", href: "/Agents" },
+    { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Operator", href: "/Agents" },
     { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Commission", href: "/Commission" },
     { icon: <IconCommissionSetup />, iconactive: <IconCommissionSetup active />, text: "Commission Setup", href: "/CommissionSetup" },
     { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Currency", href: "/Currency" },
@@ -54,8 +54,8 @@ const Dash = ({ activeLink ,open}) => {
 
 
   return (
-    <div>
-      <div className='direction-rtl hidden md:block'>
+    <div >
+      <div className='direction-rtl hidden md:block '>
         <div className='flex-col w-[300px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[32px]'>Ticket hub</span>

@@ -54,7 +54,7 @@ function LoginIn({ setIsLoggedIn }) {
             type="text"
             value={username}
             onChange={(e) => setUsername(e.target.value)}
-            className='w-[80%] h-[56px] lg:w-[450px] lg:h-[72px] border-one border-1 rounded-[8px] mt-2 lg:mt-5 pl-3'
+            className='w-[80%] h-[56px]  lg:h-[72px] border-one border-1 rounded-[8px] mt-2 lg:mt-5 pl-3'
             placeholder='email'
           />
 
@@ -64,13 +64,13 @@ function LoginIn({ setIsLoggedIn }) {
               onClick={togglePasswordVisibility}
             >
               {showPassword === true && (<FaRegEyeSlash className='absolute top-1/3 lg:top-1/2         right-25   sm:right-30 md:right-30      lg:right-15    text-2xl' />)}
-              {showPassword === false && (<MdOutlineRemoveRedEye className='absolute top-1/3 lg:top-1/2  right-25    md:right-30  sm:right-30 lg:right-15 text-2xl' />)}
+              {showPassword === false && (<MdOutlineRemoveRedEye className='absolute top-1/3 lg:top-1/2  right-25    md:right-30  sm:right-30 lg:right-25 text-2xl' />)}
             </button>
             <input 
               type={showPassword ? 'text' : 'password'} 
               value={password}
               onChange={(e) => setPassword(e.target.value)}
-              className='w-[80%] h-[56px] lg:w-[450px] lg:h-[72px] border-one border-1 rounded-[8px] mt-2 lg:mt-5 pl-3'
+              className='w-[80%] h-[56px]  lg:h-[72px] border-one border-1 rounded-[8px] mt-2 lg:mt-5 pl-3'
               placeholder='password'
             />
           </div>
@@ -82,7 +82,7 @@ function LoginIn({ setIsLoggedIn }) {
       </div>
 
       <div className='hidden md:flex'>
-        <img src={Loginpic} className='object-fill w-full h-[690px]' />
+        <img src={Loginpic} className='object-fill w-full h-screen max-h-[800px]' />
       </div>
     </div>
   );

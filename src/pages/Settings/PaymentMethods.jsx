@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing.jsx';
+import Swal from 'sweetalert2';
 
 const PaymentMethods = () => {
       const [data, setData] = useState([]);
@@ -26,28 +27,46 @@ const PaymentMethods = () => {
             console.error('Error fetching data:', error);
           });
       }, [update])
-      const handleDelete = (index) => {
+
+    
+      const handleDelete = (index, userName) => { 
         const token = localStorage.getItem('token');
-    
-        axios.delete(`https://bcknd.ticket-hub.net/api/admin/payment_method/delete/${index}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
-          .then(response => {
-            console.log('User deleted successfully:', response.data);
-            setUpdate(!update);
-    
-          })
-          .catch(error => {
-            console.error('Error deleting user:', error);
-          });
-      }
+        
+        Swal.fire({
+          title: `Are you sure you want to delete ${userName}?`, 
+          icon: 'warning',
+          showCancelButton: true,
+          confirmButtonText: 'Yes',
+          cancelButtonText: 'No',
+        }).then((result) => {
+          if (result.isConfirmed) {
+            axios.delete(`https://bcknd.ticket-hub.net/api/admin/payment_method/delete/${index}`, {
+              headers: {
+                  Authorization: `Bearer ${token}`,
+                },
+              })
+              .then((response) => {
+                console.log('User deleted successfully:', response.data);
+                setUpdate(!update);
+                Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
+              })
+              .catch((error) => {
+                console.error('Error deleting user:', error);
+                Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
+              });
+          } else {
+        
+            Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');  
+          }
+        });
+      };
+
       const handleEdit = (index) => {
         const snedData = data.find((item) => item.id === index);
         
         navigate('/Settings/AddPaymentMethods', { state: { snedData } });
       }
+
   return (
     <div>
     <div>
@@ -79,7 +98,7 @@ const PaymentMethods = () => {
                   <img
                     className='w-[24px] h-[24px] ml-2 cursor-pointer'
                     src={delet}
-                    onClick={() => handleDelete(item.id)}
+                    onClick={() => handleDelete(item.id,item.name)}   
                     alt="delete"
                   />
                 </td>

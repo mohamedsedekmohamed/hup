@@ -4,9 +4,11 @@ import AddAll from '../../ui/AddAll';
 import InputField from '../../ui/InputField';
 import InputArrow from '../../ui/InputArrow';
 import axios from 'axios';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
-
+import Inputfiltter from '../../ui/Inputfiltter';
 const AddUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -19,6 +21,7 @@ const AddUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [edit, setEdit] = useState(false);
+
 
   const [errors, setErrors] = useState({
     name: '',
@@ -39,7 +42,6 @@ const AddUser = () => {
       setCity(snedData.city_id);
       setZone(snedData.zone_id);
       setEmail(snedData.email);
-      setPassword(snedData.password);
       setEdit(true);
     }
   }, [location.state]);
@@ -55,25 +57,37 @@ const AddUser = () => {
     if (name === 'password') setPassword(value);
   };
 
-  // Validation function
   const validateForm = () => {
     let formErrors = {};
 
     if (!name) formErrors.name = 'Name is required';
-    if (!phone) formErrors.phone = 'Phone is required';
+    if (!phone) {
+      formErrors.phone = 'Phone is required';
+    } else if (!/^\+?\d+$/.test(phone)) { 
+      formErrors.phone = 'Phone should contain only numbers or start with a "+"';
+    }
     if (!country) formErrors.country = 'Country is required';
     if (!city) formErrors.city = 'City is required';
     if (!zone) formErrors.zone = 'Zone is required';
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
-    if ( password.length < 6) formErrors.password = 'Password must be at least 6 characters';
+    if(!edit){
+      if (password.length < 6) formErrors.password = 'Password must be at least 6 characters';
 
+    } 
+
+    Object.values(formErrors).forEach((error) => {
+      toast.error(error);
+    });
+
+    // Update errors state
     setErrors(formErrors);
-    return Object.keys(formErrors).length === 0; // If no errors, return true
+
+    return Object.keys(formErrors).length === 0;
   };
 
   const handleSave = () => {
     if (!validateForm()) {
-      return; // Don't proceed if form has validation errors
+      return; 
     }
 
     const token = localStorage.getItem('token');
@@ -84,8 +98,9 @@ const AddUser = () => {
       city_id: city,
       zone_id: zone,
       email,
-      password,
     };
+    if(!edit) {newUser.password=password}
+    
 
     if (edit) {
       const { snedData } = location.state || {};
@@ -96,7 +111,10 @@ const AddUser = () => {
       })
         .then(response => {
           console.log('User updated successfully:', response.data);
-          navigate('/User');
+          toast.success('User updated successfully'); 
+          setTimeout(() => {
+            navigate('/User');
+          }, 3000);
         })
         .catch(error => {
           console.error('Error updating user:', error);
@@ -111,7 +129,11 @@ const AddUser = () => {
     })
       .then(response => {
         console.log('User added successfully:', response.data);
-        navigate('/User');
+        toast.success('User added  successfully'); 
+      
+        setTimeout(() => {
+          navigate('/User');
+        }, 3000);
       })
       .catch(error => {
         console.error('Error adding user:', error);
@@ -152,18 +174,22 @@ const AddUser = () => {
           onChange={handleChange}
           required
         />
-        <InputArrow
-          placeholder="City"
+        <Inputfiltter
+          like
+          placeholder="city"
           name="cities"
           value={city}
           onChange={handleChange}
+          shara={country}
           required
         />
-        <InputArrow
-          placeholder="Zone"
+        <Inputfiltter
+          like
+          placeholder="zone"
           name="zones"
           value={zone}
           onChange={handleChange}
+          shara={city}
           required
         />
         <InputField
@@ -185,16 +211,9 @@ const AddUser = () => {
         <button onClick={handleSave}>
           <img className="my-6" src={picdone} alt="Save" />
         </button>
-        <div className="flex-col gap-3">
-          {errors.name && <p className="text-red-500">{errors.name}</p>}
-          {errors.phone && <p className="text-red-500">{errors.phone}</p>}
-          {errors.country && <p className="text-red-500">{errors.country}</p>}
-          {errors.city && <p className="text-red-500">{errors.city}</p>}
-          {errors.zone && <p className="text-red-500">{errors.zone}</p>}
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
-          {errors.password && <p className="text-red-500">{errors.password}</p>}
-        </div>
+      
       </div>
+      <ToastContainer />
     </div>
   );
 };

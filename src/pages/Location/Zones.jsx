@@ -5,6 +5,8 @@ import ThreeThing from '../../component/ThreeThing';
 import NavLocation from './NavLocation';
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
+import Swal from 'sweetalert2';
+
 const Zones = () => {
      const [data, setData] = useState([]);
      const [update, setUpdate] = useState(false);
@@ -29,26 +31,39 @@ const Zones = () => {
      },[update])
     
    
+  const handleDelete = (index, userName) => { 
+    const token = localStorage.getItem('token');
+    
+    Swal.fire({
+      title: `Are you sure you want to delete ${userName}?`, 
+      icon: 'warning',
+      showCancelButton: true,
+      confirmButtonText: 'Yes',
+      cancelButtonText: 'No',
+    }).then((result) => {
+      if (result.isConfirmed) {
+        axios.delete(`https://bcknd.ticket-hub.net/api/admin/zone/delete/${index}`, {
+          headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          })
+          .then((response) => {
+            console.log('User deleted successfully:', response.data);
+            setUpdate(!update);
+            Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
+          })
+          .catch((error) => {
+            console.error('Error deleting user:', error);
+            Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
+          });
+      } else {
+    
+        Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');  
+      }
+    });
+  };
    
-     const handleDelete = (index) => {
-       const token = localStorage.getItem('token');
-   
-       axios.delete(`https://bcknd.ticket-hub.net/api/admin/zone/delete/${index}`, {
-         headers: {
-           Authorization: `Bearer ${token}`,
-         },
-       })
-         .then(response => {
-           console.log('User deleted successfully:', response.data);
-           setUpdate(!update);
-   
-         })
-         .catch(error => {
-           console.error('Error deleting user:', error);
-         });
-   
-   
-     };
+  
      const handleEdit = (index) => {
        const snedData = data.find((item) => item.id === index);
        navigate('/Location/Addzones', { state: { snedData}});  
@@ -85,7 +100,7 @@ const Zones = () => {
                                        <img
                                          className='w-[24px] h-[24px] ml-2 cursor-pointer'
                                          src={delet}
-                                         onClick={() => handleDelete(item.id)}   
+                                         onClick={() => handleDelete(item.id,item.name)}   
                                          alt="delete"
                                        />
                     </td>

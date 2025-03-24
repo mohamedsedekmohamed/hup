@@ -105,8 +105,11 @@ const AddPaymentMethods = () => {
             },
         })
         .then(response => {
-            console.log('Country updated successfully:', response.data);
-            navigate('/Settings/PaymentMethods');
+            console.log(' Add Payment Methods updated successfully:', response.data);
+             toast.success(' Add Payment Methods updated  successfully'); 
+                                setTimeout(() => {
+                                  navigate('/Settings/PaymentMethods');
+                                }, 3000);
         })
         .catch(error => {
             console.error('Error updating country:', error);
@@ -121,8 +124,11 @@ const AddPaymentMethods = () => {
         },
     })
     .then(response => {
-        console.log('Country added successfully:', response.data);
-        navigate('/Settings/PaymentMethods');
+        console.log(' Add Payment Methods add successfully:', response.data);
+        toast.success(' Add Payment Methods added  successfully'); 
+        setTimeout(() => {
+          navigate('/Settings/PaymentMethods');
+        }, 3000);
     })
     .catch(error => {
         console.error('Error adding country:', error);
