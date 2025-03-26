@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NavBooking = () => {
   return (
     <div>
-      <nav className="grid grid-cols-4 gap-6 p-5">
+      <nav className="grid grid-cols-3 gap-6 p-5">
       <NavLink 
   to="/Booking" 
   end
@@ -13,16 +13,8 @@ const NavBooking = () => {
     ${isActive ? 'border-b-1 border-b-three' : ''}`
   }
 >
-Upcoming
-        </NavLink>
-        <NavLink 
-          to="/Booking/BookingHistory"
-          className={({ isActive }) => 
-            `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
-            ${isActive ? 'border-b-1 border-b-three' : ''}`
-          }
-        >
-          Booking History
+ History
+
         </NavLink>
         <NavLink 
           to="/Booking/CurrentBookings"
@@ -31,8 +23,9 @@ Upcoming
             ${isActive ? 'border-b-1 border-b-three' : ''}`
           }
         >
-          Current Bookings
+           pending  
         </NavLink>
+  
         <NavLink 
           to="/Booking/CanceledBooking"
           className={({ isActive }) => 
@@ -40,7 +33,7 @@ Upcoming
             ${isActive ? 'border-b-1 border-b-three' : ''}`
           }
         >
-          Canceled Booking   
+          Canceled    
         </NavLink>
       </nav>
     </div>

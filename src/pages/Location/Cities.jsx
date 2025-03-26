@@ -62,14 +62,6 @@ const Cities = () => {
     });
   };
 
-
-
-
-
-
-
-
-
   
   const handleEdit = (index) => {
     const snedData = data.find((item) => item.id === index);

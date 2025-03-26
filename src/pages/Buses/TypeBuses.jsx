@@ -72,7 +72,7 @@ const TypeBuses = () => {
     const token = localStorage.getItem('token');
     const newStatus = currentStatus === "active" ? "inactive" : "active";
 
-    axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_type/update${id}`, { status: newStatus },
+    axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_types/status/${id}`, { status: newStatus },
       { headers: { Authorization: `Bearer ${token}` } })
       .then(response => {
         console.log(`Status updated to ${newStatus}`);

@@ -231,7 +231,7 @@ const AddBuses = () => {
         flag={pic}
         onFileChange={handleFileChange}
       />
-      <SwitchButton value={status} setValue={setStatus} />
+      <SwitchButton value={status} title='status' setValue={setStatus} />
       <ToastContainer />
     </div>
       <button onClick={handleSave}>

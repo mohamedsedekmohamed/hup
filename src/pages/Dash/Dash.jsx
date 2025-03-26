@@ -38,15 +38,16 @@ const Dash = ({ activeLink ,open}) => {
       ]
     },
     { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Operator", href: "/Agents" },
-    { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Commission", href: "/Commission" },
-    { icon: <IconCommissionSetup />, iconactive: <IconCommissionSetup active />, text: "Commission Setup", href: "/CommissionSetup" },
+    { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Complaints", href: "/Complaints" },
+    { icon: <IconCommissionSetup />, iconactive: <IconCommissionSetup active />, text: "Commission Setup", href: "/Commission" },
     { icon: <IconCurrency />, iconactive: <IconCurrency active />, text: "Currency", href: "/Currency" },
     { icon: <IconPayoutAccount />, iconactive: <IconPayoutAccount active />, text: "Payout Account", href: "/PayoutAccount" },
     {
       icon: <IconSetting />, iconactive: <IconSetting active />, text: "Settings", settingsOptions:
         [
           { text: "● Payment Methods", href: "/Settings/PaymentMethods" },
-          { text: "● Cancellation Policy", href: "/Settings/CancellationPolicy" },
+          { text: "●  Nationality", href: "/Settings/Nationality" },
+          { text: "●  Subject Complaints", href: "/Settings/SubjectComplaints" },
         ]
     }
   ];
@@ -54,9 +55,11 @@ const Dash = ({ activeLink ,open}) => {
 
 
   return (
-    <div >
-      <div className='direction-rtl hidden md:block '>
-        <div className='flex-col w-[300px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+    
+        <div className="relative h-full">
+  <div className="direction-rtl hidden md:block h-full">
+    <div className="flex-col w-[300px] h-[calc(100vh-2px)] bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr">
+     
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[32px]'>Ticket hub</span>
             <img src={mainicon} className='rounded-full p-1 bg-three' alt="Main Icon" />

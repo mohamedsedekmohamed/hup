@@ -20,8 +20,8 @@ import Swal from 'sweetalert2';
       }
     })
       .then(response => {
-        setData(response.data.data);
-        console.log(response.data.data);
+        setData(response.data.users);
+        console.log(response.data.users);
 
       })
       .catch(error => {

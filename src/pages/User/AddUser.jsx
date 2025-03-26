@@ -72,7 +72,6 @@ const AddUser = () => {
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
     if(!edit){
       if (password.length < 6) formErrors.password = 'Password must be at least 6 characters';
-
     } 
 
     Object.values(formErrors).forEach((error) => {
@@ -98,6 +97,7 @@ const AddUser = () => {
       city_id: city,
       zone_id: zone,
       email,
+      
     };
     if(!edit) {newUser.password=password}
     

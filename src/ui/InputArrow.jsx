@@ -22,6 +22,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         if (name === "countries") return setArray(response.data.countries);
         if (name === "cities") return setArray(response.data.cities);
         if (name === "zones") return setArray(response.data.zones);
+        if (name === "users") return setArray(response.data.users);
        
       })
       .catch(error => {
@@ -68,12 +69,19 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
                 {item.name}
               </option>
             );
-          } else if (control === "bus_types") {
+          } 
+          else if (control === "bus_types") {
             return (
               <option key={item.id} value={item.id}>
                 {item.name}
               </option>
             );
+          }  else if (control === "users") {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              );
           } else {
             return null; 
           }
