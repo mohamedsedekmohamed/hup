@@ -111,8 +111,9 @@ const Complaints = () => {
                   
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">message</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">date</th>
-                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">date</th>
-                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">date</th>
+                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">reject</th>
+                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">resolve</th>
+              
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
                 </tr>

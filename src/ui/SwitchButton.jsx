@@ -19,7 +19,7 @@ useEffect(()=>{
     <div>
       {num ? (
         <StyledWrapper>
-          <span>{title} </span>
+          <span>{title ?title:"statue"} </span>
           <label className="switch">
             <input  
               type={kind}
@@ -32,7 +32,7 @@ useEffect(()=>{
         </StyledWrapper>
       ) : (
         <StyledWrapper>
-          <span>{title} </span>
+          <span>statue </span>
           <label className="switch">
             <input  
               type="checkbox"

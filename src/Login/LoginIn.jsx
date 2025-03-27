@@ -63,8 +63,8 @@ function LoginIn({ setIsLoggedIn }) {
               type="button"
               onClick={togglePasswordVisibility}
             >
-              {showPassword === true && (<FaRegEyeSlash className='absolute top-1/3 lg:top-1/2         right-25   sm:right-30 md:right-30      lg:right-15    text-2xl' />)}
-              {showPassword === false && (<MdOutlineRemoveRedEye className='absolute top-1/3 lg:top-1/2  right-25    md:right-30  sm:right-30 lg:right-25 text-2xl' />)}
+              {showPassword === true && (<FaRegEyeSlash className='absolute top-1/3 lg:top-1/2         right-25   sm:right-30  md:right-30      lg:right-25    text-2xl' />)}
+              {showPassword === false && (<MdOutlineRemoveRedEye className='absolute top-1/3 lg:top-1/2  right-25  sm:right-30   md:right-30   lg:right-25 text-2xl' />)}
             </button>
             <input 
               type={showPassword ? 'text' : 'password'} 

@@ -17,7 +17,7 @@ import IconCommissionSetup from '../../IconsImprot/IconCommissionSetup';
 import IconCurrency from '../../IconsImprot/IconCurrency';
 import IconPayoutAccount from '../../IconsImprot/IconPayoutAccount';
 import IconSetting from '../../IconsImprot/IconSetting';
-
+import { FaCarAlt } from "react-icons/fa";
 const Dash = ({ activeLink ,open}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -30,12 +30,13 @@ const Dash = ({ activeLink ,open}) => {
     { icon: <IconTrips />, iconactive: <IconTrips active />, text: "Trips", href: "/Trips" },
     { icon: <IconWalletRequests />, iconactive: <IconWalletRequests active />, text: "Wallet Requests", href: "/WalletRequsts" },
     { icon: <IconWallet />, iconactive: <IconWallet active />, text: "Wallet", href: "/Wallet" },
+    { icon: <FaCarAlt  className='text-white'/>, iconactive: <FaCarAlt active />, text: "Car", href: "/Car" },
     {
       icon: <IconFinancial />, iconactive: <IconFinancial active />, text: "Financial", options: [
-        { text: "● Payments", href: "/Financial/Payments" },
-        { text: "● Commissions", href: "/Financial/Commissions" },
-        { text: "● Pending Payments", href: "/Financial/PendingPayments" }
-      ]
+        { text: "● pending payments  ", href: "/Financial/Payments" },
+        { text: "● confirmed payments", href: "/Financial/Commissions" },
+        { text: "● canceled payments   ", href: "/Financial/PendingPayments" }
+      ]  
     },
     { icon: <IconAgents />, iconactive: <IconAgents active />, text: "Operator", href: "/Agents" },
     { icon: <IconComplaints />, iconactive: <IconComplaints active />, text: "Complaints", href: "/Complaints" },

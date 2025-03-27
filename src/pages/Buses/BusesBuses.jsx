@@ -11,9 +11,9 @@ const BusesBuses = () => {
     const [data, setData] = useState([]);
     const [update, setUpdate] = useState(false);
     const navigate = useNavigate();
-  
+    const token = localStorage.getItem('token');
+
     useEffect(() => {
-      const token = localStorage.getItem('token');
   
       axios.get("https://bcknd.ticket-hub.net/api/admin/busses", {
         headers: {
@@ -86,6 +86,7 @@ const BusesBuses = () => {
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Operator (Agent)</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Route</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
+                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">amenities</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
                 </tr>
               </thead>
@@ -100,7 +101,13 @@ const BusesBuses = () => {
                     <td className="w-[143px] h-[56px]  text-[16px]  ">{item.agent_name}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">****</td>
                     <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
-                    <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
+                    <td className="w-[143px] h-[56px] text-[16px]">
+      {item.amenities && item.amenities.length > 0 
+        ? item.amenities.map((amenity, index) => (
+            <span className='text-[12px]' key={index}>{amenity.name}{index < item.amenities.length - 1 && '-'}</span>
+          ))
+        : 'No amenities'}
+    </td>                    <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                     <img className='w-[24px] h-[24px]' src={pin}
                                        onClick={() => handleEdit(item.id)} />
                                      <img

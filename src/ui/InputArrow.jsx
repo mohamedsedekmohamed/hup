@@ -23,6 +23,9 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         if (name === "cities") return setArray(response.data.cities);
         if (name === "zones") return setArray(response.data.zones);
         if (name === "users") return setArray(response.data.users);
+        if (name === "car_categories") return setArray(response.data);
+        if (name === "car_brands") return setArray(response.data);
+        if (name === "operators") return setArray(response.data.operators);
        
       })
       .catch(error => {
@@ -81,6 +84,24 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
                 <option key={item.id} value={item.id}>
                   {item.name}
                 </option>
+              );
+          }  else if (control === "car_categories") {
+              return (
+                <option key={item.id} value={item.id}>
+                  {item.name}
+                </option>
+              );
+          }  else if (control === "car_brands") {
+              return (
+                <option key={item.category_id} value={item.category_id}>
+                  {item.category_name}
+                </option>
+              );
+          }  else if (control === "operators") {
+              return (
+                <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
               );
           } else {
             return null; 

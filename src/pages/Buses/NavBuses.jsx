@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NavBuses= () => {
   return (
     <div>
-      <nav className="grid grid-cols-4 gap-6 p-5">
+      <nav className="grid grid-cols-3 gap-6 p-5">
       <NavLink 
   to="/Buses" 
   end
@@ -31,17 +31,9 @@ Buses
             ${isActive ? 'border-b-1 border-b-three' : ''}`
           }
         >
-          Buses History
+Aminites
         </NavLink>
-        <NavLink 
-          to="/Buses/Operation"
-          className={({ isActive }) => 
-            `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
-            ${isActive ? 'border-b-1 border-b-three' : ''}`
-          }
-        >
-          Operation   
-        </NavLink>
+   
       </nav>
     </div>
   );

@@ -26,7 +26,7 @@ import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
 import AddPayoutAccount from '../pages/Payout/AddPayoutAccount.jsx';
 import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
-
+import Car from '../pages/Car/Car.jsx';
 const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
   const [activeLink, setActiveLink] = useState('/');
   const [open, setopen] = useState(false);
@@ -104,6 +104,9 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/Complaints' element={<Complaints />} />
           <Route path='/AddComplaints' element={<AddComplaints />} />
           {/*  */}
+          <Route path='/Car/*' element={<Car />} />
+          {/*  */}
+
           <Route path='/Commission' element={<CommissionSetup />} />
           <Route path='/AddCommission' element={<AddCommissionSetup />} />
           <Route path='/Currency' element={<Currency />} />
