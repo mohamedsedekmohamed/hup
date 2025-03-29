@@ -16,7 +16,7 @@ useEffect(()=>{
   };
 
   return (
-    <div>
+    <div className='flex items-center gap-2'>
       {num ? (
         <StyledWrapper>
           <span>{title ?title:"statue"} </span>

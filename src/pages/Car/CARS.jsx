@@ -92,17 +92,17 @@ const CARS = () => {
           <tbody>
 
             {data.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
+              <tr key={index} className=' border-y-2 hover:border-y-3 relative hover:bg-six   '>  
                 <td className="flex gap-1 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
-                  <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item.model_name}</span>
+                  <span className='w-[143px] h-[56px]  text-[16px]'>{item.model_name}</span>
                   </td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.category_name}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.brand_name}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.agent_name}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.car_number}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.car_color}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.car_year}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_year}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]">{item.status}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin}

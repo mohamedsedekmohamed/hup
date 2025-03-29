@@ -43,8 +43,13 @@ const Stations = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/AddUser', { state: { snedData } });
+    if(action==='on'){
+      const snedData = datatwo.find((item) => item.id === index);
+      navigate('/Location/AddOffStation', { state: { snedData } });
+    }else{
+      const snedData = data.find((item) => item.id === index);
+      navigate('/Location/AddOffStation', { state: { snedData } });
+    }
   };
 
   const handleToggle = (newAction) => {

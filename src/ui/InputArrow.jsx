@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 
 const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
+  
   const [arrayof, setArray] = useState([]);
   const [control, setControl] = useState(name);
 
@@ -11,6 +12,7 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
     : "absolute top-[40%] right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
 
   useEffect(() => {
+    
     const token = localStorage.getItem('token');
 
     axios.get(`https://bcknd.ticket-hub.net/api/admin/${name}`, {
@@ -26,6 +28,8 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         if (name === "car_categories") return setArray(response.data);
         if (name === "car_brands") return setArray(response.data);
         if (name === "operators") return setArray(response.data.operators);
+        if (name === "busses") return setArray(response.data.buses);
+        if (name === "currencies") return setArray(response.data.currancies);
        
       })
       .catch(error => {
@@ -98,6 +102,18 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
                 </option>
               );
           }  else if (control === "operators") {
+              return (
+                <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+              );
+          }  else if (control === "busses") {
+              return (
+                <option key={item.id} value={item.id}>
+                {item.bus_number}
+              </option>
+              );
+          }  else if (control === "currencies") {
               return (
                 <option key={item.id} value={item.id}>
                 {item.name}

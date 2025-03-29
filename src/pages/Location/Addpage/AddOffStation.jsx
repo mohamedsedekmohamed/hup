@@ -30,10 +30,11 @@ const AddOffStation = () => {
   });
   useEffect(() => {
     const { snedData } = location.state || {};
+    console.log(snedData)
     if (snedData) {
       setCountry(snedData.country_id);
       setCity(snedData.city_id);
-      setZone(snedData.id)
+      setZone(snedData.zone_id)
       setName(snedData.name);
       setValue(snedData.status);
       setpickup(snedData.pickup);
@@ -70,13 +71,13 @@ const AddOffStation = () => {
 
     const newUser = {
       name: name,
-      Country_id: country,
-      City_id: city,
+      country_id: country,
+      city_id: city,
       status: valuee,
       pickup: pickup,
       dropoff: dropoff,
-      Zone_id: zone,
-      basic_station: "1"
+      zone_id: zone,
+      basic_station: "0"
     };
 
     console.log("Data to be sent:", newUser);
@@ -122,6 +123,8 @@ const AddOffStation = () => {
     console.log(newUser)
     setpickup("0")
     setdropoff("0")
+    setValue("inactive");
+
     setCountry('');
     setName('');
     setCity('');

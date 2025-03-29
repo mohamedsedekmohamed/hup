@@ -13,7 +13,7 @@ const AddAgents = () => {
   const location = useLocation();
   const [originalFlag, setOriginalFlag] = useState(null);
   const [flag, setFlag] = useState(null);
-
+const [description,setdescription]=useState('')
   const [edit, setEdit] = useState(false);
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
@@ -31,6 +31,7 @@ const AddAgents = () => {
     email: '',
     password: '',
     flag: '',
+    description:''
   });
 
   function convertImageUrlToBase64(url) {
@@ -54,6 +55,8 @@ const AddAgents = () => {
     const { snedData } = location.state || {};
     if (snedData) {
       setName(snedData.name);
+      setdescription(snedData.description);
+
       setEmail(snedData.email);
       setPassword(snedData.password);
       setPhone(snedData.phone);
@@ -78,10 +81,12 @@ const AddAgents = () => {
     if (name === 'email') setEmail(value);
     if (name === 'password') setPassword(value);
     if (name === 'phone') setPhone(value);
+    if (name === 'description') setdescription(value);
   };
   const validateForm = () => {
     let formErrors = {};
     if (!name) formErrors.name = 'name is required';
+    if (!description) formErrors.description = 'description is required';
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
     if (!edit) {
       if (password.length < 6) formErrors.password = 'Password must be at least 6 characters';
@@ -108,6 +113,7 @@ const AddAgents = () => {
       email: email,
       password: password,
       phone: phone,
+      description: description,
     };
 
     if (flag !== originalFlag) {
@@ -152,7 +158,7 @@ const AddAgents = () => {
       .catch(error => {
         console.error('Error adding operator:', error);
       });
-
+setdescription('')
     setName('');
     setEmail('');
     setPassword('');
@@ -170,6 +176,13 @@ const AddAgents = () => {
           placeholder="name"
           name="name"
           value={name}
+          onChange={handleChange}
+          required
+        />
+        <InputField
+          placeholder="description"
+          name="description"
+          value={description}
           onChange={handleChange}
           required
         />
