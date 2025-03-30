@@ -57,9 +57,9 @@ const Dash = ({ activeLink ,open}) => {
 
   return (
     
-        <div className="relative h-full">
-  <div className="direction-rtl hidden md:block h-full">
-    <div className="flex-col w-[300px] h-[calc(100vh-2px)] bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr">
+        <div className="relative ">
+  <div className="direction-rtl hidden md:block h-full ">
+    <div className="flex-col w-[300px]  h-screen text-center overflow-y-scroll overflow-x-hidden direction-ltr">
      
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[32px]'>Ticket hub</span>

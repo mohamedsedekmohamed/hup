@@ -9,6 +9,7 @@ import Buses from '../pages/Buses/Buses.jsx';
 import Booking from '../pages/Booking/Booking.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
+import ViewTrips from '../pages/Trips/ViewTrips.jsx';
 import Wallet from '../pages/Wallet/Wallet.jsx';
 import WalletRequsts from '../pages/WalletRequsts/WalletRequsts.jsx';
 import Agents from '../pages/Agents/Agents.jsx';
@@ -50,7 +51,7 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         setActiveLink('/Buses');
     } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings' || location.pathname === '/Booking/CanceledBooking') {
         setActiveLink('/Booking');
-    } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips') {
+    } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips'||location.pathname==='/ViewTrips') {
         setActiveLink('/Trips');
     } else if (location.pathname === '/Wallet') {
         setActiveLink('/Wallet');
@@ -82,8 +83,8 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
 }, [location.pathname]);
 
   return (
-    <div className='flex overflow-hidden'>
-      <div>
+    <div className='flex overflow-hidden relative'>
+      <div className='bg-one  '>
         <Dash activeLink={activeLink} open={open} />
       </div>
       <div className='w-full'>
@@ -97,6 +98,7 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/Booking/*' element={<Booking />} />
           <Route path='/Trips' element={<Trips />} />
           <Route path='/AddTrips' element={<AddTrips />} />
+          <Route path='/ViewTrips' element={<ViewTrips />} />
           <Route path='/Wallet' element={<Wallet />} />
           <Route path='/WalletRequsts' element={<WalletRequsts />} />
           <Route path='/Agents' element={<Agents />} />

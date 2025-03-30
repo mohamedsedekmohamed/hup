@@ -187,7 +187,6 @@ const AddTrips = () => {
     if (!toZoneId) formErrors.toZoneId = 'To zone ID is required';
     if (!date) formErrors.date = 'Date is required';
     if (!price) formErrors.price = 'Price is required';
-    if (!status) formErrors.status = 'Status is required';
     if (!agentId) formErrors.agentId = 'Agent ID is required';
     if (!maxBookDate) formErrors.maxBookDate = 'Max book date is required';
     if (!type) formErrors.type = 'Type is required';

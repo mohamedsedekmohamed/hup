@@ -62,7 +62,11 @@ const Trips = () => {
   };
   const handleEdit = (index) => {
     const snedData = data.find((item) => item.id === index);
-    navigate('/AddUser', { state: { snedData}});  
+    navigate('/AddTrips', { state: { snedData}});  
+  }
+  const view = (index) => {
+    const view = data.find((item) => item.id === index);
+    navigate('/ViewTrips', { state: { view}});  
   }
   return (
     <div>
@@ -76,12 +80,9 @@ const Trips = () => {
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">date</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">departure time</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">arrival time</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">max booking_date</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">price</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">min cost</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">currency name</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">available seats</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">cancellation date</th>
+                        {/* <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> view</th> */}
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> status</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">Action</th>
                       </tr>
@@ -95,12 +96,9 @@ const Trips = () => {
                           <td className="w-[143px] h-[56px]  text-[12px] ">{item.date}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.departure_time}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.arrival_time}</td>
-                          <td className="w-[143px] h-[56px]  text-[12px]  ">{item.max_booking_date}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.price}</td>
-                          <td className="w-[143px] h-[56px]  text-[12px]  ">{item.min_cost}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.currency_name}</td>
-                          <td className="w-[143px] h-[56px]  text-[12px]  ">{item.available_seats}</td>
-                          <td className="w-[143px] h-[56px]  text-[12px]  ">{item.cancellation_policy.cancellation_date}</td>
+                          {/* <td className="w-[143px] h-[56px]  text-[12px]  "><button onClick={()=>view(item.id)}>****</button></td> */}
                           <td className="w-[143px]  h-[56px]  text-[12px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                           <td className="w-[143px]  h-[56px]  text-[12px]  flex justify-start gap-2 items-center">
                       <img className='w-[24px] h-[24px]' src={pin} 

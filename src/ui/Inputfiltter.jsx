@@ -23,7 +23,7 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
     }
     if (name === "two") {
       const typeArray = [
-        { name: "fiexd" },
+        { name: "fixed" },
         { name: "percentage" }]
       setArrthing(typeArray)
     }
