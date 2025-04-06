@@ -4,14 +4,14 @@ import Dash from '../pages/Dash/Dash.jsx';
 import Home from '../pages/Home/Home.jsx';
 import User from '../pages/User/User.jsx';
 import AddUser from '../pages/User/AddUser.jsx';
+import UserDetails from '../pages/User/UserDetails.jsx';
 import Location from '../pages/Location/Location.jsx';
 import Buses from '../pages/Buses/Buses.jsx';
 import Booking from '../pages/Booking/Booking.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
 import ViewTrips from '../pages/Trips/ViewTrips.jsx';
-import Wallet from '../pages/Wallet/Wallet.jsx';
-import WalletRequsts from '../pages/WalletRequsts/WalletRequsts.jsx';
+
 import Agents from '../pages/Agents/Agents.jsx';
 import AddAgents from '../pages/Agents/AddAgents.jsx'
 //
@@ -28,6 +28,8 @@ import AddPayoutAccount from '../pages/Payout/AddPayoutAccount.jsx';
 import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
 import Car from '../pages/Car/Car.jsx';
+//
+import Train from '../pages/Tarins/Tarin.jsx'
 const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
   const [activeLink, setActiveLink] = useState('/');
   const [open, setopen] = useState(false);
@@ -43,7 +45,7 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
-    if (location.pathname === '/AddUser') {
+    if (location.pathname === '/AddUser'||location.pathname === '/UserDetails') {
         setActiveLink('/User');
     } else if (location.pathname === '/Location/Cities' || location.pathname === '/Location/Zones' || location.pathname === '/Location/Stations' || location.pathname === '/Location/Addcountries' || location.pathname === '/Location/Addcities' || location.pathname === '/Location/Addzones' || location.pathname === '/Location/AddOffStation') {
         setActiveLink('/Location');
@@ -53,10 +55,13 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         setActiveLink('/Booking');
     } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips'||location.pathname==='/ViewTrips') {
         setActiveLink('/Trips');
-    } else if (location.pathname === '/Wallet') {
-        setActiveLink('/Wallet');
-    } else if ( location.pathname === '/WalletRequsts') {
-        setActiveLink('/WalletRequsts');
+   
+        //
+    } else if (location.pathname === '/Train/AddTraintype'||location.pathname === '/Train/TrainClass'||location.pathname === '/Train/AddTrainClass' || location.pathname === '/Train/TrainRoute' || location.pathname === '/Train/AddTrainRoute'
+       || location.pathname === '/Train/Trains' || location.pathname === '/Train/Addtrains'
+    ) {  
+        setActiveLink('/Train');
+   
     } else if (location.pathname === '/Agents' || location.pathname === '/AddAgents') {
         setActiveLink('/Agents');
     } else if (location.pathname === '/Complaints' || location.pathname === '/AddComplaints' ) {
@@ -77,6 +82,8 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         setActiveLink('/Settings/Nationality');
     } else if (location.pathname === '/Settings/AddSubjectComplaints' ) {
         setActiveLink('/Settings/SubjectComplaints');
+    } else if (location.pathname === '/Tarins/Tarin' ) {
+        setActiveLink('/Tarins/Tarin');
     } else {
         setActiveLink(location.pathname);
     }
@@ -93,20 +100,20 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/' element={<></>} />
           <Route path='/User' element={<User />} />
           <Route path='/AddUser' element={<AddUser />} />
+          <Route path='/UserDetails' element={<UserDetails />} />
           <Route path='/Buses/*' element={<Buses />} />
           <Route path='/Location/*' element={<Location />} />
           <Route path='/Booking/*' element={<Booking />} />
           <Route path='/Trips' element={<Trips />} />
           <Route path='/AddTrips' element={<AddTrips />} />
           <Route path='/ViewTrips' element={<ViewTrips />} />
-          <Route path='/Wallet' element={<Wallet />} />
-          <Route path='/WalletRequsts' element={<WalletRequsts />} />
           <Route path='/Agents' element={<Agents />} />
           <Route path='/AddAgents' element={<AddAgents />} />
           <Route path='/Complaints' element={<Complaints />} />
           <Route path='/AddComplaints' element={<AddComplaints />} />
           {/*  */}
           <Route path='/Car/*' element={<Car />} />
+          <Route path='/Train/*' element={<Train />} />
           {/*  */}
 
           <Route path='/Commission' element={<CommissionSetup />} />

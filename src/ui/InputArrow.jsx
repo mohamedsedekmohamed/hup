@@ -2,7 +2,7 @@ import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { IoIosArrowDown } from "react-icons/io";
 
-const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
+const InputArrow = ({ placeholder, value, like, onChange, name }) => {
   
   const [arrayof, setArray] = useState([]);
   const [control, setControl] = useState(name);
@@ -30,6 +30,10 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
         if (name === "operators") return setArray(response.data.operators);
         if (name === "busses") return setArray(response.data.buses);
         if (name === "currencies") return setArray(response.data.currancies);
+        if (name === "trainTypes") return setArray(response.data.trainTypes);
+        if (name === "trainRoutes") return setArray(response.data.routes);
+        if (name === "trainclasses") return setArray(response.data.trainClasses);
+        if (name === "agents") return setArray(response.data.agents);
        
       })
       .catch(error => {
@@ -70,7 +74,25 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
                 {item.name}
               </option>
             );
+          } else if (control === "trainclasses") {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            );
+          } else if (control === "trainRoutes") {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            );
           } else if (control === "zones") {
+            return (
+              <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+            );
+          } else if (control === "agents") {
             return (
               <option key={item.id} value={item.id}>
                 {item.name}
@@ -114,6 +136,12 @@ const InputArrow = ({ placeholder, value, like, onChange, name  }) => {
               </option>
               );
           }  else if (control === "currencies") {
+              return (
+                <option key={item.id} value={item.id}>
+                {item.name}
+              </option>
+              );
+          }  else if (control === "trainTypes") {
               return (
                 <option key={item.id} value={item.id}>
                 {item.name}

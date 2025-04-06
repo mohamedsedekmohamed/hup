@@ -17,6 +17,7 @@ import IconCommissionSetup from '../../IconsImprot/IconCommissionSetup';
 import IconCurrency from '../../IconsImprot/IconCurrency';
 import IconPayoutAccount from '../../IconsImprot/IconPayoutAccount';
 import IconSetting from '../../IconsImprot/IconSetting';
+import IconTrain from '../../IconsImprot/IconTrain';
 import { FaCarAlt } from "react-icons/fa";
 const Dash = ({ activeLink ,open}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
@@ -26,11 +27,10 @@ const Dash = ({ activeLink ,open}) => {
     { icon: <IconUser />, iconactive: <IconUser active />, text: "User", href: "/User" },
     { icon: <IconLocation />, iconactive: <IconLocation active />, text: "Location", href: "/Location" },
     { icon: <IconBuses />, iconactive: <IconBuses active />, text: "Buses", href: "/Buses" },
+    { icon: <IconTrain />, iconactive: <IconTrain active />, text: "Train", href: "/Train" },
     { icon: <IconBooking />, iconactive: <IconBooking active />, text: "Bookings", href: "/Booking" },
     { icon: <IconTrips />, iconactive: <IconTrips active />, text: "Trips", href: "/Trips" },
-    { icon: <IconWalletRequests />, iconactive: <IconWalletRequests active />, text: "Wallet Requests", href: "/WalletRequsts" },
-    { icon: <IconWallet />, iconactive: <IconWallet active />, text: "Wallet", href: "/Wallet" },
-    { icon: <FaCarAlt  className='text-white'/>, iconactive: <FaCarAlt active />, text: "Car", href: "/Car" },
+    { icon: <FaCarAlt  className='text-white w-5 h-5'/>, iconactive: <FaCarAlt  className='w-5 h-5 text-one' active />, text: "Car", href: "/Car" },
     {
       icon: <IconFinancial />, iconactive: <IconFinancial active />, text: "Financial", options: [
         { text: "● pending payments  ", href: "/Financial/Payments" },
@@ -178,7 +178,7 @@ const Dash = ({ activeLink ,open}) => {
   {open&&(
 
      <div className={`direction-rtl  md:hidden`}>
-        <div className='flex-col w-[150px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+        <div className='flex-col sm:w-[300px] md:w-[400px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[16px]'>Ticket hub</span>
             <img src={mainicon} className='rounded-full w-6 h-6 p-1 bg-three' alt="Main Icon" />

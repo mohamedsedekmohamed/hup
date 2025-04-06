@@ -15,7 +15,25 @@ const Home = ({ setIsLoggedIn, open, setopen }) => {
   const handleopen = () => {
     setopen(!open);
   }
+useEffect(() => {
+    const handleResize = () => {
+      if (window.innerWidth > 768) {
+        setopen(false);
+      } else {
+        setopen(true);
+      }
+    };
 
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
+  }, []);
+  useEffect(() => {
+    setopen(false); // إغلاق القائمة عند تغيير المسار
+
+  },  [location.pathname]);
   function removeSlash(inputString) {
     // استبدال كل "/" بمسافة
     return inputString.replace(/\//g, ' ');

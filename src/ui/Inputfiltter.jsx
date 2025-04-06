@@ -103,8 +103,8 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
   }, [name, shara]);
 
 const shape = like
-  ? "absolute top-[40%] left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
-  : "absolute top-[40%] right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
+  ? "absolute top-[40%] left-42 md:left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
+  : "absolute top-[40%] right-4 md:right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
 
 return (
   <div className="relative group">
@@ -122,7 +122,7 @@ return (
         paddingRight: '20px',
         backgroundImage: 'none',
       }}
-      className="w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
+      className=" w-50 h-12 md:w-[300px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
     >
       <option value="">{placeholder}</option> {/* قيمة افتراضية */}
       {arrThing && arrThing.length > 0 && arrThing.map((item, index) => {

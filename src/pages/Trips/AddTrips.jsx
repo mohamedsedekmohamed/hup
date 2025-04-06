@@ -48,15 +48,7 @@ const AddTrips = () => {
   const [cancellationDate, setCancellationDate] = useState();
 
   const [edit, setEdit] = useState(false);
-  // const handleDateChange = (newData) => {
-  //   const day = newData.getDate();
-  //   const month = newData.getMonth() + 1; 
-  //   const year = newData.getFullYear();
-  //   // const hours = newData.getHours(); 
-  //   // const minutes = newData.getMinutes(); 
-  //   const formattedDate = `${year}-${month}-${day}`;
-  //   // const formatDay = `${hours}-${minutes}`;
-  //   // setDate(formattedDate); 
+  
   // };
   const [errors, setErrors] = useState({
     tripName: '',

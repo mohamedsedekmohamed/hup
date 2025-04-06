@@ -20,8 +20,8 @@ import Swal from 'sweetalert2';
       }
     })
       .then(response => {
-        setData(response.data.users);
-        console.log(response.data.users);
+        setData(response.data.data);
+        console.log(response.data.data);
 
       })
       .catch(error => {
@@ -68,9 +68,13 @@ import Swal from 'sweetalert2';
     const snedData = data.find((item) => item.id === index);
     navigate('/AddUser', { state: { snedData}});  
   }
+  const Details = (index) => {
+    const snedData = data.find((item) => item.id === index);  
+    navigate('/UserDetails', { state: { snedData}});
+  }
 
     const names=["Uesr","email","Country","Cities","Zones","Booking","Action"]
-    const fieldsToShow = ["name", "email", "country", "city", "zone"];
+    const fieldsToShow = ["name", "email", "country", "city", "zone",'Booking'];
   return (
     <div>
       <ThreeThing navGo='/AddUser' />
@@ -98,7 +102,8 @@ import Swal from 'sweetalert2';
                 <td className="w-[143px] h-[56px]   lg:text-[12px] xl:text-[16px] px-1 ">{item.country}</td>
                 <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">{item.city}</td> 
                 <td className="w-[143px] h-[56px]   lg:text-[12px] xl:text-[16px] px-1 ">{item.zone}</td>
-                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">********</td>
+                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">
+                  <button className='underline' onClick={()=>Details(item.id)}>Details</button></td>
                 <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] flex justify-start items-center">
                   <img className='w-[24px] h-[24px]' src={pin} 
                   onClick={()=>handleEdit(item.id)}/>
