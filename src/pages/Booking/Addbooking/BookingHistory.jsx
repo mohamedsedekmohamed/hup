@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import NavBooking from '../NavBooking'
+import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../../component/ThreeThing'
 const BookingHistory = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+  const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
 
@@ -14,8 +17,8 @@ const BookingHistory = () => {
       }
     })
       .then(response => {
-        setData(response.data.bookingHistory);
-        console.log(response.data.bookingHistory);
+        setData(response.data.userBookings);
+        console.log(response.data.userBookings);
 
       })
       .catch(error => {
@@ -23,9 +26,11 @@ const BookingHistory = () => {
         console.error('Error fetching data:', error);
       });
   }, [update])
-  const token = localStorage.getItem('token');
 
-
+  const Details = (index) => {
+    const snedData = data.find((item) => item.id === index);  
+    navigate('/Bookingdetails', { state: { snedData}});
+  }
   return (
 
     <div>
@@ -35,24 +40,23 @@ const BookingHistory = () => {
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">seats count</th>
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">bus_id</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">destenation from</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">destenation to</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">date</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left"> name</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">country</th>
+              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">city </th>
+              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">zone </th>
+              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">bookings</th>
             </tr>
           </thead>
           <tbody>
 
             {data.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                <td className="w-[143px] h-[56px]  text-[16px] ">{item.seats_count}</td>
-                <td className="w-[143px] h-[56px]  text-[16px] ">{item.bus_id}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.destenation_from}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.destenation_to}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.date}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span></td>
+                <td className="w-[143px] h-[56px]  text-[16px] ">{item.name}</td>
+                <td className="w-[143px] h-[56px]  text-[16px] ">{item.country}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.city}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.zone}</td>
+                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">
+                <button className='underline' onClick={()=>Details(item.id)}>Details</button></td>    
                
               </tr>
             ))}

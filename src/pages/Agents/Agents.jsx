@@ -5,8 +5,11 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
+
 const Agents = () => {
   const [data, setData] = useState([]);
+  const [commission, setCommission] = useState("");
+
   const [update, setUpdate] = useState(false);
   const navigate = useNavigate();
   useEffect(() => {
@@ -26,6 +29,7 @@ const Agents = () => {
         console.log(token);
         console.error('Error fetching data:', error);
       });
+      
   }, [update])
 
   const handleDelete = (index, userName) => {
@@ -60,6 +64,30 @@ const Agents = () => {
       }
     });
   };
+  const show = (index) => {
+    const token = localStorage.getItem('token');
+  
+    // استدعاء الـ API مباشرة لعرض القيمة بدون نافذة التأكيد
+    axios
+      .get(`https://bcknd.ticket-hub.net/api/admin/CommissionAgent/${index}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        // عرض قيمة الـ commission في نافذة Swal مباشرة
+        Swal.fire({
+          title: `Commission value: ${response.data.commission}`,
+          icon: 'success',
+          confirmButtonText: 'OK', // زر "OK" بعد عرض القيمة
+        });
+      })
+      .catch(() => {
+        Swal.fire('Error!', `There was an error retrieving the commission.`, 'error');
+      });
+  };
+  
+  
 
   const handleEdit = (index) => {
     const snedData = data.find((item) => item.id === index);
@@ -78,6 +106,7 @@ const Agents = () => {
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">points </th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">role </th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">email </th>
+              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">commission</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">image</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
             </tr>
@@ -91,6 +120,7 @@ const Agents = () => {
                 <td className="w-[143px] h-[56px]  text-[16px]  ">{item.points}</td>
                 <td className="w-[143px] h-[56px]  text-[16px]  ">{item.role}</td>
                 <td className="w-[143px] h-[56px]  text-[16px]   ">{item.email}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]   "><button onClick={()=>show(item.id)}>*****</button></td>
                 <td className="w-[143px] h-[56px]  text-[16px]  "> 
                                    <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
                 </td>

@@ -1,5 +1,6 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom'
+
 import IconDash from '../ui/IconDash'
 
 const AddAll = ({navGo,name}) => {

@@ -72,9 +72,8 @@ import Swal from 'sweetalert2';
     const snedData = data.find((item) => item.id === index);  
     navigate('/UserDetails', { state: { snedData}});
   }
-
     const names=["Uesr","email","Country","Cities","Zones","Booking","Action"]
-    const fieldsToShow = ["name", "email", "country", "city", "zone",'Booking'];
+    const fieldsToShow = ["name", "email", "country", "city", "zone","Details",'Booking'];
   return (
     <div>
       <ThreeThing navGo='/AddUser' />

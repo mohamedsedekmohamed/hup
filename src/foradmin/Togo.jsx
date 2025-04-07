@@ -3,11 +3,14 @@ import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
 import Dash from '../pages/Dash/Dash.jsx';
 import Home from '../pages/Home/Home.jsx';
 import User from '../pages/User/User.jsx';
+import Userbookingdetails from '../pages/User/Userbookingdetails.jsx';
 import AddUser from '../pages/User/AddUser.jsx';
 import UserDetails from '../pages/User/UserDetails.jsx';
 import Location from '../pages/Location/Location.jsx';
 import Buses from '../pages/Buses/Buses.jsx';
 import Booking from '../pages/Booking/Booking.jsx';
+import Bookingdetails from '../pages/Booking/Addbooking/Bookingdetails.jsx';
+import Bookingdetailsmore from '../pages/Booking/Addbooking/Bookingdetailsmore.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
 import ViewTrips from '../pages/Trips/ViewTrips.jsx';
@@ -45,13 +48,21 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
-    if (location.pathname === '/AddUser'||location.pathname === '/UserDetails') {
+    if (location.pathname === '/AddUser'
+      ||location.pathname === '/UserDetails'
+      ||location.pathname === '/Userbookingdetails'
+
+    ) {
         setActiveLink('/User');
     } else if (location.pathname === '/Location/Cities' || location.pathname === '/Location/Zones' || location.pathname === '/Location/Stations' || location.pathname === '/Location/Addcountries' || location.pathname === '/Location/Addcities' || location.pathname === '/Location/Addzones' || location.pathname === '/Location/AddOffStation') {
         setActiveLink('/Location');
     } else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/BusesHistory' || location.pathname === '/Buses/Operation' || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
         setActiveLink('/Buses');
-    } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings' || location.pathname === '/Booking/CanceledBooking') {
+    } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings'
+       || location.pathname === '/Booking/CanceledBooking'
+       || location.pathname === '/Booking/Bookingdetails'
+       || location.pathname === '/Booking/Bookingdetailsmore'
+      ) {
         setActiveLink('/Booking');
     } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips'||location.pathname==='/ViewTrips') {
         setActiveLink('/Trips');
@@ -99,11 +110,14 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         <Routes>
           <Route path='/' element={<></>} />
           <Route path='/User' element={<User />} />
+          <Route path='/Userbookingdetails' element={<Userbookingdetails />} />
           <Route path='/AddUser' element={<AddUser />} />
           <Route path='/UserDetails' element={<UserDetails />} />
           <Route path='/Buses/*' element={<Buses />} />
           <Route path='/Location/*' element={<Location />} />
           <Route path='/Booking/*' element={<Booking />} />
+          <Route path='/Bookingdetails' element={<Bookingdetails />} />
+          <Route path='/Bookingdetailsmore' element={<Bookingdetailsmore />} />
           <Route path='/Trips' element={<Trips />} />
           <Route path='/AddTrips' element={<AddTrips />} />
           <Route path='/ViewTrips' element={<ViewTrips />} />
