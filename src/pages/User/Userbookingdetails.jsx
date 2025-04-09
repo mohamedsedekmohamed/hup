@@ -23,7 +23,7 @@ const Userbookingdetails = () => {
           
 
       {userData ? (
-        <div className="bg-one w-full h-30 grid grid-cols-3 p-4 mb-4 rounded-lg shadow-lg">
+        <div className="bg-one w-full h-30 grid grid-cols-2 px-4 mb-4 rounded-lg shadow-lg">
           <div className="flex flex-col justify-center">
             <span className="text-2xl font-bold text-white">
               {userData.trip_name} to {userData.city_residence}

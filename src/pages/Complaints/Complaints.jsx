@@ -143,7 +143,7 @@ const Complaints = () => {
  <img
                     className='w-[24px] h-[24px] ml-2 cursor-pointer'
                     src={delet}
-                    onClick={() => handleDelete(item.id,item.subject_id)}   
+                    onClick={() => handleDelete(item.id,item.message)}   
                     alt="delete"
                   />                      </td>
                   </tr>

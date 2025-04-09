@@ -1,16 +1,18 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import NavBuses from './NavBuses.jsx'
+import NavBuses from './NavBuses.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing.jsx';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
+import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 
 const TypeBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // State for search query
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -29,9 +31,9 @@ const TypeBuses = () => {
       });
   }, [update]);
 
- const handleDelete = (index, userName) => { 
+  const handleDelete = (index, userName) => {
     const token = localStorage.getItem('token');
-    
+
     Swal.fire({
       title: `Are you sure you want to delete ${userName}?`, 
       icon: 'warning',
@@ -55,13 +57,10 @@ const TypeBuses = () => {
             Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
           });
       } else {
-    
         Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');  
       }
     });
   };
-
- 
 
   const handleEdit = (id) => {
     const snedData = data.find((item) => item.id === id);
@@ -83,10 +82,34 @@ const TypeBuses = () => {
       });
   };
 
+  // Filter data based on the search query
+  const filteredData = data.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.seat_count.toString().includes(searchQuery) // Add filtering for seat count
+    );
+  });
+
   return (
     <div>
       <NavBuses />
-      <ThreeThing navGo='/Buses/AddTypeBuses' />
+
+      {/* Search Box */}
+      <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+      <ThreeThing navGo='/Buses/AddTypeBuses' liked />
+      </div>
+
+      {/* Data Table */}
       <div className="mt-10 ml-5">
         <table className="w-full border-y border-black">
           <thead className="w-full">
@@ -101,8 +124,8 @@ const TypeBuses = () => {
             </tr>
           </thead>
           <tbody>
-            {data.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six'>
+            {filteredData.map((item, index) => (
+              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
                 <td className="w-[143px] h-[56px] text-[16px]">{item.name}</td>
                 <td><img className="w-5 h-5" src={item.bus_image} alt="Bus" /></td>
                 <td className="w-[143px] h-[56px] text-[16px]">{item.seat_count}</td>
@@ -126,8 +149,8 @@ const TypeBuses = () => {
                   <span className="font-normal p-2 rounded-[8px] flex">
                     <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
                     <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet}
-                                         onClick={() => handleDelete(item.id,item.name)}   
-                                         alt="delete" />
+                      onClick={() => handleDelete(item.id, item.name)}   
+                      alt="delete" />
                   </span>
                 </td>
               </tr>

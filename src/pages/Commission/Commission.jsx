@@ -3,7 +3,6 @@ import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import Swal from 'sweetalert2';
 
 const Commission = () => {
    const [data, setData] = useState([]);
@@ -33,7 +32,8 @@ const Commission = () => {
     }
   return (
     <div>
-        <ThreeThing like />
+      { data.length === 0 ? (        <ThreeThing navGo="/AddCommission"/>
+):( <ThreeThing like/>)}
        <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">
@@ -45,6 +45,7 @@ const Commission = () => {
 
                 </tr>
               </thead>
+              
               <tbody>
                
             

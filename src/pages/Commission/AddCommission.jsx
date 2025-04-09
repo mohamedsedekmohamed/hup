@@ -13,6 +13,7 @@ const AddCommission = () => {
   const [bus, setbus] = useState('');
   const [hiace, sethiace] = useState('');
   const [id, setId] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
   const [errors, setErrors] = useState({
     train: '',
     bus: '',
@@ -32,8 +33,10 @@ const AddCommission = () => {
         setbus(response.data.default_commission.bus);
         sethiace(response.data.default_commission.hiace);
         setId(response.data.default_commission.id);
+    
       })
       .catch(error => {
+        setIsLoading(true)
         console.log(token);
         console.error('Error fetching data:', error);
       });
@@ -67,14 +70,32 @@ const AddCommission = () => {
     if (!validateForm()) {
       return;
     }
-
     const token = localStorage.getItem('token');
     const newUser = {
       train,
       bus,
       hiace
     };
-    if()
+    if (isLoading) {
+            console.log('11111111111')
+      axios.post(`https://bcknd.ticket-hub.net/api/admin/CommissionDefault/add`, newUser, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then(response => {
+          console.log('Commission updated successfully:', response.data);
+          toast.success('Commission updated successfully');
+          setTimeout(() => {
+            navigate('/Commission');
+          }, 3000);
+        })
+        .catch(error => {
+          console.error('Error updating Commission:', error);
+        });
+      } else {
+        console.log('2222222222')
+
     axios.put(`https://bcknd.ticket-hub.net/api/admin/defaultCommission/update/${id}`, newUser, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -90,6 +111,7 @@ const AddCommission = () => {
       .catch(error => {
         console.error('Error updating Commission:', error);
       });
+      }
     settrain('');
     sethiace('');
     setbus('');

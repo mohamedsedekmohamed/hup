@@ -8,8 +8,6 @@ import IconLocation from '../../IconsImprot/IconLocation';
 import IconBuses from '../../IconsImprot/IconBuses';
 import IconTrips from '../../IconsImprot/IconTrips';
 import IconBooking from '../../IconsImprot/IconBooking';
-import IconWalletRequests from '../../IconsImprot/IconWalletRequests';
-import IconWallet from '../../IconsImprot/IconWallet';
 import IconFinancial from '../../IconsImprot/IconFinancial';
 import IconAgents from '../../IconsImprot/IconAgents';
 import IconComplaints from '../../IconsImprot/IconComplaints';
@@ -19,9 +17,12 @@ import IconPayoutAccount from '../../IconsImprot/IconPayoutAccount';
 import IconSetting from '../../IconsImprot/IconSetting';
 import IconTrain from '../../IconsImprot/IconTrain';
 import { FaCarAlt } from "react-icons/fa";
+
 const Dash = ({ activeLink ,open}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
+
+  
   const menuItems = [
     { icon: <IconHome />, iconactive: <IconHome active />, text: "Home", href: "/" },
     { icon: <IconUser />, iconactive: <IconUser active />, text: "User", href: "/User" },
@@ -49,10 +50,10 @@ const Dash = ({ activeLink ,open}) => {
           { text: "● Payment Methods", href: "/Settings/PaymentMethods" },
           { text: "●  Nationality", href: "/Settings/Nationality" },
           { text: "●  Subject Complaints", href: "/Settings/SubjectComplaints" },
+          { text: "●  Operator Payment", href: "/Settings/OperatorPayment" },
         ]
     }
   ];
-
 
 
   return (

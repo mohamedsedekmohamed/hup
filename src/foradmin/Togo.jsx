@@ -27,7 +27,6 @@ import AddCommissionSetup from '../pages/Commission/AddCommission.jsx';
 import Currency from '../pages/Currency/Currency.jsx';
 import AddCurrency from '../pages/Currency/AddCurrency.jsx';
 import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
-import AddPayoutAccount from '../pages/Payout/AddPayoutAccount.jsx';
 import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
 import Car from '../pages/Car/Car.jsx';
@@ -60,8 +59,8 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         setActiveLink('/Buses');
     } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings'
        || location.pathname === '/Booking/CanceledBooking'
-       || location.pathname === '/Booking/Bookingdetails'
-       || location.pathname === '/Booking/Bookingdetailsmore'
+       || location.pathname === '/Bookingdetails'
+       || location.pathname === '/Bookingdetailsmore'
       ) {
         setActiveLink('/Booking');
     } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips'||location.pathname==='/ViewTrips') {
@@ -93,6 +92,8 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
         setActiveLink('/Settings/Nationality');
     } else if (location.pathname === '/Settings/AddSubjectComplaints' ) {
         setActiveLink('/Settings/SubjectComplaints');
+    } else if (location.pathname === '/Settings/AddOperatorPayment' ) {
+        setActiveLink('/Settings/OperatorPayment');
     } else if (location.pathname === '/Tarins/Tarin' ) {
         setActiveLink('/Tarins/Tarin');
     } else {
@@ -135,7 +136,6 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/Currency' element={<Currency />} />
           <Route path='/AddCurrency' element={<AddCurrency />} />
           <Route path='/PayoutAccount' element={<PayoutAccount />} />
-          <Route path='/AddPayoutAccount' element={<AddPayoutAccount />} />
           <Route path='/Financial/*' element={<Financial />} />
           <Route path='/Settings/*' element={<Settings />} />
         </Routes>

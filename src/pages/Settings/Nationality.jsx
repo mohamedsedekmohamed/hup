@@ -5,7 +5,6 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
-
 const Nationality = () => {
    const [data, setData] = useState([]);
     const [update, setUpdate] = useState(false);

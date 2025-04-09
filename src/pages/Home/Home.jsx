@@ -7,7 +7,7 @@ import { useLocation } from 'react-router-dom';
 const Home = ({ setIsLoggedIn, open, setopen }) => {
   const location = useLocation();
   const [name, setName] = useState("");
-
+ 
   const Handle = () => {
     setIsLoggedIn(false);
   }
@@ -23,7 +23,8 @@ useEffect(() => {
         setopen(true);
       }
     };
-
+   
+   
     window.addEventListener('resize', handleResize);
 
     return () => {
@@ -63,6 +64,7 @@ useEffect(() => {
         </button>
         <span className='w-full text-center lg:hidden  font-bold text-[20px]'>{name}</span>
       </div>
+
     </div>
   );
 }

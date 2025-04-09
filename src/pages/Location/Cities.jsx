@@ -6,14 +6,17 @@ import NavLocation from './NavLocation';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
+import { CiSearch } from "react-icons/ci"; // Importing search icon
 
 const Cities = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
   const navigate = useNavigate();
+
   useEffect(() => {
     const token = localStorage.getItem('token');
-
+    
     axios.get("https://bcknd.ticket-hub.net/api/admin/cities", {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -22,83 +25,102 @@ const Cities = () => {
       .then(response => {
         setData(response.data.cities);
         console.log(response.data.cities);
-
       })
       .catch(error => {
-        console.log(token);
         console.error('Error fetching data:', error);
       });
-  }, [update])
+  }, [update]);
 
-  const handleDelete = (index, userName) => { 
+  const handleDelete = (index, cityName) => {
     const token = localStorage.getItem('token');
     
     Swal.fire({
-      title: `Are you sure you want to delete ${userName}?`, 
+      title: `Are you sure you want to delete ${cityName}?`, 
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
       cancelButtonText: 'No',
     }).then((result) => {
       if (result.isConfirmed) {
-   axios.delete(`https://bcknd.ticket-hub.net/api/admin/city/delete/${index}`, {
+        axios.delete(`https://bcknd.ticket-hub.net/api/admin/city/delete/${index}`, {
           headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
+            Authorization: `Bearer ${token}`,
+          },
+        })
           .then((response) => {
-            console.log('User deleted successfully:', response.data);
+            console.log('City deleted successfully:', response.data);
             setUpdate(!update);
-            Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
+            Swal.fire('Deleted!', `${cityName} has been deleted successfully.`, 'success'); 
           })
           .catch((error) => {
-            console.error('Error deleting user:', error);
-            Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
+            console.error('Error deleting city:', error);
+            Swal.fire('Error!', `There was an error while deleting ${cityName}.`, 'error'); 
           });
       } else {
-    
-        Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');  
+        Swal.fire('Cancelled', `${cityName} was not deleted.`, 'info');  
       }
     });
   };
 
-  
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/Location/Addcities', { state: { snedData } });
-  }
+    const sendData = data.find((item) => item.id === index);
+    navigate('/Location/Addcities', { state: { sendData } });
+  };
+
+  // Filter the cities based on the search query
+  const filteredData = data.filter((item) => {
+    return (
+      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      item.country_name.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+  });
 
   return (
     <div>
       <NavLocation />
 
-      <ThreeThing navGo='/Location/Addcities' />
-      <div className=" mt-10 ml-5">
-        <table className="w-full  border-y border-black">
+      <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+        <ThreeThing navGo='/Location/Addcities'liked />
+      </div>
+
+      <div className="mt-10 ml-5">
+        <table className="w-full border-y border-black">
           <thead className="w-full">
-            <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">Country Name</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left"> Country  </th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
+            <tr className='bg-four w-[1012px] h-[56px]'>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
             </tr>
           </thead>
           <tbody>
-
-            {data.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>
-                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
-                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.country_name}</td>
-
-
-                <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span></td>
-                <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
-                  <img className='w-[24px] h-[24px]' src={pin}
-                    onClick={() => handleEdit(item.id)} />
+            {filteredData.map((item, index) => (
+              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.name}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.country_name}</td>
+                <td className="w-[143px] h-[56px] text-[16px] text-nine">
+                  <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>
+                </td>
+                <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-2 items-center">
+                  <img 
+                    className='w-[24px] h-[24px]' 
+                    src={pin} 
+                    onClick={() => handleEdit(item.id)} 
+                    alt="edit"
+                  />
                   <img
                     className='w-[24px] h-[24px] ml-2 cursor-pointer'
                     src={delet}
-                    onClick={() => handleDelete(item.id,item.name)}   
+                    onClick={() => handleDelete(item.id, item.name)}   
                     alt="delete"
                   />
                 </td>
@@ -108,7 +130,7 @@ const Cities = () => {
         </table>
       </div>
     </div>
-  )
+  );
 }
 
-export default Cities
+export default Cities;

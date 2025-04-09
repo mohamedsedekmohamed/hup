@@ -1,9 +1,9 @@
   import React from 'react'
 
-  const InputField = ({placeholder,value, onChange,name ,email}) => {
+  const InputField = ({placeholder,value, onChange,name ,email,disabled}) => {
     return (
       <div>
-  <input type={email} className='w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'      name={name}  
+  <input type={email} className='w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10' disabled={disabled}     name={name}  
   value={value} onChange={onChange}  placeholder={placeholder}/>
 
       </div>

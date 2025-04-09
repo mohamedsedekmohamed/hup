@@ -109,15 +109,14 @@ const AddUser = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('User updated successfully:', response.data);
+        .then(() => {
           toast.success('User updated successfully'); 
           setTimeout(() => {
             navigate('/User');
           }, 3000);
         })
-        .catch(error => {
-          console.error('Error updating user:', error);
+        .catch(()=> {
+          toast.error("failed network");
         });
       return;
     }
@@ -127,16 +126,15 @@ const AddUser = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('User added successfully:', response.data);
+      .then(() => {
         toast.success('User added  successfully'); 
       
         setTimeout(() => {
           navigate('/User');
         }, 3000);
       })
-      .catch(error => {
-        console.error('Error adding user:', error);
+      .catch(() => {
+        toast.error("failed network");
       });
 
     setName('');
