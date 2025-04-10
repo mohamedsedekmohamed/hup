@@ -139,17 +139,15 @@ const PayoutAccount = () => {
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">agent</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">email</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">phone</th>
-                <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">payment method</th>
+                <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> method</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">Status</th>
-                <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">Action</th>
+                <th className="w-[158px] h-[56px]  text-[12px]  border-b text-center">Action</th>
               </tr>
             </thead>
             <tbody>
 
               {filteredData.map((item, index) => (
                 <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>
-
-
                   <td className="w-[143px] h-[56px]  text-[12px] ">{item.date}</td>
                   <td className="w-[158px]   h-[56px]  text-[12px]  ">{item.amount}</td>
                   <td className="w-[158px]  h-[56px]  text-[12px]  ">{item.currency.name}{item.currency.symbol}</td>
@@ -157,9 +155,9 @@ const PayoutAccount = () => {
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item.agent.email}</td>
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item.agent.phone}</td>
                   <td className="w-[158px]  h-[56px]  text-[12px]  ">{item.payment_method.name}<img src={item.payment_method.image_link} className='w-5 h-5'/></td>
-
-                  <td className="w-[158px]    h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal  rounded-[8px]">{item.status}</span></td>
-                  {item.status !== 'canceled' ? (<td className="w-[158px]    flex gap-1 justify-center items-center h-12  ">
+                 <td className=" w-[158px]    h-[56px]  text-[16px]  text-nine  font-normal  rounded-[8px]">{item.status}</td>
+                  {item.status !== 'canceled' ? (
+                    <td className="w-[158px]    flex gap-1 justify-center items-center h-12  ">
                     <button onClick={() => handlecancel(item.id,item.agent.name)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
                       confirm
                     </button>
@@ -167,8 +165,7 @@ const PayoutAccount = () => {
                   </td>) : (
                     <td></td>
                   )}
-                  <td className="w-[158px] h-[56px]  text-[16px]  ">
-                  </td>
+                  
                 </tr>
               ))}
             </tbody>

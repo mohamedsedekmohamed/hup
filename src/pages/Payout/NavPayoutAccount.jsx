@@ -19,7 +19,7 @@ const NavPayoutAccount= () => {
             </NavLink>
             <NavLink 
             
-              to="/Allpayot/PayoutAccount"
+              to="/PayoutAccount"
               className={({ isActive }) => 
                 `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
                 ${isActive ? 'border-b-1 border-b-three' : ''}`
@@ -29,7 +29,7 @@ const NavPayoutAccount= () => {
             </NavLink>
       
             <NavLink 
-              to="/Allpayot/Cancelpayout"
+              to="/Cancelpayout"
               className={({ isActive }) => 
                 `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
                 ${isActive ? 'border-b-1 border-b-three' : ''}`

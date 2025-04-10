@@ -25,7 +25,12 @@ import AddCommissionSetup from '../pages/Commission/AddCommission.jsx';
 //
 import Currency from '../pages/Currency/Currency.jsx';
 import AddCurrency from '../pages/Currency/AddCurrency.jsx';
+//
 import Allpayot from '../pages/Payout/Allpayot.jsx';
+import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
+import Cancelpayout from '../pages/Payout/Cancelpayout.jsx';
+
+//
 import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
 import Car from '../pages/Car/Car.jsx';
@@ -80,8 +85,8 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
       setActiveLink('/Commission');
     } else if (location.pathname === '/Currency' || location.pathname === '/AddCurrency') {
       setActiveLink('/Currency');
-    } else if (location.pathname === './Allpayot' ||
-      location.pathname === './PayoutAccount' ||
+    } else if (location.pathname === '/Allpayot' ||
+      location.pathname === '/PayoutAccount' ||
       location.pathname === '/Cancelpayout'
     ) {
       setActiveLink('/Allpayot');
@@ -137,7 +142,9 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/AddCommission' element={<AddCommissionSetup />} />
           <Route path='/Currency' element={<Currency />} />
           <Route path='/AddCurrency' element={<AddCurrency />} />
-          <Route path='/Allpayot/*' element={<Allpayot />} />
+          <Route path='/Allpayot' element={<Allpayot />} />
+          <Route path='/PayoutAccount' element={<PayoutAccount />} />
+          <Route path='/Cancelpayout' element={<Cancelpayout />} />
           <Route path='/Financial/*' element={<Financial />} />
           <Route path='/Settings/*' element={<Settings />} />
         </Routes>
