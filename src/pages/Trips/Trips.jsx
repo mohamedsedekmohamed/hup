@@ -4,9 +4,14 @@ import pin from '../../assets/pin.svg';
 import Threething from '../../component/ThreeThing';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CiSearch } from "react-icons/ci";
+import ThreeThing from '../../component/ThreeThing';
+
 import Swal from 'sweetalert2';
 const Trips = () => {
    const [data, setData] = useState([]);
+     const [searchQuery, setSearchQuery] = useState(''); 
+     const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
    const [update, setUpdate] = useState(false);
    const navigate = useNavigate();
    
@@ -64,41 +69,83 @@ const Trips = () => {
     const snedData = data.find((item) => item.id === index);
     navigate('/AddTrips', { state: { snedData}});  
   }
-  const view = (index) => {
-    const view = data.find((item) => item.id === index);
-    navigate('/ViewTrips', { state: { view}});  
-  }
+
+  const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
+  });
+const cheose = ["Filter","name", "trip_type", "date", "departure_time", "arrival_time", "price", "currency","status"]
+const labelMap = {
+  Filter: "Filter",
+  name: "name",
+  trip_type: "trip",
+  date: "date",
+  departure_time:"departure",
+  price:"price",
+  currency:"currency",
+  arrival_time:"arrival"
+};
   return (
     <div>
-      <Threething navGo='/AddTrips'/>
+       <div className='flex justify-between items-center mt-10 px-5'>
+              <div className='flex justify-center items-center gap-3 relative'>
+                <input
+                  placeholder='Search'
+                  className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+                  value={searchQuery}
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+                <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+       
+              </div>
+              <ThreeThing 
+                navGo='/AddTrips' 
+                liked 
+                labelMap={labelMap}
+                cheose={cheose} // Pass the cheose array to ThreeThing component
+                selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+                setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+              />
+             
+            </div>
+      
           <div className=" mt-10 ml-5">
                   <table className="w-full  border-y border-black">
                     <thead  className="w-full">
                       <tr className='bg-four w-[1012px] h-[56px]' >
                         <th className="w-[158px] h-[56px]  text-[12px] border-b text-left">name</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> trip type</th>
+                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">  type</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">date</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">departure time</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">arrival time</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">price</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">currency name</th>
-                        {/* <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> view</th> */}
+                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">currency </th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> status</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">Action</th>
                       </tr>
                     </thead>
                     <tbody>
                      
-                    {data.map((item,index) => (
+                    {filteredData.map((item,index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                             <td className="w-[143px] h-[56px]  text-[16px]  ">{item.name}</td>
+                             <td className="w-[143px] h-[56px]  text-[12px]  ">{item.name}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.trip_type}</td>
                           <td className="w-[143px] h-[56px]  text-[12px] ">{item.date}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.departure_time}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.arrival_time}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.price}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.currency_name}</td>
-                          {/* <td className="w-[143px] h-[56px]  text-[12px]  "><button onClick={()=>view(item.id)}>****</button></td> */}
                           <td className="w-[143px]  h-[56px]  text-[12px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                           <td className="w-[143px]  h-[56px]  text-[12px]  flex justify-start gap-2 items-center">
                       <img className='w-[24px] h-[24px]' src={pin} 

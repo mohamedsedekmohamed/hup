@@ -12,6 +12,8 @@ const Countries = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
+    const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
+  
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -66,11 +68,27 @@ const Countries = () => {
     navigate('/Location/Addcountries', { state: { snedData } });
   };
 
-  // Filter data based on the search query
   const filteredData = data.filter((item) => {
-    return item.name.toLowerCase().includes(searchQuery.toLowerCase());
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
   });
-
+  const cheose = ["Filter","name","status",]
+  const labelMap = {
+    Filter: "Filter",
+    name: "name",
+    status: "status",
+  };
   return (
     <div>
       <NavLocation />
@@ -85,7 +103,12 @@ const Countries = () => {
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing navGo='/Location/Addcountries' liked />
+        <ThreeThing navGo='/Location/Addcountries' liked 
+        labelMap={labelMap}
+             cheose={cheose} // Pass the cheose array to ThreeThing component
+             selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+             setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+             />
       </div>
 
       <div className="mt-10 ml-5">

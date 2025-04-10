@@ -33,7 +33,12 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
         { name: "unlimited" }]
       setArrthing(typeArray)
     }
-
+    if (name === "swticher") {
+      const typeArray = [
+        { name: "Default" },
+        { name: "Private" }]
+      setArrthing(typeArray)
+    }
     if (name === "cities" || name === "zones" || name === "countries" || name === "bus_types"
       || name === "agents" || name === 'car_brands' || name === "car_models" || name === "stations") {
       axios.get(`https://bcknd.ticket-hub.net/api/admin/${name}`, {
@@ -174,6 +179,13 @@ return (
           );
         }
         else if (control === "Limit") {
+          return (
+            <option key={index} value={item.id}>
+              {item.name}
+            </option>
+          );
+        }
+        else if (control === "swticher") {
           return (
             <option key={index} value={item.id}>
               {item.name}

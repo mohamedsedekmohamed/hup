@@ -6,9 +6,13 @@ import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../component/ThreeThing.jsx';
+import { CiSearch } from "react-icons/ci";
+
 const CARS = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+   const [searchQuery, setSearchQuery] = useState(''); 
+      const [selectedFilter, setSelectedFilter] = useState(''); 
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -67,13 +71,58 @@ const CARS = () => {
     navigate('/Car/AddCARS', { state: { snedData } });
   }
 
+  const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
+  });
+const cheose = ["Filter","model_name", "category_name","brand_name","agent_name"
+  ,"car_number","car_color","status","car_year"
+]
+const labelMap = {
+  Filter: "Filter",
+  model_name: "model",
+  category_name: "category",
+  brand_name: "brand",
+  agent_name: "agent",
+  car_number: "number",
+  car_color: "color",
+  car_year: "year",
+  status: "status",
 
+};
   return (
     <div>
       <Navcars/>
-      
-
-      <ThreeThing navGo='/Car/AddCARS' />
+      <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+        <ThreeThing 
+          navGo='/Car/AddCARS' 
+          liked 
+          labelMap={labelMap}
+          cheose={cheose} // Pass the cheose array to ThreeThing component
+          selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+          setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+        />
+      </div>
       <div className=" mt-10 ml-5">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
@@ -91,19 +140,19 @@ const CARS = () => {
           </thead>
           <tbody>
 
-            {data.map((item, index) => (
-              <tr key={index} className=' border-y-2 hover:border-y-3 relative hover:bg-six   '>  
+            {filteredData.map((item, index) => (
+              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
                 <td className="flex gap-1 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
                   <span className='w-[143px] h-[56px]  text-[16px]'>{item.model_name}</span>
                   </td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.category_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.brand_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.agent_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.car_number}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.car_color}</td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_year}</td>
-                <td className="w-[143px]  h-[56px]  text-[16px]">{item.status}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.category_name}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.brand_name}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.agent_name}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_number}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_color}</td>
+                <td className="w-[143px]  h-[56px]  text-[10px]">{item.car_year}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item.status}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin}
                     onClick={() => handleEdit(item.id)} />

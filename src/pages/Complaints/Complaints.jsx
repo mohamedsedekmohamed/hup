@@ -3,6 +3,7 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
+import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 
 import delet from  '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
@@ -13,6 +14,9 @@ const Complaints = () => {
      const navigate = useNavigate();
      const token = localStorage.getItem('token');
 
+      const [searchQuery, setSearchQuery] = useState(''); // State for search query
+        const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
+      
      useEffect(() => {
   
       axios.get("https://bcknd.ticket-hub.net/api/admin/complaints", {
@@ -101,9 +105,48 @@ const Complaints = () => {
         toast.error('Error  resolve:', error)
       });
     }
+    const filteredData = data.filter((item) => {
+      if(selectedFilter==="Filter"){
+        return Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      if (selectedFilter && item[selectedFilter]) {
+        return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+      } else if (selectedFilter === '') {
+        return Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      return false;
+    });
+    const cheose = ["Filter","message","date","status"]
+    const labelMap = {
+      Filter: "Filter",
+      message: "message",
+      date: "date",
+      status:"status"
+    };
   return (
     <div>
-        <ThreeThing navGo='/AddComplaints' />
+        <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+        <ThreeThing navGo="/AddComplaints" liked 
+        labelMap={labelMap}
+             cheose={cheose} // Pass the cheose array to ThreeThing component
+             selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+             setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+             />
+      </div>
+
        <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">
@@ -120,7 +163,7 @@ const Complaints = () => {
               </thead>
               <tbody>
                
-              {data.map((item,index) => (
+              {filteredData.map((item,index) => (
                   <tr key={index} className='border-y relative hover:bg-six hover:border-y-2'>
       
                   

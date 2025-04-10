@@ -11,7 +11,7 @@ const Commission = () => {
     useEffect(()=>{
       const token = localStorage.getItem('token');
   
-      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission ", {
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
         headers: {
           Authorization: `Bearer ${token}`, 
         }
@@ -30,10 +30,31 @@ const Commission = () => {
       
       navigate('/AddCommission');  
     }
+    const cheose = []
+
   return (
     <div>
-      { data.length === 0 ? (        <ThreeThing navGo="/AddCommission"/>
-):( <ThreeThing like/>)}
+      { data.length === 0 ? (  
+              <div className='flex justify-end w-full  mt-10 px-5'>
+       
+              <ThreeThing  liked navGo="/AddCommission"
+                   cheose={cheose} // Pass the cheose array to ThreeThing component
+                 
+                   />
+            </div>
+):( <div className='flex justify-between items-center mt-10 px-5'>
+       
+  <ThreeThing like liked 
+       cheose={cheose} // Pass the cheose array to ThreeThing component
+     
+       />
+</div>
+
+)}
+
+
+
+
        <div className=" mt-10 ml-5">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">

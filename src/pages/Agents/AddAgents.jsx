@@ -7,6 +7,7 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import InputField from '../../ui/InputField';
 import FileUploadButton from '../../ui/FileUploadButton';
+import Inputfiltter from '../../ui/Inputfiltter';
 
 const AddAgents = () => {
   const navigate = useNavigate();
@@ -20,10 +21,20 @@ const AddAgents = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const [trainCommission, setTrainCommission] = useState('default');
-  const [busCommission, setBusCommission] = useState('default');
-  const [hiaceCommission, setHiaceCommission] = useState('default');
-  const [commissionType, setCommissionType] = useState('defult');
+  const [trainCommission, setTrainCommission] = useState('');
+  const [busCommission, setBusCommission] = useState('');
+  const [hiaceCommission, setHiaceCommission] = useState('');
+  const [trainType, setTrainType] = useState('');
+  const [busType, setBusType] = useState('');
+  const [hiaceType, setHiaceType] = useState('');
+
+  const [enableTrain, setEnableTrain] = useState(false);
+  const [enableBus, setEnableBus] = useState(false);
+  const [enableHiace, setEnableHiace] = useState(false);
+  const [enableprivate, setEnableprivate] = useState(false);
+  const [fixedone,setfixedone]=useState(true)
+  const [fixedtwo,setfixedtwo]=useState(true)
+  const [fixedthree,setfixedthree]=useState(true)
 
   const [errors, setErrors] = useState({
     name: '',
@@ -55,7 +66,6 @@ const AddAgents = () => {
         console.error('Error converting image to Base64', error);
       });
   }
-
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
@@ -65,7 +75,7 @@ const AddAgents = () => {
       setPassword(snedData.password);
       setPhone(snedData.phone);
       setEdit(true);
-
+  
       if (snedData.image) {
         convertImageUrlToBase64(snedData.image)
           .then((base64Flag) => {
@@ -76,9 +86,28 @@ const AddAgents = () => {
             console.error('Error converting flag image:', error);
           });
       }
+  
+      const commission = snedData.commissions[0] || {};
+      setTrainCommission(commission.train || '');
+      setBusCommission(commission.bus || '');
+      setHiaceCommission(commission.hiace || '');
+  
+      setEnableTrain(snedData.modules.some(module => module.module === 'train'));
+      setEnableBus(snedData.modules.some(module => module.module === 'bus'));
+      setEnableHiace(snedData.modules.some(module => module.module === 'hiace'));
+      setEnableprivate(snedData.modules.some(module => module.module === 'private'));
+  
+      setTrainType(snedData.trainType || '');
+      setBusType(snedData.busType || '');
+      setHiaceType(snedData.hiaceType || '');
+  
+      console.log(enableBus); 
+      console.log(enableprivate);
+      console.log(enableTrain);
+      console.log(enableHiace);
     }
   }, [location.state]);
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === 'name') setName(value);
@@ -86,25 +115,12 @@ const AddAgents = () => {
     if (name === 'password') setPassword(value);
     if (name === 'phone') setPhone(value);
     if (name === 'description') setDescription(value);
-    if (name === 'trainCommission') setTrainCommission(value);
-    if (name === 'busCommission') setBusCommission(value);
-    if (name === 'hiaceCommission') setHiaceCommission(value);
-  };
-
-  const handleCommissionTypeChange = (e) => {
-    const { value } = e.target;
-    setCommissionType(value);
-
-    if (value === 'defult') {
-      setTrainCommission('default');
-      setBusCommission('default');
-      setHiaceCommission('default');
-    }
-    if (value === 'private') {
-      setTrainCommission('');
-      setBusCommission('');
-      setHiaceCommission('');
-    }
+    if (name === 'trainCommission'&&fixedone) setTrainCommission(value);
+    if (name === 'busCommission'&&fixedtwo) setBusCommission(value);
+    if (name === 'hiaceCommission'&&fixedthree) setHiaceCommission(value);
+    if (name === 'trainType') setTrainType(value);
+    if (name === 'busType') setBusType(value);
+    if (name === 'hiaceType') setHiaceType(value);
   };
 
   const validateForm = () => {
@@ -113,23 +129,19 @@ const AddAgents = () => {
     if (!description) formErrors.description = 'description is required';
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
     if (!edit && password.length < 6) formErrors.password = 'Password must be at least 6 characters';
-    
-    if (commissionType === 'private') {
-      if (!trainCommission) formErrors.trainCommission = 'Train commission is required';
-      else if (isNaN(trainCommission)) formErrors.trainCommission = 'Train commission must be a number';
-
-      if (!busCommission) formErrors.busCommission = 'Bus commission is required';
-      else if (isNaN(busCommission)) formErrors.busCommission = 'Bus commission must be a number';
-
-      if (!hiaceCommission) formErrors.hiaceCommission = 'Hiace commission is required';
-      else if (isNaN(hiaceCommission)) formErrors.hiaceCommission = 'Hiace commission must be a number';
-  }    if (!phone) formErrors.phone = 'Phone is required';
-    else if (!/^\+?\d+$/.test(phone)) formErrors.phone = 'Phone should contain only numbers or start with a "+"';
+    if (!phone) formErrors.phone = 'Phone is required';
+    if (!trainCommission) formErrors.trainCommission = 'trainCommission is required';
+    if (!busCommission) formErrors.busCommission = 'busCommission is required';
+    if (!hiaceCommission) formErrors.hiaceCommission = 'hiaceCommission is required';
+    else if (!/^[+]?\d+$/.test(phone)) formErrors.phone = 'Phone should contain only numbers or start with a "+"';
     if (!flag && !edit) formErrors.flag = 'Flag is required';
+
+    if (enableTrain && isNaN(trainCommission)) formErrors.trainCommission = 'Train commission must be a number';
+    if (enableBus && isNaN(busCommission)) formErrors.busCommission = 'Bus commission must be a number';
+    if (enableHiace && isNaN(hiaceCommission)) formErrors.hiaceCommission = 'Hiace commission must be a number';
+
     setErrors(formErrors);
-    Object.values(formErrors).forEach((error) => {
-      toast.error(error);
-    });
+    Object.values(formErrors).forEach((error) => toast.error(error));
     return Object.keys(formErrors).length === 0;
   };
 
@@ -143,18 +155,20 @@ const AddAgents = () => {
       password,
       phone,
       description,
-      commission_type:commissionType,
+      commission_type: "private", // أو استخدم القيمة المناسبة بناءً على متطلباتك
+      bus_modules: enableBus ? 1 : 0,  // إذا تم تمكين Bus، تكون القيمة 1، وإلا 0
+      train_modules: enableTrain ? 1 : 0,  // إذا تم تمكين Train، تكون القيمة 1، وإلا 0
+      hiace_modules: enableHiace ? 1 : 0,  // إذا تم تمكين Hiace، تكون القيمة 1، وإلا 0
+      private_modules:enableprivate? 1 : 0
     };
-    if(commissionType=== 'private') {
-      newCountryData.hiace_commission = hiaceCommission;
-      newCountryData.train_commission = trainCommission;
-      newCountryData.bus_commission = busCommission;
-    }
+    
+    if (enableTrain) newCountryData.train_commission = trainCommission;
+    if (enableBus) newCountryData.bus_commission = busCommission;
+    if (enableHiace) newCountryData.hiace_commission = hiaceCommission;
+
     if (flag !== originalFlag) {
       newCountryData.image = flag;
     }
-
-    console.log('Data to be sent:', newCountryData);
 
     if (edit) {
       const { snedData } = location.state || {};
@@ -162,8 +176,7 @@ const AddAgents = () => {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(response => {
-          console.log('operator updated successfully:', response.data);
-          toast.success('operator updated successfully');
+          toast.success('Operator updated successfully');
           setTimeout(() => navigate('/Agents'), 3000);
         })
         .catch((error) => console.error('Error updating operator:', error));
@@ -174,8 +187,7 @@ const AddAgents = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(response => {
-        console.log('operator added successfully:', response.data);
-        toast.success('operator added successfully');
+        toast.success('Operator added successfully');
         setTimeout(() => navigate('/Agents'), 3000);
       })
       .catch(error => {
@@ -183,7 +195,6 @@ const AddAgents = () => {
         console.error('Error adding operator:', error);
       });
 
-    // Reset form
     setDescription('');
     setName('');
     setEmail('');
@@ -191,7 +202,57 @@ const AddAgents = () => {
     setPhone('');
     setFlag(null);
     setEdit(false);
+    setTrainCommission('');
+     setBusCommission('');
+    setHiaceCommission('');
+     setTrainType('');
+    setBusType('');
+    setHiaceType('');
+setEnableTrain(false);
+setEnableBus(false);
+  setEnableHiace(false);
+setEnableprivate(false);
+    setfixedone(true)
+  setfixedtwo(true)
+  setfixedthree(true)
   };
+  useEffect(()=>{
+    const token = localStorage.getItem('token');
+
+    axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+      headers: {
+        Authorization: `Bearer ${token}`, 
+      }
+    })
+      .then(response => {
+   if(enableTrain&&trainType==="Default"){
+    setfixedone(false)
+     setTrainCommission(response.data.default_commission.train);
+   }
+   if(enableBus&&busType==="Default"){
+    setfixedtwo(false)
+     setBusCommission(response.data.default_commission.bus);}
+   if(enableHiace&&hiaceType==="Default"){
+    setfixedthree(false)
+    setHiaceCommission(response.data.default_commission.hiace);}
+     
+      if(enableTrain&&trainType==="Private"){
+        setfixedone(true)
+         setTrainCommission();
+       }
+       if(enableBus&&busType==="Private"){
+        setfixedtwo(true)
+         setBusCommission();}
+       if(enableHiace&&hiaceType==="Private"){
+        setfixedthree(true)
+        setHiaceCommission();}
+
+      }).catch(error => {
+        console.log(token);
+        console.error('Error fetching data:', error);   
+      });
+  },[enableTrain,enableBus,enableHiace,trainType,busType,hiaceType])
+  
 
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
@@ -204,58 +265,163 @@ const AddAgents = () => {
         <InputField placeholder="Password" name="password" value={password} onChange={handleChange} required />
         <FileUploadButton name="image" kind="image" flag={flag} onFileChange={handleFileChange} />
 
-        <div className='flex flex-col gap-1 justify-center items-center'>
-        <label>Commission Type </label>       
-           <select 
-            className='w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10' 
-            value={commissionType} 
-            onChange={handleCommissionTypeChange}
-          >
-            <option value="defult">Default</option>
-            <option value="private">Private</option>
-          </select>
-        </div>
-
-        <div className='flex flex-col gap-1 justify-center items-center'>
-          <label>Commission Train:</label>
-          {commissionType && (
-            <InputField
-              placeholder="Train Commission"
-              name="trainCommission"
-              value={trainCommission}
-              onChange={handleChange}
-              disabled={commissionType !== 'private'}
-            />
+        {/* Train Commission */}
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <div
+              className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
+                enableTrain ? 'bg-green-500' : ''
+              }`}
+              onClick={() => {
+                const value = !enableTrain;
+                setEnableTrain(value);
+                if (!value) {
+                  setTrainCommission('');
+                  setTrainType('');
+                }
+              }}
+            >
+              <div
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
+                  enableTrain ? 'translate-x-6' : ''
+                }`}
+              ></div>
+            </div>
+             Train Commission
+          </label>
+          {enableTrain && (
+            <>
+              <Inputfiltter
+//
+name="swticher"
+placeholder="type"
+                value={trainType}
+                onChange={()=>setTrainType(event.target.value)}
+              />
+              {(trainType === 'Default' || trainType === 'Private') && (
+                <InputField
+                  placeholder="Train Commission"
+                  name="trainCommission"
+                  value={trainCommission}
+                  onChange={handleChange}
+                />
+              )}
+            </>
           )}
         </div>
+
+        {/* Bus Commission */}
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <div
+              className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
+                enableBus ? 'bg-green-500' : ''
+              }`}
+              onClick={() => {
+                const value = !enableBus;
+                setEnableBus(value);
+                if (!value) {
+                  setBusCommission('');
+                  setBusType('');
+                }
+              }}
+            >
+              <div
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
+                  enableBus ? 'translate-x-6' : ''
+                }`}
+              ></div>
+            </div>
+             Bus Commission
+          </label>
+          {enableBus && (
+            <>
+              <Inputfiltter
+              //
+        name="swticher"
+                        placeholder="type"
+                value={busType}
+                onChange={()=>setBusType(event.target.value)}
+              />
+              {(busType === 'Default' || busType === 'Private') && (
+                <InputField
+                  placeholder="Bus Commission"
+                  name="busCommission"
+                  value={busCommission}
+                  onChange={handleChange}
+                />
+              )}
+            </>
+          )}
+        </div>
+
+        {/* Hiace Commission */}
+        <div className="flex flex-col gap-2">
+          <label className="flex items-center gap-2 cursor-pointer">
+            <div
+              className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
+                enableHiace ? 'bg-green-500' : ''
+              }`}
+              onClick={() => {
+                const value = !enableHiace;
+                setEnableHiace(value);
+                if (!value) {
+                  setHiaceCommission('');
+                  setHiaceType('');
+                }
+              }}
+            >
+              <div
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
+                  enableHiace ? 'translate-x-6' : ''
+                }`}
+              ></div>
+            </div>
+             Hiace Commission
+          </label>
+          {enableHiace && (
+            <>
+              <Inputfiltter
+              //
+        name="swticher"
         
-        <div className='flex flex-col gap-1 justify-center items-center'>
-          <label>Commission Bus: </label>
-          {commissionType && (
-            <InputField
-              placeholder="Bus Commission"
-              name="busCommission"
-              value={busCommission}
-              onChange={handleChange}
-              disabled={commissionType !== 'private'}
-            />
+                        placeholder="type"
+                value={hiaceType}
+                onChange={()=>setHiaceType(event.target.value)}
+              />
+              {(hiaceType === 'Default' || hiaceType === 'Private') && (
+                <InputField
+                  placeholder="Hiace Commission"
+                  name="hiaceCommission"
+                  value={hiaceCommission}
+                  onChange={handleChange}
+                />
+              )}
+            </>
           )}
         </div>
-
-        <div className='flex flex-col gap-1 justify-center items-center'>
-          <label>Commission Hiace: </label>
-          {commissionType && (
-            <InputField
-              placeholder="Hiace Commission"
-              name="hiaceCommission"
-              value={hiaceCommission}
-              onChange={handleChange}
-              disabled={commissionType !== 'private'}
-            />
-          )}
-        </div>
-
       </div>
+
+
+      <label className="flex items-center gap-2 cursor-pointer">
+            <div
+              className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
+                enableprivate ? 'bg-green-500' : ''
+              }`}
+              onClick={() => {
+                const value = !enableprivate;
+                setEnableprivate(value);
+              
+              }}
+            >
+              <div
+                className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
+                  enableprivate ? 'translate-x-6' : ''
+                }`}
+              ></div>
+            </div>
+             private modules
+          </label>
 
       <div className="flex gap-3">
         <button onClick={handleSave}>

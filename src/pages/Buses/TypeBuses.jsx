@@ -12,8 +12,9 @@ import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 const TypeBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [selectedFilter, setSelectedFilter] = useState(''); 
+    const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -81,15 +82,29 @@ const TypeBuses = () => {
         console.error('Error updating status:', error);
       });
   };
-
-  // Filter data based on the search query
   const filteredData = data.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.status.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.seat_count.toString().includes(searchQuery) // Add filtering for seat count
-    );
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
   });
+const cheose = ["Filter","name", "seat_count","status",
+]
+  const labelMap = {
+    Filter: "Filter",
+    name: "name",
+    seat_count: "seats",
+    status: "status",
+  };
 
   return (
     <div>
@@ -106,7 +121,12 @@ const TypeBuses = () => {
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-      <ThreeThing navGo='/Buses/AddTypeBuses' liked />
+      <ThreeThing navGo='/Buses/AddTypeBuses' liked 
+       labelMap={labelMap}
+       cheose={cheose} // Pass the cheose array to ThreeThing component
+       selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+       setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+      />
       </div>
 
       {/* Data Table */}

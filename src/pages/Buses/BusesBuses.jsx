@@ -11,8 +11,9 @@ import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 const BusesBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [selectedFilter, setSelectedFilter] = useState(''); 
+    const navigate = useNavigate();
   const token = localStorage.getItem('token');
 
   useEffect(() => {
@@ -64,15 +65,30 @@ const BusesBuses = () => {
     const snedData = data.find((item) => item.id === index);
     navigate('/Buses/AddBuses', { state: { snedData } });
   };
-
-  // Filter data based on the search query
   const filteredData = data.filter((item) => {
-    return (
-      item.bus_number.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.bus_type_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.agent_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
   });
+const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
+]
+  const labelMap = {
+    Filter: "Filter",
+    agent_name: "agent",
+    agent_email: "email",
+    capacity: "capacity",
+    status: "status",
+  };
 
   return (
     <div>
@@ -87,7 +103,13 @@ const BusesBuses = () => {
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing navGo='/Buses/AddBuses' liked/>
+        <ThreeThing navGo='/Buses/AddBuses' liked
+           labelMap={labelMap}
+           cheose={cheose} // Pass the cheose array to ThreeThing component
+           selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+           setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+    
+        />
       </div>
 
       <div className="mt-10 ml-5">
@@ -98,8 +120,6 @@ const BusesBuses = () => {
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">email</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Capacity</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Bus Image</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Operator (Agent)</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Route</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Amenities</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
@@ -112,8 +132,6 @@ const BusesBuses = () => {
                 <td className="w-[143px] h-[56px] text-[12px]">{item.agent_email}</td>
                 <td className="w-[143px] h-[56px] text-[16px]">{item.capacity}</td>
                 <td><img className="w-5 h-5" src={item.bus_image === null ? `data:image/png;base64,${item.bus_image}` : item.bus_image} alt="Bus" /></td>
-                <td className="w-[143px] h-[56px] text-[16px]">{item.agent_name}</td>
-                <td className="w-[143px] h-[56px] text-[16px]">****</td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">
                   <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>
                 </td>

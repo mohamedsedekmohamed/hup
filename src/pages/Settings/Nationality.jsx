@@ -5,8 +5,13 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
+import { CiSearch } from "react-icons/ci"; // Import search icon for UI
+
 const Nationality = () => {
    const [data, setData] = useState([]);
+     const [searchQuery, setSearchQuery] = useState(''); // State for search query
+             const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
+           
     const [update, setUpdate] = useState(false);
     const navigate = useNavigate();
 
@@ -66,9 +71,47 @@ const Nationality = () => {
       
       navigate('/Settings/AddNationality', { state: { snedData } });
     }
+    const filteredData = data.filter((item) => {
+      if(selectedFilter==="Filter"){
+        return Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      if (selectedFilter && item[selectedFilter]) {
+        return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+      } else if (selectedFilter === '') {
+        return Object.values(item).some(value =>
+          value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+        );
+      }
+      return false;
+    });
+    const cheose = ["Filter","name"]
+    const labelMap = {
+      Filter: "Filter",
+      name: "name",     
+    };
   return (
     <div>
-   <ThreeThing navGo='/Settings/AddNationality' />
+            <div className='flex justify-between items-center mt-10 px-5'>
+
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+        <ThreeThing navGo='/Settings/AddNationality' liked 
+        labelMap={labelMap}
+             cheose={cheose} // Pass the cheose array to ThreeThing component
+             selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+             setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+             />
+      </div>
+
       <div className=" mt-10 ml-5">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
@@ -79,7 +122,7 @@ const Nationality = () => {
           </thead>
           <tbody>
 
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
                 <td className="">
                   <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item.name}</span>

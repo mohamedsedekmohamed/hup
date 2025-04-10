@@ -5,9 +5,13 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
+import { CiSearch } from "react-icons/ci"; // Import search icon for UI
+
 const TrainRoute = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+      const [searchQuery, setSearchQuery] = useState(''); 
+        const [selectedFilter, setSelectedFilter] = useState(''); 
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -66,11 +70,52 @@ const TrainRoute = () => {
 
     navigate('/Train/AddTrainRoute', { state: { snedData } });
   }
+  const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
+  });
 
+const cheose = ["Filter","name","from_country","from_city",'to_country',"to_city"
+]
+const labelMap = {
+Filter: "Filter",
+name: "Route",
+from_country:'from country',
+from_city:"from city",
+to_country:"to country",
+to_city:"to city"
+};
   return (
     <div>
       <NavTrains />
-      <ThreeThing navGo='/Train/AddTrainRoute' />
+      <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)} // Update search query state
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+        </div>
+        <ThreeThing navGo='/Train/AddTrainRoute' liked
+           labelMap={labelMap}
+           cheose={cheose} // Pass the cheose array to ThreeThing component
+           selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+           setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+        />
+      </div>
       <div className=" mt-10 ml-5">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
@@ -85,7 +130,7 @@ const TrainRoute = () => {
           </thead>
           <tbody>
 
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>
                 <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
                 <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.from_country}</td>

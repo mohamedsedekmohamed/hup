@@ -11,8 +11,9 @@ import { CiSearch } from "react-icons/ci"; // Importing search icon
 const Cities = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State to store search query
   const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState(''); 
+  const [selectedFilter, setSelectedFilter] = useState(''); 
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -67,14 +68,28 @@ const Cities = () => {
     navigate('/Location/Addcities', { state: { sendData } });
   };
 
-  // Filter the cities based on the search query
   const filteredData = data.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.country_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
   });
-
+const cheose = ["Filter","country_name", "name", "status"]
+  const labelMap = {
+    Filter: "Filter",
+    country_name: " country",
+    name: "name",
+    status: "status",
+  };
   return (
     <div>
       <NavLocation />
@@ -89,7 +104,12 @@ const Cities = () => {
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing navGo='/Location/Addcities'liked />
+        <ThreeThing navGo='/Location/Addcities'liked
+        labelMap={labelMap}
+          cheose={cheose} // Pass the cheose array to ThreeThing component
+          selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+          setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+     />
       </div>
 
       <div className="mt-10 ml-5">

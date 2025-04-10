@@ -5,10 +5,13 @@ import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { CiSearch } from "react-icons/ci";
 import ThreeThing from '../../component/ThreeThing.jsx';
 const BRANDS = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
+   const [searchQuery, setSearchQuery] = useState(''); 
+    const [selectedFilter, setSelectedFilter] = useState(''); 
   const navigate = useNavigate();
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -66,6 +69,28 @@ const BRANDS = () => {
     
     navigate('/Car/AddBRANDS', { state: { snedData } });
   }
+  const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
+  });
+const cheose = ["Filter","name", "category_name"]
+const labelMap = {
+  Filter: "Filter",
+  name: "name",
+  category_name: "category",
+
+};
 
 
   return (
@@ -73,7 +98,27 @@ const BRANDS = () => {
       <Navcars/>
       
 
-      <ThreeThing navGo='/Car/AddBRANDS' />
+      <div className='flex justify-between items-center mt-10 px-5'>
+        <div className='flex justify-center items-center gap-3 relative'>
+          <input
+            placeholder='Search'
+            className='w-full h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+          <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+ 
+        </div>
+        <ThreeThing 
+          navGo='/Car/AddBRANDS' 
+          liked 
+          labelMap={labelMap}
+          cheose={cheose} // Pass the cheose array to ThreeThing component
+          selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+          setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+        />
+       
+      </div>
       <div className=" mt-10 ml-5">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
@@ -85,7 +130,7 @@ const BRANDS = () => {
           </thead>
           <tbody>
 
-            {data.map((item, index) => (
+            {filteredData.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
                 <td className="flex gap-1 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>

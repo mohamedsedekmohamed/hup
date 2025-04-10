@@ -13,8 +13,9 @@ const Stations = () => {
   const [datatwo, setDatatwo] = useState([]);
   const [update, setUpdate] = useState(false);
   const [action, setAction] = useState(() => localStorage.getItem('action') || 'on');
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const navigate = useNavigate();
+ const [searchQuery, setSearchQuery] = useState(''); 
+  const [selectedFilter, setSelectedFilter] = useState(''); 
+    const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -59,51 +60,79 @@ const Stations = () => {
     localStorage.setItem('action', newAction);
   };
 
-  // Filter function for search query
-  const filterData = (items) => {
-    return items.filter(item => {
-      return (
-        item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.country_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.city_name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-        item.zone_name.toLowerCase().includes(searchQuery.toLowerCase())
+  const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
       );
-    });
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
+  });
+const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
+  const labelMap = {
+    Filter: "Filter",
+    name: " name",
+    country_name: "country",
+    city_name:" city",
+    zone_name:"  zone"
   };
 
-  const renderTable = (items) => {
-    return (
-      <div className="mt-10 ml-5">
-        <table className="w-full border-y border-black">
-          <thead className="w-full">
-            <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Name</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zone</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
+ const renderTable = (items) => {
+  const filtered = items.filter((item) => {
+    const query = searchQuery.toLowerCase();
+
+    if (selectedFilter === "Filter" || selectedFilter === "") {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(query)
+      );
+    }
+
+    if (item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(query);
+    }
+
+    return false;
+  });
+
+  return (
+    <div className="mt-10 ml-5">
+      <table className="w-full border-y border-black">
+        <thead className="w-full">
+          <tr className='bg-four w-[1012px] h-[56px]'>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Name</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zone</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {filtered.map((item, index) => (
+            <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item.name}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item.city_name}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item.zone_name}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item.status}</td>
+              <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-5 items-center">
+                <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet} onClick={() => handleDelete(item.id)} alt="delete" />
+              </td>
             </tr>
-          </thead>
-          <tbody>
-            {filterData(items).map((item, index) => (
-              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.name}</td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.city_name}</td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.zone_name}</td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.status}</td>
-                <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-5 items-center">
-                  <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
-                  <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet} onClick={() => handleDelete(item.id)} alt="delete" />
-                </td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
-    );
-  };
+          ))}
+        </tbody>
+      </table>
+    </div>
+  );
+};
 
   return (
     <div>
@@ -123,7 +152,11 @@ const Stations = () => {
           onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state
         />
         <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-6 md:h-6' />
-      <ThreeThing navGo='/Location/AddOffStation' liked />
+      <ThreeThing navGo='/Location/AddOffStation' liked 
+       labelMap={labelMap}
+       cheose={cheose} // Pass the cheose array to ThreeThing component
+       selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+       setSelectedFilter={setSelectedFilter}/>
       </div>
 
 

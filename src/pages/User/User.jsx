@@ -8,7 +8,6 @@ import Swal from 'sweetalert2';
 import { ToastContainer, toast } from 'react-toastify';
 import { CiSearch } from "react-icons/ci";
 import 'react-toastify/dist/ReactToastify.css';
-// import { CgOptions } from 'react-icons/cg';
 
 const User = () => {
   const [data, setData] = useState([]);
@@ -74,6 +73,11 @@ const User = () => {
 
   // Filtering data based on selected filter and search query
   const filteredData = data.filter((item) => {
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
     if (selectedFilter && item[selectedFilter]) {
       return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
     } else if (selectedFilter === '') {
@@ -83,8 +87,16 @@ const User = () => {
     }
     return false;
   });
-  const [onevalue, setOneValue] = useState('');
-const cheose = ["User", "email", "Country", "Cities", "Zones"]
+const cheose = ["Filter","name", "email", "country", "city", "Zone"]
+const labelMap = {
+  Filter: "Filter",
+  name: "name",
+  email: "Gmail",
+  country: "country",
+  city:"city",
+  Zone:"Zone"
+};
+
   const names = ["User", "email", "Country", "Cities", "Zones", "Booking", "Action"];
   const fieldsToShow = ["name", "email", "country", "city", "zone", "Details", 'Booking'];
 
@@ -100,16 +112,17 @@ const cheose = ["User", "email", "Country", "Cities", "Zones"]
             onChange={(e) => setSearchQuery(e.target.value)}
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
+ 
         </div>
         <ThreeThing 
           navGo='/AddUser' 
           liked 
-          onevalue={onevalue} // Pass onevalue to ThreeThing component
-          setOneValue={setOneValue} // Function to update onevalue
+          labelMap={labelMap}
           cheose={cheose} // Pass the cheose array to ThreeThing component
           selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
           setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
         />
+       
       </div>
 
       {/* Table for larger screens */}
@@ -118,7 +131,7 @@ const cheose = ["User", "email", "Country", "Cities", "Zones"]
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">User</th>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">email</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Gmail</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Cities</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zones</th>

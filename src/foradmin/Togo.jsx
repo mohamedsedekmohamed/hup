@@ -13,7 +13,6 @@ import Bookingdetails from '../pages/Booking/Addbooking/Bookingdetails.jsx';
 import Bookingdetailsmore from '../pages/Booking/Addbooking/Bookingdetailsmore.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
-import ViewTrips from '../pages/Trips/ViewTrips.jsx';
 
 import Agents from '../pages/Agents/Agents.jsx';
 import AddAgents from '../pages/Agents/AddAgents.jsx'
@@ -26,7 +25,7 @@ import AddCommissionSetup from '../pages/Commission/AddCommission.jsx';
 //
 import Currency from '../pages/Currency/Currency.jsx';
 import AddCurrency from '../pages/Currency/AddCurrency.jsx';
-import PayoutAccount from '../pages/Payout/PayoutAccount.jsx';
+import Allpayot from '../pages/Payout/Allpayot.jsx';
 import Financial from '../pages/Financial/Financial.jsx';
 import Settings from '../pages/Settings/Settings.jsx';
 import Car from '../pages/Car/Car.jsx';
@@ -47,59 +46,63 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
   }, [isLoggedIn, navigate]);
 
   useEffect(() => {
+    console.log(location.pathname)
     if (location.pathname === '/AddUser'
-      ||location.pathname === '/UserDetails'
-      ||location.pathname === '/Userbookingdetails'
+      || location.pathname === '/UserDetails'
+      || location.pathname === '/Userbookingdetails'
 
     ) {
-        setActiveLink('/User');
+      setActiveLink('/User');
     } else if (location.pathname === '/Location/Cities' || location.pathname === '/Location/Zones' || location.pathname === '/Location/Stations' || location.pathname === '/Location/Addcountries' || location.pathname === '/Location/Addcities' || location.pathname === '/Location/Addzones' || location.pathname === '/Location/AddOffStation') {
-        setActiveLink('/Location');
+      setActiveLink('/Location');
     } else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/BusesHistory' || location.pathname === '/Buses/Operation' || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
-        setActiveLink('/Buses');
+      setActiveLink('/Buses');
     } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings'
-       || location.pathname === '/Booking/CanceledBooking'
-       || location.pathname === '/Bookingdetails'
-       || location.pathname === '/Bookingdetailsmore'
-      ) {
-        setActiveLink('/Booking');
-    } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips'||location.pathname==='/ViewTrips') {
-        setActiveLink('/Trips');
-   
-        //
-    } else if (location.pathname === '/Train/AddTraintype'||location.pathname === '/Train/TrainClass'||location.pathname === '/Train/AddTrainClass' || location.pathname === '/Train/TrainRoute' || location.pathname === '/Train/AddTrainRoute'
-       || location.pathname === '/Train/Trains' || location.pathname === '/Train/Addtrains'
-    ) {  
-        setActiveLink('/Train');
-   
+      || location.pathname === '/Booking/CanceledBooking'
+      || location.pathname === '/Bookingdetails'
+      || location.pathname === '/Bookingdetailsmore'
+    ) {
+      setActiveLink('/Booking');
+    } else if (location.pathname === '/Trips' || location.pathname === '/AddTrips') {
+      setActiveLink('/Trips');
+
+      //
+    } else if (location.pathname === '/Train/AddTraintype' || location.pathname === '/Train/TrainClass' || location.pathname === '/Train/AddTrainClass' || location.pathname === '/Train/TrainRoute' || location.pathname === '/Train/AddTrainRoute'
+      || location.pathname === '/Train/Trains' || location.pathname === '/Train/Addtrains'
+    ) {
+      setActiveLink('/Train');
+
     } else if (location.pathname === '/Agents' || location.pathname === '/AddAgents') {
-        setActiveLink('/Agents');
-    } else if (location.pathname === '/Complaints' || location.pathname === '/AddComplaints' ) {
-        setActiveLink('/Complaints');
-    }else if ( location.pathname === '/Commission' || location.pathname === '/AddCommission') {
+      setActiveLink('/Agents');
+    } else if (location.pathname === '/Complaints' || location.pathname === '/AddComplaints') {
+      setActiveLink('/Complaints');
+    } else if (location.pathname === '/Commission' || location.pathname === '/AddCommission') {
       setActiveLink('/Commission');
-  } else if (location.pathname === '/Currency' || location.pathname === '/AddCurrency') {
-        setActiveLink('/Currency');
-    } else if (location.pathname === '/PayoutAccount' || location.pathname === '/AddPayoutAccount') {
-        setActiveLink('/PayoutAccount');
+    } else if (location.pathname === '/Currency' || location.pathname === '/AddCurrency') {
+      setActiveLink('/Currency');
+    } else if (location.pathname === './Allpayot' ||
+      location.pathname === './PayoutAccount' ||
+      location.pathname === '/Cancelpayout'
+    ) {
+      setActiveLink('/Allpayot');
     } else if (location.pathname === '/Financial') {
-        setActiveLink('/Financial');
+      setActiveLink('/Financial');
     } else if (location.pathname === '/PaymentMethods' || location.pathname === '/CancellationPolicy') {
-        setActiveLink('/Settings');
-    } else if (location.pathname === '/Settings/AddPaymentMethods' ) {
-        setActiveLink('/Settings/PaymentMethods');
-    } else if (location.pathname === '/Settings/AddNationality' ) {
-        setActiveLink('/Settings/Nationality');
-    } else if (location.pathname === '/Settings/AddSubjectComplaints' ) {
-        setActiveLink('/Settings/SubjectComplaints');
-    } else if (location.pathname === '/Settings/AddOperatorPayment' ) {
-        setActiveLink('/Settings/OperatorPayment');
-    } else if (location.pathname === '/Tarins/Tarin' ) {
-        setActiveLink('/Tarins/Tarin');
+      setActiveLink('/Settings');
+    } else if (location.pathname === '/Settings/AddPaymentMethods') {
+      setActiveLink('/Settings/PaymentMethods');
+    } else if (location.pathname === '/Settings/AddNationality') {
+      setActiveLink('/Settings/Nationality');
+    } else if (location.pathname === '/Settings/AddSubjectComplaints') {
+      setActiveLink('/Settings/SubjectComplaints');
+    } else if (location.pathname === '/Settings/AddOperatorPayment') {
+      setActiveLink('/Settings/OperatorPayment');
+    } else if (location.pathname === '/Tarins/Tarin') {
+      setActiveLink('/Tarins/Tarin');
     } else {
-        setActiveLink(location.pathname);
+      setActiveLink(location.pathname);
     }
-}, [location.pathname]);
+  }, [location.pathname]);
 
   return (
     <div className='flex overflow-hidden relative'>
@@ -121,7 +124,6 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/Bookingdetailsmore' element={<Bookingdetailsmore />} />
           <Route path='/Trips' element={<Trips />} />
           <Route path='/AddTrips' element={<AddTrips />} />
-          <Route path='/ViewTrips' element={<ViewTrips />} />
           <Route path='/Agents' element={<Agents />} />
           <Route path='/AddAgents' element={<AddAgents />} />
           <Route path='/Complaints' element={<Complaints />} />
@@ -135,7 +137,7 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/AddCommission' element={<AddCommissionSetup />} />
           <Route path='/Currency' element={<Currency />} />
           <Route path='/AddCurrency' element={<AddCurrency />} />
-          <Route path='/PayoutAccount' element={<PayoutAccount />} />
+          <Route path='/Allpayot/*' element={<Allpayot />} />
           <Route path='/Financial/*' element={<Financial />} />
           <Route path='/Settings/*' element={<Settings />} />
         </Routes>

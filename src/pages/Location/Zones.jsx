@@ -11,8 +11,9 @@ import { CiSearch } from 'react-icons/ci'; // Import search icon
 const Zones = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); // State for search query
-  const navigate = useNavigate();
+const [searchQuery, setSearchQuery] = useState(''); 
+  const [selectedFilter, setSelectedFilter] = useState(''); 
+    const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -66,14 +67,29 @@ const Zones = () => {
     const sendData = data.find((item) => item.id === index);
     navigate('/Location/Addzones', { state: { sendData } });
   };
-
-  // Filter the zones based on the search query
   const filteredData = data.filter((item) => {
-    return (
-      item.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-      item.country_name.toLowerCase().includes(searchQuery.toLowerCase())
-    );
+    if(selectedFilter==="Filter"){
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    if (selectedFilter && item[selectedFilter]) {
+      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
+    } else if (selectedFilter === '') {
+      return Object.values(item).some(value =>
+        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
+      );
+    }
+    return false;
   });
+const cheose = ["Filter","country_name", "name","city_name",  "status"]
+  const labelMap = {
+    Filter: "Filter",
+    country_name: " country",
+    name: "zone",
+    city_name: " city",
+    status: "status",
+  };
 
   return (
     <div>
@@ -89,14 +105,20 @@ const Zones = () => {
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing liked navGo='/Location/Addzones' />
+        <ThreeThing liked navGo='/Location/Addzones'
+         labelMap={labelMap}
+         cheose={cheose} // Pass the cheose array to ThreeThing component
+         selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+         setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+ />
       </div>
 
       <div className="mt-10 ml-5">
         <table className="w-full border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zone Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zone </th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City </th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
@@ -105,8 +127,9 @@ const Zones = () => {
           <tbody>
             {filteredData.map((item, index) => (
               <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.name}</td>
-                <td className="w-[143px] h-[56px] text-[16px] px-4">{item.country_name}</td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item.name}</td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item.city_name}</td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">
                   <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>
                 </td>
