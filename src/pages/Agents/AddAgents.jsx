@@ -31,11 +31,13 @@ const AddAgents = () => {
   const [enableTrain, setEnableTrain] = useState(false);
   const [enableBus, setEnableBus] = useState(false);
   const [enableHiace, setEnableHiace] = useState(false);
-  const [enableprivate, setEnableprivate] = useState(false);
   const [fixedone,setfixedone]=useState(true)
   const [fixedtwo,setfixedtwo]=useState(true)
   const [fixedthree,setfixedthree]=useState(true)
 
+  const [privaterequset, setprivaterequset] = useState('');
+  const [enableprivate, setEnableprivate] = useState(false);
+ 
   const [errors, setErrors] = useState({
     name: '',
     phone: '',
@@ -95,8 +97,9 @@ const AddAgents = () => {
       setEnableTrain(snedData.modules.some(module => module.module === 'train'));
       setEnableBus(snedData.modules.some(module => module.module === 'bus'));
       setEnableHiace(snedData.modules.some(module => module.module === 'hiace'));
-      setEnableprivate(snedData.modules.some(module => module.module === 'private'));
+      setEnableprivate(true);
   
+      setprivaterequset(snedData.privateRequest_commission);
       setTrainType(snedData.trainType || '');
       setBusType(snedData.busType || '');
       setHiaceType(snedData.hiaceType || '');
@@ -121,6 +124,7 @@ const AddAgents = () => {
     if (name === 'trainType') setTrainType(value);
     if (name === 'busType') setBusType(value);
     if (name === 'hiaceType') setHiaceType(value);
+    if (name === 'privaterequset') setprivaterequset(value);
   };
 
   const validateForm = () => {
@@ -128,16 +132,19 @@ const AddAgents = () => {
     if (!name) formErrors.name = 'name is required';
     if (!description) formErrors.description = 'description is required';
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
-    if (!edit && password.length < 6) formErrors.password = 'Password must be at least 6 characters';
+    if (!edit && password.length < 8) formErrors.password = 'Password must be at least 6 characters';
     if (!phone) formErrors.phone = 'Phone is required';
     if (!trainCommission) formErrors.trainCommission = 'trainCommission is required';
     if (!busCommission) formErrors.busCommission = 'busCommission is required';
     if (!hiaceCommission) formErrors.hiaceCommission = 'hiaceCommission is required';
+    if (!privaterequset) formErrors.hiaceCommission = 'privaterequset is required';
     else if (!/^[+]?\d+$/.test(phone)) formErrors.phone = 'Phone should contain only numbers or start with a "+"';
     if (!flag && !edit) formErrors.flag = 'Flag is required';
 
     if (enableTrain && isNaN(trainCommission)) formErrors.trainCommission = 'Train commission must be a number';
-    if (enableBus && isNaN(busCommission)) formErrors.busCommission = 'Bus commission must be a number';
+    if (enableBus && isNaN(busCommission)){ formErrors.busCommission = 'Bus commission must be a number';
+    }
+
     if (enableHiace && isNaN(hiaceCommission)) formErrors.hiaceCommission = 'Hiace commission must be a number';
 
     setErrors(formErrors);
@@ -165,7 +172,7 @@ const AddAgents = () => {
     if (enableTrain) newCountryData.train_commission = trainCommission;
     if (enableBus) newCountryData.bus_commission = busCommission;
     if (enableHiace) newCountryData.hiace_commission = hiaceCommission;
-
+    if (enableprivate) newCountryData.privateRequest_commission = privaterequset;
     if (flag !== originalFlag) {
       newCountryData.image = flag;
     }
@@ -175,18 +182,20 @@ const AddAgents = () => {
       axios.put(`https://bcknd.ticket-hub.net/api/admin/operator/update/${snedData.id}`, newCountryData, {
         headers: { Authorization: `Bearer ${token}` },
       })
-        .then(response => {
+        .then(() => {
           toast.success('Operator updated successfully');
           setTimeout(() => navigate('/Agents'), 3000);
         })
-        .catch((error) => console.error('Error updating operator:', error));
+        .catch((error) =>{
+          toast.error(error);}
+      );
       return;
     }
 
     axios.post('https://bcknd.ticket-hub.net/api/admin/operator/add', newCountryData, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(response => {
+      .then(() => {
         toast.success('Operator added successfully');
         setTimeout(() => navigate('/Agents'), 3000);
       })
@@ -215,44 +224,63 @@ setEnableprivate(false);
     setfixedone(true)
   setfixedtwo(true)
   setfixedthree(true)
+  setEnableprivate(false)
+  setprivaterequset('')
   };
-  useEffect(()=>{
-    const token = localStorage.getItem('token');
+// Train
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (enableTrain) {
+    if (trainType === "Default") {
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(response => {
+        setfixedone(false);
+        setTrainCommission(response.data.default_commission.train);
+      }).catch(error => toast.error(error.message));
+    } else if (trainType === "Private") {
+      setfixedone(true);
+      setTrainCommission('');
+    }
+  }
+}, [enableTrain, trainType]);
 
-    axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
-      headers: {
-        Authorization: `Bearer ${token}`, 
-      }
-    })
-      .then(response => {
-   if(enableTrain&&trainType==="Default"){
-    setfixedone(false)
-     setTrainCommission(response.data.default_commission.train);
-   }
-   if(enableBus&&busType==="Default"){
-    setfixedtwo(false)
-     setBusCommission(response.data.default_commission.bus);}
-   if(enableHiace&&hiaceType==="Default"){
-    setfixedthree(false)
-    setHiaceCommission(response.data.default_commission.hiace);}
-     
-      if(enableTrain&&trainType==="Private"){
-        setfixedone(true)
-         setTrainCommission();
-       }
-       if(enableBus&&busType==="Private"){
-        setfixedtwo(true)
-         setBusCommission();}
-       if(enableHiace&&hiaceType==="Private"){
-        setfixedthree(true)
-        setHiaceCommission();}
+// Bus
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (enableBus) {
+    if (busType === "Default") {
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(response => {
+        setfixedtwo(false);
+        setBusCommission(response.data.default_commission.bus);
+      }).catch(error => toast.error(error.message));
+    } else if (busType === "Private") {
+      setfixedtwo(true);
+      setBusCommission('');
+    }
+  }
+}, [enableBus, busType]);
 
-      }).catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);   
-      });
-  },[enableTrain,enableBus,enableHiace,trainType,busType,hiaceType])
-  
+// Hiace
+useEffect(() => {
+  const token = localStorage.getItem('token');
+  if (enableHiace) {
+    if (hiaceType === "Default") {
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+        headers: { Authorization: `Bearer ${token}` }
+      }).then(response => {
+        setfixedthree(false);
+        setHiaceCommission(response.data.default_commission.hiace);
+      }).catch(error => toast.error(error.message));
+    } else if (hiaceType === "Private") {
+      setfixedthree(true);
+      setHiaceCommission('');
+    }
+  }
+}, [enableHiace, hiaceType]);
+
 
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
@@ -403,25 +431,38 @@ placeholder="type"
       </div>
 
 
-      <label className="flex items-center gap-2 cursor-pointer">
-            <div
-              className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
-                enableprivate ? 'bg-green-500' : ''
-              }`}
-              onClick={() => {
-                const value = !enableprivate;
-                setEnableprivate(value);
-              
-              }}
-            >
-              <div
-                className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
-                  enableprivate ? 'translate-x-6' : ''
-                }`}
-              ></div>
-            </div>
-             private modules
-          </label>
+{/* privte */}
+<div className="flex flex-col gap-2">
+  <label className="flex items-center gap-2 cursor-pointer">
+    <div
+      className={`w-12 h-6 flex items-center bg-gray-300 rounded-full p-1 duration-300 ${
+        enableprivate ? 'bg-green-500' : ''
+      }`}
+      onClick={() => {
+        const value = !enableprivate;
+        setEnableprivate(value);
+      }}
+    >
+      <div
+        className={`bg-white w-4 h-4 rounded-full shadow-md transform duration-300 ${
+          enableprivate ? 'translate-x-6' : ''
+        }`}
+      ></div>
+    </div>
+    Private Request Commission
+  </label>
+  {enableprivate && (
+    <>
+      <InputField
+        placeholder="Private Request Commission"
+        name="privaterequset"
+        value={privaterequset}
+        onChange={handleChange}
+      />
+    </>
+  )}
+</div>
+   
 
       <div className="flex gap-3">
         <button onClick={handleSave}>

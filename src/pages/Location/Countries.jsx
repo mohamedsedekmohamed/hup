@@ -25,10 +25,8 @@ const Countries = () => {
     })
       .then(response => {
         setData(response.data.countries);
-        console.log(response.data.countries);
       })
       .catch(error => {
-        console.log(token);
         console.error('Error fetching data:', error);
       });
   }, [update]);
@@ -48,13 +46,11 @@ const Countries = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-          .then((response) => {
-            console.log('Country deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${countryName} has been deleted successfully.`, 'success'); 
           })
-          .catch((error) => {
-            console.error('Error deleting country:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${countryName}.`, 'error'); 
           });
       } else {
@@ -111,8 +107,8 @@ const Countries = () => {
              />
       </div>
 
-      <div className="mt-10 ml-5">
-        <table className="w-full border-y border-black">
+      <div className="mt-10 ml-5 hidden lg:block">
+                <table className="w-full border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country Name</th>
@@ -148,6 +144,42 @@ const Countries = () => {
           </tbody>
         </table>
       </div>
+      {/* Mobile view */}
+<div className="mt-10 ml-5 lg:hidden">
+  <div className='w-[95%] bg-six'>
+    {filteredData.map((item, index) => (
+      <div key={index} className='flex flex-col gap-4 p-3'>
+        <div className="flex gap-4">
+          <strong>Country:</strong>
+          <span>{item.name}</span>
+        </div>
+        <div className="flex gap-4">
+          <strong>Status:</strong>
+          <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+        </div>
+        <div className="flex gap-4">
+          <strong>Flag:</strong>
+          <img 
+            className="w-5 h-5"
+            src={item.flag === null ? `data:image/png;base64,${item.flag}` : item.flag}
+            alt={`${item.name} flag`} 
+          />
+        </div>
+        <div className='flex'>
+          <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+          <img
+            className='w-[24px] h-[24px] ml-2 cursor-pointer'
+            src={delet}
+            onClick={() => handleDelete(item.id,item.name)}   
+            alt="delete"
+          />
+        </div>
+        <div className='w-full bg-white h-2'></div>
+      </div>
+    ))}
+  </div>
+</div>
+
     </div>
   );
 }

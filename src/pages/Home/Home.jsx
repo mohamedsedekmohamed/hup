@@ -3,7 +3,7 @@ import rang from '../../assets/rang.svg';
 import rrr from '../../assets/rrr.svg';
 import { FiAlignJustify } from "react-icons/fi";
 import { useLocation } from 'react-router-dom';
-
+import { BiLogOut } from "react-icons/bi";
 const Home = ({ setIsLoggedIn, open, setopen }) => {
   const location = useLocation();
   const [name, setName] = useState("");
@@ -53,7 +53,9 @@ useEffect(() => {
           <span className='font-medium text-[24px]'>name</span>
         </div>
         <div className='flex justify-center items-center gap-3'>
-          <img src={rang} onClick={Handle} />
+    <button  onClick={Handle}>
+    <BiLogOut className='w-8 text-one h-8'/>
+      </button>     
           <img src={rrr} />
         </div>
       </div>

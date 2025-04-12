@@ -1,22 +1,14 @@
 import React from 'react'
 import IconAdd from '../ui/IconAdd'
 import filter from '../assets/filter.svg'
-import { CiSearch } from "react-icons/ci";
-const TheeThing = ({navGo,like,liked,labelMap,selectedFilter,cheose,setSelectedFilter}) => {
+const TheeThing = ({navGo,like,labelMap,selectedFilter,cheose,setSelectedFilter}) => {
   const handleChange = (event) => {
     
     setSelectedFilter(event.target.value);
   };
   return (
     <div>
-      <div className='w-full h-[48px]   px-10 lg:px-[26px] justify-between  gap-16 flex'>
-       {!liked&&(<div className='flex justify-center items-center gap-3 relative'> 
-          <input  placeholder='Search' className=' w-full  h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'/>
-          <CiSearch  className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6'/>
-              </div>)}
-          
-             
-
+      <div className='w-full h-[48px]   px-10 lg:px-[26px] justify-around  gap-16 flex'>
           <div className='flex justify-center relative items-center gap-4'> 
           {cheose.length !== 0 && (
   <select

@@ -13,7 +13,6 @@ import picdone from '../../assets/picdone.svg'
 import DatePicker from 'react-date-picker';
 import TimePicker from 'react-time-picker';
 import 'react-date-picker/dist/DatePicker.css';
-import Calendar from 'react-calendar';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-calendar/dist/Calendar.css';
 const AddTrips = () => {
@@ -45,9 +44,30 @@ const AddTrips = () => {
   const [minCost, setMinCost] = useState('');
   const [tripType, setTripType] = useState('');
   const [currencyId, setCurrencyId] = useState('');
+  const [datastart, setdatastart] = useState('');
   const [cancellationDate, setCancellationDate] = useState();
-
+  const [selectedDays, setSelectedDays] = useState([]);
   const [edit, setEdit] = useState(false);
+
+  const handleDayChange = (event) => {
+    const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+    setSelectedDays(prevDays => {
+      const newDays = [...prevDays];
+      selectedOptions.forEach(day => {
+        if (newDays.includes(day)) {
+          const index = newDays.indexOf(day);
+          newDays.splice(index, 1); // إزالة اليوم
+        } else {
+          newDays.push(day); // إضافة اليوم
+        }
+      });
+      return newDays;
+    });
+  };
+  
+useEffect(()=>{
+  console.log(selectedDays)
+},[selectedDays])
   
   // };
   const [errors, setErrors] = useState({
@@ -64,12 +84,14 @@ const AddTrips = () => {
     toCountryId: '',
     toCityId: '',
     toZoneId: '',
+    datastart: '',
     date: '',
     price: '',
     status: '',
     agentId: '',
     maxBookDate: '',
     type: '',
+    day:"",
     fixedDate: '',
     cancellationPolicy: '',
     cancellationPayAmount: '',
@@ -83,37 +105,38 @@ const AddTrips = () => {
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
-      setTripName(snedData.trip_name);
-      setBusId(snedData.bus_id);
-      setPickupStationId(snedData.pickup_station_id);
-      setDropoffStationId(snedData.dropoff_station_id);
-      setCityId(snedData.city_id);
-      setZoneId(snedData.zone_id);
-      setDepartureTime(snedData.deputre_time);
+      setTripName(snedData.name);
+      setBusId(snedData.bus?.id); // access bus.id safely
+      setPickupStationId(snedData.route?.origin?.pickup_station?.id);
+      setDropoffStationId(snedData.route?.destination?.dropoff_station?.id);
+      setCityId(snedData.route?.origin?.city?.id);
+      setZoneId(snedData.route?.origin?.zone?.id);
+      setDepartureTime(snedData.departure_time);
       setArrivalTime(snedData.arrival_time);
-      setAvailableSeats(snedData.avalible_seats);
-      setCountryId(snedData.country_id);
-      setToCountryId(snedData.to_country_id);
-      setToCityId(snedData.to_city_id);
-      setToZoneId(snedData.to_zone_id);
+      setAvailableSeats(snedData.available_seats);
+      setCountryId(snedData.route?.origin?.country_id);
+      setToCountryId(snedData.route?.destination?.country_id);
+      setToCityId(snedData.route?.destination?.city?.id);
+      setToZoneId(snedData.route?.destination?.zone?.id);
       setDate(snedData.date);
       setPrice(snedData.price);
       setStatus(snedData.status);
-      setAgentId(snedData.agent_id);
-      setMaxBookDate(snedData.max_book_date);
+      setAgentId(snedData.agent?.id);
+      setMaxBookDate(snedData.max_booking_date);
       setType(snedData.type);
       setFixedDate(snedData.fixed_date);
-      setCancellationPolicy(snedData.cancellation_policy);
-      setCancellationPayAmount(snedData.cancelation_pay_amount);
-      setCancellationPayValue(snedData.cancelation_pay_value);
+      setCancellationPolicy(snedData.cancellation_policy?.policy);
+      setCancellationPayAmount(snedData.cancellation_policy?.pay_amount);
+      setCancellationPayValue(snedData.cancellation_policy?.pay_value);
       setMinCost(snedData.min_cost);
       setTripType(snedData.trip_type);
       setCurrencyId(snedData.currency_id);
-      setCancellationDate(snedData.cancelation_date);
+      setCancellationDate(snedData.cancellation_policy?.cancelation_hours); // assuming this is what you mean
+      setdatastart(snedData.start_date);
       setEdit(true);
     }
   }, [location.state]);
-
+  
   const handleChangetwo = (e) => {
     const { name, value } = e.target;
     if (name === 'countries') setToCountryId(value);
@@ -132,29 +155,21 @@ const AddTrips = () => {
     if (name === 'stations') setPickupStationId(value);
 
 
-    //
-    // if (name === 'deputre_time') setDepartureTime(value);
-    // if (name === 'arrival_time') setArrivalTime(value);
     if (name === 'avalible_seats') setAvailableSeats(value);
-    //
+  
 
-    // if (name === 'date') setDate(value);
     if (name === 'price') setPrice(value);
     if (name === 'status') setStatus(value);
     if (name === 'operators') setAgentId(value);
-    // if (name === 'max_book_date') setMaxBookDate(value);
+    if (name === 'maxBookDate') setMaxBookDate(value);
     if (name === 'Limit') setType(value);
-    // if (name === 'fixed_date') setFixedDate(value);
     if (name === 'cancellation_policy') setCancellationPolicy(value);
     if (name === 'two') setCancellationPayAmount(value);
     if (name === 'cancelation_pay_value') setCancellationPayValue(value);
     if (name === 'min_cost') setMinCost(value);
     if (name === 'three') setTripType(value);
     if (name === 'currencies') setCurrencyId(value);
-    // if (name === 'cancelation_date') setCancellationDate(value);
-    //done
     if (name === 'busses') setBusId(value);
-    //may daone
   };
 
   const validateForm = () => {
@@ -180,7 +195,12 @@ const AddTrips = () => {
     if (!date) formErrors.date = 'Date is required';
     if (!price) formErrors.price = 'Price is required';
     if (!agentId) formErrors.agentId = 'Agent ID is required';
-    if (!maxBookDate) formErrors.maxBookDate = 'Max book date is required';
+    if (!maxBookDate) {
+      formErrors.maxBookDate = 'Max book date is required';
+    } else if (isNaN(maxBookDate)) {
+      formErrors.maxBookDate = 'Max book date should be a number';
+    }
+    
     if (!type) formErrors.type = 'Type is required';
     if (!fixedDate) formErrors.fixedDate = 'Fixed date is required';
     if (!cancellationPolicy) formErrors.cancellationPolicy = 'Cancellation policy is required';
@@ -191,7 +211,7 @@ const AddTrips = () => {
     if (!currencyId) formErrors.currencyId = 'Currency ID is required';
     if (!cancellationDate) formErrors.cancellationDate = 'Cancellation date is required';
 
-
+    
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
     });
@@ -212,18 +232,6 @@ const AddTrips = () => {
       setDate(formattedDate);
     } else {
       setDate("");
-    }
-  };
-  const handlemaxBookDate = (newData) => {
-    if (newData) {
-      const day = newData.getDate() + 1;
-      const month = newData.getMonth() + 1;
-      const year = newData.getFullYear();
-
-      const formattedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
-      setMaxBookDate(formattedDate);
-    } else {
-      setMaxBookDate("");
     }
   };
 
@@ -249,6 +257,18 @@ const AddTrips = () => {
       setCancellationDate(formattedDate);
     } else {
       setCancellationDate("");
+    }
+  };
+  const handstartDate = (newData) => {
+    if (newData) {
+      const day = newData.getDate() + 1;
+      const month = newData.getMonth() + 1;
+      const year = newData.getFullYear();
+
+      const formattedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+      setdatastart(formattedDate);
+    } else {
+      setdatastart("");
     }
   };
 
@@ -278,7 +298,6 @@ const AddTrips = () => {
     }
 
     const token = localStorage.getItem('token');
-
     const newTrip = {
       trip_name: tripName,
       bus_id: busId,
@@ -296,9 +315,11 @@ const AddTrips = () => {
       date,
       price,
       status,
+      start_date:datastart,
       agent_id: agentId,
       max_book_date: maxBookDate,
       type,
+      day:selectedDays,
       fixed_date: fixedDate,
       cancellation_policy: cancellationPolicy,
       cancelation_pay_amount: cancellationPayAmount,
@@ -345,7 +366,7 @@ const AddTrips = () => {
       .catch(error => {
         console.error('Error adding trip:', error);
       });
-
+      setdatastart('')
     setTripName('');
     setBusId('');
     setPickupStationId('');
@@ -461,6 +482,15 @@ const AddTrips = () => {
           />
         </div>
         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
+          <span>Start data</span>
+          <DatePicker 
+            onChange={handstartDate}
+            value={datastart}
+            format="dd-MM-yyyy" 
+            disableClock={true}
+          />
+        </div>
+        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
           <span>arrivalTime</span>
           <TimePicker
             onChange={handlearrivalTime}
@@ -505,16 +535,14 @@ const AddTrips = () => {
           onChange={handleChange}
           required
         />
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-2'>
-          <span>Max Book Date</span>
-          <DatePicker
-            onChange={handlemaxBookDate}
-            value={maxBookDate}
-            format="dd-MM-yyyy"
-            disableClock={true}
-            disableCalendar={false}
-          />
-        </div>
+    
+        <InputField
+          placeholder="maxBookDate"
+          name="maxBookDate"
+          value={maxBookDate}
+          onChange={handleChange}
+          required
+        />
 
         <Inputfiltter
           placeholder="Type"
@@ -533,6 +561,35 @@ const AddTrips = () => {
             disableCalendar={false}
           />
         </div>
+
+     
+      <select
+  id="options"
+  value={selectedDays}
+  onChange={handleDayChange}
+  style={{
+
+  }}
+  className="w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
+>
+  <option value="null">Weekdays</option>
+  {['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day) => {
+  if (selectedDays.includes(day)) {
+    return (
+      <option key={day} value={day} className="bg-blue-500 text-white">
+        {day}
+      </option>
+    );
+  } else {
+    return (
+      <option key={day} value={day}>
+        {day}
+      </option>
+    );
+  }
+})}
+
+</select>
 
 
         <InputField
@@ -588,7 +645,6 @@ const AddTrips = () => {
           />
         </div>
 
-        {/* done */}
         <InputArrow
           placeholder="bus "
           name="busses"
@@ -597,7 +653,6 @@ const AddTrips = () => {
           required
         />
         <SwitchButton value={status} setValue={setStatus} />
-        {/* may daone */}
 
 
       </div>

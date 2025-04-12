@@ -60,21 +60,7 @@ const Stations = () => {
     localStorage.setItem('action', newAction);
   };
 
-  const filteredData = data.filter((item) => {
-    if(selectedFilter==="Filter"){
-      return Object.values(item).some(value =>
-        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    if (selectedFilter && item[selectedFilter]) {
-      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
-    } else if (selectedFilter === '') {
-      return Object.values(item).some(value =>
-        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      );
-    }
-    return false;
-  });
+ 
 const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
   const labelMap = {
     Filter: "Filter",
@@ -102,7 +88,8 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
   });
 
   return (
-    <div className="mt-10 ml-5">
+    <>
+    <div className="mt-10 ml-5 hidden lg:block">
       <table className="w-full border-y border-black">
         <thead className="w-full">
           <tr className='bg-four w-[1012px] h-[56px]'>
@@ -131,13 +118,53 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
         </tbody>
       </table>
     </div>
+        <div className="mt-10 ml-5 lg:hidden">
+            <div className='w-[95%] bg-six'>
+              {filtered.map((item, index) => (
+                <div key={index} className='flex flex-col gap-4 p-3'>
+                  <div className="flex gap-4">
+                    <strong>name:</strong>
+                    <span>{item.name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>Country:</strong>
+                    <span>{item.country_name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>city:</strong>
+                    <span>{item.name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>Zone:</strong>
+                    <span>{item.zone_name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>Status:</strong>
+                    <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+                  </div>
+                  <div className='flex'>
+                    <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                    <img
+                      className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                      src={delet}
+                      onClick={() => handleDelete(item.id,item.name)}   
+                      alt="delete"
+                    />
+                  </div>
+                  <div className='w-full bg-white h-2'></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          </>
+
   );
 };
 
   return (
     <div>
       <NavLocation />
-      <div className='flex ml-6 mt-6 gap-6'>
+      <div className='flex mx-2 mt-6 gap-3'>
         <Tiglebutton action={action === 'on' ? 'on' : 'off'} onClick={() => handleToggle('on')} title='Pick-up' />
         <Tiglebutton action={action === 'on' ? 'off' : 'on'} onClick={() => handleToggle('off')} title='Drop-off' />
       </div>
@@ -147,7 +174,7 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
         
         <input
           placeholder='Search'
-          className=' h-10 lg:h-[48px] border-2 border-two rounded-[8px] pl-10'
+          className=' h-10 lg:h-[48px] w-25 border-2 border-two rounded-[8px] pl-10'
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)} // Update searchQuery state
         />
@@ -160,7 +187,6 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
       </div>
 
 
-      {/* Render Table Based on Toggle State */}
       {action === 'on' ? renderTable(datatwo) : renderTable(data)}
     </div>
   );

@@ -9,7 +9,6 @@ import { CiSearch } from "react-icons/ci";
 
 const Agents = () => {
   const [data, setData] = useState([]);
-  // const [commission, setCommission] = useState("");
   const [searchQuery, setSearchQuery] = useState(''); 
   const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
   const [update, setUpdate] = useState(false);
@@ -66,28 +65,25 @@ const Agents = () => {
       }
     });
   };
-  const show = (index) => {
-    const token = localStorage.getItem('token');
-  
-    // استدعاء الـ API مباشرة لعرض القيمة بدون نافذة التأكيد
-    axios
-      .get(`https://bcknd.ticket-hub.net/api/admin/CommissionAgent/${index}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-      .then((response) => {
-        // عرض قيمة الـ commission في نافذة Swal مباشرة
-        Swal.fire({
-          title: `Commission value: ${response.data.commission}`,
-          icon: 'success',
-          confirmButtonText: 'OK', // زر "OK" بعد عرض القيمة
-        });
-      })
-      .catch(() => {
-        Swal.fire('Error!', `There was an error retrieving the commission.`, 'error');
-      });
+  const show = (commissions) => {
+    const commission = commissions[0]; 
+  if(commission){
+    Swal.fire({
+      title: `Commission train: ${commission.train}
+      Commission bus: ${commission.bus}
+      Commission hiace: ${commission.hiace}`,
+      icon: 'success',
+      confirmButtonText: 'OK', // زر "OK" بعد عرض القيمة
+    });}
+    else{
+      Swal.fire({
+        title: ` no Commissions `,
+        icon: 'success',
+        confirmButtonText: 'OK', // زر "OK" بعد عرض القيمة
+      });}
   };
+  
+  
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){
       return Object.values(item).some(value =>
@@ -167,7 +163,7 @@ const labelMap = {
                 <td className="w-[143px] h-[56px]  text-[16px]   ">{item.email}</td>
                 <td className="w-[143px] h-[56px]  text-[12px]  underline  "><button
                 className='bg-three px-2  rounded-4xl py-1'
-                onClick={()=>show(item.id)}>commission</button></td>
+                onClick={()=>show(item.commissions)}>commission</button></td>
                 <td className="w-[143px] h-[56px]  text-[16px]  "> 
                                    <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
                 </td>

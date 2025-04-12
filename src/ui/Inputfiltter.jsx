@@ -17,7 +17,6 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
     if (name === "three") {
       const typeArray = [
         { name: "bus" },
-        { name: "private" },
         { name: "train" }]
       setArrthing(typeArray)
     }

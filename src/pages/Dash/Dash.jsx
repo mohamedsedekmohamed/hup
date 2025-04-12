@@ -59,8 +59,8 @@ const Dash = ({ activeLink ,open}) => {
   return (
     
         <div className="relative ">
-  <div className="direction-rtl hidden md:block h-full ">
-    <div className="flex-col w-[300px]  h-screen text-center overflow-y-scroll overflow-x-hidden direction-ltr">
+  <div className="direction-rtl hidden md:block h-full w-[300px]  ">
+    <div className="flex-col  h-screen text-center overflow-y-scroll overflow-x-hidden direction-ltr">
      
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[32px]'>Ticket hub</span>
@@ -179,7 +179,7 @@ const Dash = ({ activeLink ,open}) => {
   {open&&(
 
      <div className={`direction-rtl  md:hidden`}>
-        <div className='flex-col sm:w-[300px] md:w-[400px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+        <div className='flex-col sm:w-[200px] md:w-[250px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[16px]'>Ticket hub</span>
             <img src={mainicon} className='rounded-full w-6 h-6 p-1 bg-three' alt="Main Icon" />
