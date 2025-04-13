@@ -29,7 +29,7 @@ const Agents = () => {
       .catch(error => {
         console.log(token);
         console.error('Error fetching data:', error);
-      });
+      });   
       
   }, [update])
 
