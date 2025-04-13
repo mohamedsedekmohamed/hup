@@ -93,13 +93,13 @@ const AddAgents = () => {
       setTrainCommission(commission.train || '');
       setBusCommission(commission.bus || '');
       setHiaceCommission(commission.hiace || '');
+      setprivaterequset(snedData.commission.privateRequest|| '');
   
       setEnableTrain(snedData.modules.some(module => module.module === 'train'));
       setEnableBus(snedData.modules.some(module => module.module === 'bus'));
       setEnableHiace(snedData.modules.some(module => module.module === 'hiace'));
       setEnableprivate(true);
   
-      setprivaterequset(snedData.privateRequest_commission);
       setTrainType(snedData.trainType || '');
       setBusType(snedData.busType || '');
       setHiaceType(snedData.hiaceType || '');
@@ -292,6 +292,9 @@ useEffect(() => {
         <InputField placeholder="Email" name="email" value={email} onChange={handleChange} required />
         <InputField placeholder="Password" name="password" value={password} onChange={handleChange} required />
         <FileUploadButton name="image" kind="image" flag={flag} onFileChange={handleFileChange} />
+  
+</div>
+<div className=' flex  gap-2'>
 
         {/* Train Commission */}
         <div className="flex flex-col gap-2">
@@ -465,9 +468,9 @@ placeholder="type"
    
 
       <div className="flex gap-3">
-        <button onClick={handleSave}>
-          <img className="my-6" src={picdone} alt="Save" />
-        </button>
+      <button onClick={handleSave}>
+            <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
+            </button>
       </div>
 
       <ToastContainer />

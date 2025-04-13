@@ -20,8 +20,6 @@ const FileUploadButton = ({ onFileChange, kind }) => {
 
         reader.readAsDataURL(selectedFile); 
         setError('');  
-      } else {
-        setError("Please upload a valid image file.");  
       }
     }
   };
@@ -36,25 +34,15 @@ const FileUploadButton = ({ onFileChange, kind }) => {
         style={{ display: 'none' }} 
       />
       <button
-        className='w-[300px] h-[72px] border-1 border-two rounded-[8px] placeholder-seven'
+      
+        className='w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-5'
         onClick={() => document.getElementById(`file-upload-${kind}`).click()}
       >
         {kind}
       </button>
       
-      {error && <p style={{ color: 'red' }}>{error}</p>}  {/* Display error message */}
 
-      {/* Display the uploaded image preview if the file exists */}
-      {/* {file && (
-        <div>
-          <img 
-            src={URL.createObjectURL(file)} 
-            alt="Uploaded Image" 
-            width={100} 
-            height={100} 
-          />
-        </div>
-      )} */}
+    
     </div>
   );
 };

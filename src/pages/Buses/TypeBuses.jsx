@@ -12,9 +12,9 @@ import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 const TypeBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
-  const [searchQuery, setSearchQuery] = useState(''); 
-  const [selectedFilter, setSelectedFilter] = useState(''); 
-    const navigate = useNavigate();
+  const [searchQuery, setSearchQuery] = useState('');
+  const [selectedFilter, setSelectedFilter] = useState('');
+  const navigate = useNavigate();
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -25,10 +25,8 @@ const TypeBuses = () => {
     })
       .then(response => {
         setData(response.data.bus_type);
-        console.log(response.data.bus_type);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch(() => {
       });
   }, [update]);
 
@@ -36,7 +34,7 @@ const TypeBuses = () => {
     const token = localStorage.getItem('token');
 
     Swal.fire({
-      title: `Are you sure you want to delete ${userName}?`, 
+      title: `Are you sure you want to delete ${userName}?`,
       icon: 'warning',
       showCancelButton: true,
       confirmButtonText: 'Yes',
@@ -45,20 +43,18 @@ const TypeBuses = () => {
       if (result.isConfirmed) {
         axios.delete(`https://bcknd.ticket-hub.net/api/admin/bus_type/delete/${index}`, {
           headers: {
-              Authorization: `Bearer ${token}`,
-            },
-          })
-          .then((response) => {
-            console.log('User deleted successfully:', response.data);
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then(() => {
             setUpdate(!update);
-            Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
+            Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success');
           })
           .catch((error) => {
-            console.error('Error deleting user:', error);
-            Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
+            Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error');
           });
       } else {
-        Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');  
+        Swal.fire('Cancelled', `${userName} was not deleted.`, 'info');
       }
     });
   };
@@ -74,16 +70,14 @@ const TypeBuses = () => {
 
     axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_types/status/${id}`, { status: newStatus },
       { headers: { Authorization: `Bearer ${token}` } })
-      .then(response => {
-        console.log(`Status updated to ${newStatus}`);
+      .then(() => {
         setUpdate(!update);
       })
-      .catch(error => {
-        console.error('Error updating status:', error);
+      .catch(() => {
       });
   };
   const filteredData = data.filter((item) => {
-    if(selectedFilter==="Filter"){
+    if (selectedFilter === "Filter") {
       return Object.values(item).some(value =>
         value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
       );
@@ -97,8 +91,8 @@ const TypeBuses = () => {
     }
     return false;
   });
-const cheose = ["Filter","name", "seat_count","status",
-]
+  const cheose = ["Filter", "name", "seat_count", "status",
+  ]
   const labelMap = {
     Filter: "Filter",
     name: "name",
@@ -121,16 +115,16 @@ const cheose = ["Filter","name", "seat_count","status",
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-      <ThreeThing navGo='/Buses/AddTypeBuses' liked 
-       labelMap={labelMap}
-       cheose={cheose} // Pass the cheose array to ThreeThing component
-       selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
-       setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
-      />
+        <ThreeThing navGo='/Buses/AddTypeBuses' liked
+          labelMap={labelMap}
+          cheose={cheose} // Pass the cheose array to ThreeThing component
+          selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
+          setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
+        />
       </div>
 
       {/* Data Table */}
-      <div className="mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
@@ -157,8 +151,8 @@ const cheose = ["Filter","name", "seat_count","status",
                       <label className="switch">
                         <input
                           type="checkbox"
-                          checked={item.status === "active"}  // Set the switch state based on the current status
-                          onClick={() => onchangething(item.id, item.status)}  // Call the function to toggle status
+                          checked={item.status === "active"} 
+                          onClick={() => onchangething(item.id, item.status)}  
                         />
                         <span className="slider" />
                       </label>
@@ -169,7 +163,7 @@ const cheose = ["Filter","name", "seat_count","status",
                   <span className="font-normal p-2 rounded-[8px] flex">
                     <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
                     <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet}
-                      onClick={() => handleDelete(item.id, item.name)}   
+                      onClick={() => handleDelete(item.id, item.name)}
                       alt="delete" />
                   </span>
                 </td>
@@ -177,6 +171,63 @@ const cheose = ["Filter","name", "seat_count","status",
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>agent:</strong>
+                <span>{item.name}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>bus Image:</strong>
+                <img
+                  className="w-5 h-5"
+                  src={item.bus_image === null ? `data:image/png;base64,${item.bus_image}` : item.bus_image}
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <strong>plan image :</strong>
+                <img
+                  className="w-5 h-5"
+                  src={item.plan_image === null ? `data:image/png;base64,${item.plan_image}` : item.plan_image}
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <strong>Seats Image:</strong>
+                <img
+                  className="w-5 h-5"
+                  src={item.seats_image === null ? `data:image/png;base64,${item.seats_image}` : item.seats_image}
+                
+                />
+              </div>
+
+              <div className="flex gap-4">
+                <strong>seat_count:</strong>
+                <span>{item.seat_count}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>Status:</strong>
+                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+              </div>
+            
+              <div className='flex'>
+                <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                <img
+                  className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                  src={delet}
+                  onClick={() => handleDelete(item.id, item.name)}
+                  alt="delete"
+                />
+              </div>
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

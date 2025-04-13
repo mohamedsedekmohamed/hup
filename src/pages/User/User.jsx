@@ -5,7 +5,7 @@
   import axios from 'axios';
   import { useNavigate } from 'react-router-dom';
   import Swal from 'sweetalert2';
-  import { ToastContainer, toast } from 'react-toastify';
+  import { ToastContainer } from 'react-toastify';
   import { CiSearch } from "react-icons/ci";
   import 'react-toastify/dist/ReactToastify.css';
 
@@ -28,7 +28,6 @@
           setData(response.data.data);
         })
         .catch(() => {
-          toast.error(" Error fetching data");
         });
     }, [update]);
 

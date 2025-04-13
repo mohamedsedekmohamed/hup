@@ -193,9 +193,9 @@ const AddCARS = () => {
     };
     return (
         <div className='ml-6 flex flex-col mt-6 gap-6'>
-            <AddAll navGo='/Car/MODELS' name="Add MODELS" />
+            <AddAll navGo='/Car/CARS' name="Add cars  " />
             <div className='flex flex-wrap gap-6'>
-            <InputArrow like 
+            <InputArrow 
                 placeholder="categories"
                 name="car_categories"
                 value={category}
@@ -203,7 +203,6 @@ const AddCARS = () => {
                 required
             />
             <Inputfiltter
-                like
                 placeholder="brands"
                 name="car_brands"
                 value={brand}
@@ -212,7 +211,7 @@ const AddCARS = () => {
                 required
             />
              <Inputfiltter
-                like
+                
                 placeholder="models"
                 name="car_models"
                 value={model}
@@ -220,7 +219,7 @@ const AddCARS = () => {
                 shara={brand}
                 required
             />
-             <InputArrow like
+             <InputArrow 
                 placeholder="agent"
                 name="operators"
                 value={agent}
@@ -258,7 +257,7 @@ const AddCARS = () => {
 
             <SwitchButton num value={valuee} setValue={setValue} />
             <button onClick={handleSave}>
-                <img className="my-6" src={picdone} alt="Save" />
+            <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
             </button>
             <ToastContainer />
             </div>

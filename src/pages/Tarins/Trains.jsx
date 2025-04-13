@@ -117,7 +117,7 @@ country:"country",
            setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
         />
       </div>
-    <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
             <thead className="w-full">
                 <tr className='bg-four w-[1012px] h-[56px]' >
@@ -139,8 +139,8 @@ country:"country",
                         <td className="w-[143px] h-[56px]  text-[14px]  ">{item.agent}</td>
                         <td className="w-[143px] h-[56px]  text-[14px]  ">{item.type}</td>
                         <td className="w-[143px] h-[56px]  text-[14px]  ">{item.route}</td>
-                        <td className="w-[143px] h-[56px]  text-[14px]  ">{item.country}</td>
                         <td className="w-[143px] h-[56px]  text-[14px]  ">{item.class}</td>
+                        <td className="w-[143px] h-[56px]  text-[14px]  ">{item.country}</td>
     <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">
       {item.status===1 ? "active" : "inactive"}
       </span></td>
@@ -159,6 +159,54 @@ country:"country",
                 ))}
             </tbody>
         </table>
+    </div>
+     {/* Mobile view */}
+    <div className="mt-10 ml-5 lg:hidden">
+      <div className='w-[95%] bg-six'>
+        {filteredData.map((item, index) => (
+          <div key={index} className='flex flex-col gap-4 p-3'>
+            <div className="flex gap-4">
+              <strong>Class:</strong>
+              <span>{item.name}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>agent:</strong>
+              <span>{item.agent}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>type:</strong>
+              <span>{item.type}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>route:</strong>
+              <span>{item.route}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>Class:</strong>
+              <span>{item.name}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>country:</strong>
+              <span>{item.country}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>Status:</strong>
+              <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+            </div>
+          
+            <div className='flex'>
+              <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+              <img
+                className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                src={delet}
+                onClick={() => handleDelete(item.id,item.name)}   
+                alt="delete"
+              />
+            </div>
+            <div className='w-full bg-white h-2'></div>
+          </div>
+        ))}
+      </div>
     </div>
 </div>
   )

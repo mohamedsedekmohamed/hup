@@ -72,14 +72,14 @@ code:"code"
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing  liked
+        <ThreeThing  liked like
            labelMap={labelMap}
            cheose={cheose} // Pass the cheose array to ThreeThing component
            selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
            setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
         />
       </div>
-<div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
             <table className="w-full  border-y border-black">
               <thead  className="w-full">
                 <tr className='bg-four w-[1012px] h-[56px]' >
@@ -107,6 +107,46 @@ code:"code"
               </tbody>
             </table>
           </div> 
+          <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>destenation_from:</strong>
+                <span>{item.destenation_from}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>destenation_to:</strong>
+                <span>{item.destenation_to}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>date:</strong>
+                <span>{item.date}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>seats_count:</strong>
+                <span>{item.seats_count}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>code:</strong>
+                <span>{item.code}</span>
+              </div>
+             
+              
+              <div className="flex gap-4">
+          <strong>Status:</strong>
+          <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+        </div>
+     
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
+        </div>
+      </div>
       </div>
   )
 }

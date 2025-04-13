@@ -1,16 +1,16 @@
 import React, { useEffect, useState } from 'react';
-import AddAll from '../../../ui/AddAll';
-import picdone from '../../../assets/picdone.svg';
+import AddAll from '../../ui/AddAll';
+import picdone from '../../assets/picdone.svg';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
-import InputField from '../../../ui/InputField';
-import FileUploadButton from '../../../ui/FileUploadButton';
-import SwitchButton from '../../../ui/SwitchButton';
-import Inputfiltter from '../../../ui/Inputfiltter';
-import Aminites from '../../../ui/amintes.jsx'; // Import the Aminites component for amenities selection
-const AddBuses = () => {
+import InputField from '../../ui/InputField';
+import FileUploadButton from '../../ui/FileUploadButton';
+import SwitchButton from '../../ui/SwitchButton';
+import Inputfiltter from '../../ui/Inputfiltter';
+
+const Addhiace = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [busNumber, setBusNumber] = useState('');
@@ -21,8 +21,6 @@ const AddBuses = () => {
   const [originalFlag, setOriginalFlag] = useState(null);
   const [status, setStatus] = useState('inactive');
   const [edit, setEdit] = useState(false);
-    const [selectedDays, setSelectedDays] = useState([]);
-  
   const [errors, setErrors] = useState({
     busNumber: '',
     pic: '',
@@ -114,13 +112,12 @@ const AddBuses = () => {
     if (!validateForm()) return;
 
     const newBus = {
-      type:"bus",
+      type: "hiace",
       bus_number: busNumber,
       bus_type_id: busType,
       agent_id: agent,
       capacity: capacity,
       status: status,
-      aminty_id:selectedDays
     };
 
     if (pic != originalFlag) {
@@ -143,7 +140,7 @@ const AddBuses = () => {
           toast.success('bus updated  successfully');
 
           setTimeout(() => {
-            navigate('/Buses');
+            navigate('/Hiace');
           }, 3000);
           resetForm();
         })
@@ -162,7 +159,7 @@ const AddBuses = () => {
           toast.success('bus added  successfully');
 
           setTimeout(() => {
-            navigate('/Buses');
+            navigate('/Hiace');
           }, 3000);
           resetForm();
         })
@@ -185,7 +182,7 @@ const AddBuses = () => {
   return (
 <div>
 
-      <AddAll navGo='/Buses' name="Add Bus" />
+      <AddAll navGo='/Hiace' name="Add Bus" />
       <div className='ml-6 flex flex-wrap mt-6 gap-6'>
 
         <InputField
@@ -224,8 +221,6 @@ const AddBuses = () => {
           flag={pic}
           onFileChange={handleFileChange}
         />
-        <Aminites selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
-
         <SwitchButton value={status} title='status' setValue={setStatus} />
         <ToastContainer />
       </div>
@@ -238,4 +233,4 @@ const AddBuses = () => {
   );
 };
 
-export default AddBuses;
+export default Addhiace ;

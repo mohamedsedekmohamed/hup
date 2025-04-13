@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import axios from 'axios';  
 import { useNavigate } from 'react-router-dom';
 import NavBuses from './NavBuses.jsx';
 import delet from '../../assets/delete.svg';
@@ -111,7 +111,7 @@ const cheose = ["Filter","name","status"
  />     
       </div>
 
-      <div className="mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
@@ -137,6 +137,40 @@ const cheose = ["Filter","name","status"
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>Name:</strong>
+                <span>{item.name}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>Status:</strong>
+                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>Icon:</strong>
+                <img 
+                  className="w-5 h-5"
+                  src={item.icon_link === null ? `data:image/png;base64,${item.icon_link}` : item.icon_link}
+                />
+              </div>
+              <div className='flex'>
+                <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                <img
+                  className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                  src={delet}
+                  onClick={() => handleDelete(item.id,item.name)}   
+                  alt="delete"
+                />
+              </div>
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
+        </div>
       </div>
     </div>
   );

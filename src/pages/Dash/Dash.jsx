@@ -17,7 +17,7 @@ import IconPayoutAccount from '../../IconsImprot/IconPayoutAccount';
 import IconSetting from '../../IconsImprot/IconSetting';
 import IconTrain from '../../IconsImprot/IconTrain';
 import { FaCarAlt } from "react-icons/fa";
-
+import { TbCarSuv } from "react-icons/tb";
 const Dash = ({ activeLink ,open}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -28,6 +28,8 @@ const Dash = ({ activeLink ,open}) => {
     { icon: <IconUser />, iconactive: <IconUser active />, text: "User", href: "/User" },
     { icon: <IconLocation />, iconactive: <IconLocation active />, text: "Location", href: "/Location" },
     { icon: <IconBuses />, iconactive: <IconBuses active />, text: "Buses", href: "/Buses" },
+    { icon: <TbCarSuv  className='text-white w-5 h-5'/>, iconactive: <TbCarSuv  className='w-5 h-5 text-one' active />, text: "Hiace", href: "/Hiace" },
+
     { icon: <IconTrain />, iconactive: <IconTrain active />, text: "Train", href: "/Train" },
     { icon: <IconBooking />, iconactive: <IconBooking active />, text: "Bookings", href: "/Booking" },
     { icon: <IconTrips />, iconactive: <IconTrips active />, text: "Trips", href: "/Trips" },
@@ -51,6 +53,7 @@ const Dash = ({ activeLink ,open}) => {
           { text: "●  Nationality", href: "/Settings/Nationality" },
           { text: "●  Subject Complaints", href: "/Settings/SubjectComplaints" },
           { text: "●  Operator Payment", href: "/Settings/OperatorPayment" },
+          { text: "●  Fees", href: "/Settings/Fees" },
         ]
     }
   ];

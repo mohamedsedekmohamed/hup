@@ -129,8 +129,8 @@ const PayoutAccount = () => {
             setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
           />
         </div>
-        <div className=" mt-10 ml-5">
-          <table className="w-full  border-y border-black">
+        <div className="mt-10 ml-5 hidden lg:block">
+        <table className="w-full  border-y border-black">
             <thead className="w-full">
               <tr className='bg-four w-[1012px] h-[56px]' >
                 <th className="w-[158px] h-[56px]  text-[12px] border-b text-left"> date</th>
@@ -154,7 +154,8 @@ const PayoutAccount = () => {
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item.agent.name}</td>
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item.agent.email}</td>
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item.agent.phone}</td>
-                  <td className="w-[158px]  h-[56px]  text-[12px]  ">{item.payment_method.name}<img src={item.payment_method.image_link} className='w-5 h-5'/></td>
+                  <td className="w-[158px]  h-[56px]  text-[12px]  ">{item.payment_method?.name}
+                    <img src={item.payment_method?.image_link} className='w-5 h-5'/></td>
                  <td className=" w-[158px]    h-[56px]  text-[16px]  text-nine  font-normal  rounded-[8px]">{item.status}</td>
                   {item.status !== 'canceled' ? (
                     <td className="w-[158px]    flex gap-1 justify-center items-center h-12  ">
@@ -170,6 +171,65 @@ const PayoutAccount = () => {
               ))}
             </tbody>
           </table>
+        </div>
+
+      </div>
+      
+      <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>date:</strong>
+                <span>{item.date}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>amount:</strong>
+                <span>{item.amount}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>currency:</strong>
+                <span>{item.currency.name}{item.currency.symbol}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>agent:</strong>
+                <span>{item.agent.name}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>email:</strong>
+                <span>{item.agent.email}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>phone:</strong>
+                <span>{item.agent.phone}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>Status:</strong>
+                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>method:</strong>
+
+                <img 
+                  className="w-5 h-5"
+                  src={item.payment_method?.image_link === null ? `data:image/png;base64,${item.payment_method?.image_link}` :item.payment_method?.image_link}
+            
+                /><span>{item.payment_method?.name}</span>
+              </div>
+              <div className='flex'>
+              {item.status !== 'canceled' ? (
+                    <td className="w-[158px]    flex gap-1 justify-center items-center h-12  ">
+                    <button onClick={() => handlecancel(item.id,item.agent.name)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
+                      confirm
+                    </button>
+                    <button className='bg-three py-1 px-2 rounded-[8px] text-white' onClick={() => handelcancel(item.id,item.agent.name)}>cancel</button>
+                  </td>) : (
+                    <td></td>
+                  )}
+              </div>
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
         </div>
       </div>
       <ToastContainer />

@@ -40,10 +40,10 @@ useEffect(() => {
     return inputString.replace(/\//g, ' ');
   }
 
-  useEffect(() => {
-    const updatedName = removeSlash(location.pathname);  // استبدال الـ "/" بالمسافات
-    setName(updatedName);  // تحديث الحالة
-  }, [location.pathname]);
+  // useEffect(() => {
+  //   const updatedName = removeSlash(location.pathname);  // استبدال الـ "/" بالمسافات
+  //   setName(updatedName);  // تحديث الحالة
+  // }, [location.pathname]);
 
   return (
     <div>
@@ -64,7 +64,7 @@ useEffect(() => {
         <button className='w-15 h-15 pl-10' onClick={handleopen}>
           <FiAlignJustify />
         </button>
-        <span className='w-full text-center lg:hidden  font-bold text-[20px]'>{name}</span>
+        {/* <span className='w-full text-center lg:hidden  font-bold text-[20px]'>{name}</span> */}
       </div>
 
     </div>

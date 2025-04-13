@@ -7,8 +7,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import axios from 'axios';
 import InputArrow from '../../ui/InputArrow';
 import InputField from '../../ui/InputField';
-import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
+import DatePicker from 'react-date-picker';
 
 const AddComplaints = () => {
   const navigate = useNavigate();
@@ -16,7 +16,7 @@ const AddComplaints = () => {
   const [user, setuser] = useState('');
   const [subject, setsubject] = useState('');
   const [message, setmessage] = useState('');
-  const [data, setdata] = useState(new Date());
+  const [data, setdata] = useState();
   const [edit, setEdit] = useState(false);
 
   const [errors, setErrors] = useState({
@@ -25,6 +25,21 @@ const AddComplaints = () => {
     message: '',
     data: '',
   });
+
+  
+  const handleDateChange = (newData) => {
+    if (newData) {
+      const day = newData.getDate() + 1;
+      const month = newData.getMonth() + 1;
+      const year = newData.getFullYear();
+
+      const formattedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+      setdata(formattedDate);
+    } else {
+      setdata("");
+    }
+  };
+
 
   useEffect(() => {
     const { snedData } = location.state || {};
@@ -37,15 +52,7 @@ const AddComplaints = () => {
     }
   }, [location.state]);
 
-  const handleDateChange = (newData) => {
-    const day = newData.getDate();
-    const month = newData.getMonth() + 1; 
-    const year = newData.getFullYear();
-
-
-    const formattedDate = `${year}-${month}-${day}`;
-    setdata(formattedDate); 
-  };
+ 
 
 
   const handleChange = (e) => {
@@ -140,7 +147,6 @@ const AddComplaints = () => {
       <AddAll navGo="/Complaints" name="add Complaints " />
       <div className="flex flex-wrap gap-6 mt-6">
         <InputArrow
-          like
           placeholder="user"
           name="users"
           value={user}
@@ -150,12 +156,21 @@ const AddComplaints = () => {
         <InputField onChange={handleChange} name="subject" value={subject} placeholder="subject " />
         <InputField onChange={handleChange} name="message" value={message} placeholder="message " />
 
-        <Calendar name="data" onChange={handleDateChange} value={data} />
+          <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10'>
+                <span className='text-[12px] md:text-[16px]'>date</span>
+                  <DatePicker
+                    onChange={handleDateChange}
+                    value={data}
+                    format="dd-MM-yyyy"
+                    disableClock={true}
+                    disableCalendar={false}
+                  />
+                </div>
       </div>
 
       <button onClick={handleSave}>
-        <img className="my-6" src={picdone} alt="Save" />
-      </button>
+            <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
+            </button>
       <ToastContainer />
     </div>
   );

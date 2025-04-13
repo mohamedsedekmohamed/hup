@@ -4,7 +4,7 @@ import { NavLink } from 'react-router-dom';
 const NavBooking = () => {
   return (
     <div>
-      <nav className="grid grid-cols-3 gap-6 p-5">
+      <nav className=" flex justify-evenly  p-0 md:grid md:grid-cols-3 gap-6 md:p-5">
       <NavLink 
   to="/Booking" 
   end

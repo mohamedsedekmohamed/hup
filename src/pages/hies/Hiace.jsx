@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
-import NavBuses from './NavBuses.jsx';
 import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 
-
-const BusesBuses = () => {
+const Hiace = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); 
@@ -18,14 +16,13 @@ const BusesBuses = () => {
   const token = localStorage.getItem('token');
 
   useEffect(() => {
-    axios.get("https://bcknd.ticket-hub.net/api/admin/busses", {
+    axios.get("https://bcknd.ticket-hub.net/api/admin/hiaces", {
       headers: {
         Authorization: `Bearer ${token}`,
       }
     })
       .then(response => {
-        setData(response.data.buses);
-        console.log(response.data.buses);
+        setData(response.data.hiaces);
       })
       .catch(error => {
         console.log(token);
@@ -64,7 +61,7 @@ const BusesBuses = () => {
 
   const handleEdit = (index) => {
     const snedData = data.find((item) => item.id === index);
-    navigate('/Buses/AddBuses', { state: { snedData } });
+    navigate('/Addhiace', { state: { snedData } });
   };
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){
@@ -93,8 +90,7 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
 
   return (
     <div>
-      <NavBuses />
-      <div className='flex justify-between items-center mt-10 px-5'>
+          <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
           <input
             placeholder='Search'
@@ -104,7 +100,7 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing navGo='/Buses/AddBuses' liked
+        <ThreeThing navGo='/Addhiace' liked
            labelMap={labelMap}
            cheose={cheose} // Pass the cheose array to ThreeThing component
            selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
@@ -215,4 +211,4 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
   );
 };
 
-export default BusesBuses;
+export default Hiace;

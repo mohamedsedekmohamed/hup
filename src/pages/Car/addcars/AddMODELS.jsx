@@ -179,8 +179,8 @@ const AddMODELS = () => {
     
     <SwitchButton  num value={valuee} setValue={setValue} />
     <button onClick={handleSave}>
-        <img className="my-6" src={picdone} alt="Save" />
-    </button>
+            <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
+            </button>
     <ToastContainer />
 </div>
   )

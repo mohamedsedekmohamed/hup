@@ -78,14 +78,14 @@ zone:"zone"
           />
           <CiSearch className='w-4 h-4 md:w-6 text-black font-medium absolute left-2 md:h-6' />
         </div>
-        <ThreeThing navGo='/Train/AddTrainClass' liked
+        <ThreeThing like liked
            labelMap={labelMap}
            cheose={cheose} // Pass the cheose array to ThreeThing component
            selectedFilter={selectedFilter} // Pass selectedFilter to TheeThing component
            setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
         />
       </div>
-      <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
@@ -107,13 +107,62 @@ zone:"zone"
                 <td className="w-[143px] h-[56px]  text-[14px]  ">{item.city}</td>
                 <td className="w-[143px] h-[56px]  text-[14px]  ">{item.zone}</td>
                 <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">
-                <button className='underline bg-three px-2 py-1 rounded-4xl' onClick={()=>Details(item.id)}>Details</button></td>    
+                <button className='underline bg-three px-2 py-1 rounded-4xl' 
+                onClick={()=>Details(item.id)}>Details</button></td>    
                
               </tr>
             ))}
           </tbody>
         </table>
       </div>
+            {/* Mobile view */}
+      <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>name:</strong>
+                <span>{item.name}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>name:</strong>
+                <span>{item.name}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>email:</strong>
+                <span>{item.email}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>country:</strong>
+                <span>{item.country}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>city:</strong>
+                <span>{item.city}</span>
+              </div>
+             
+              <div className="flex gap-4">
+                <strong>zone:</strong>
+                <span>{item.zone}</span>
+              </div>
+              <div className="flex gap-4">
+                <strong>Details:</strong>
+                <button className='underline bg-three px-2 py-1 rounded-4xl' 
+                onClick={()=>Details(item.id)}>Details</button>
+                              </div>
+             
+              
+           
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
+        </div>
+      </div>
+      
     </div>
   )
 }

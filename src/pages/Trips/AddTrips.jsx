@@ -15,11 +15,13 @@ import TimePicker from 'react-time-picker';
 import 'react-date-picker/dist/DatePicker.css';
 import 'react-time-picker/dist/TimePicker.css';
 import 'react-calendar/dist/Calendar.css';
+import WeekdaySelect from '../../ui/WeekdaySelect';
 const AddTrips = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [tripName, setTripName] = useState('');
   const [busId, setBusId] = useState('');
+  const [train_id, settrain_id] = useState('');
   const [pickupStationId, setPickupStationId] = useState('');
   const [dropoffStationId, setDropoffStationId] = useState('');
   const [cityId, setCityId] = useState('');
@@ -47,23 +49,23 @@ const AddTrips = () => {
   const [datastart, setdatastart] = useState('');
   const [cancellationDate, setCancellationDate] = useState();
   const [selectedDays, setSelectedDays] = useState([]);
-  const [edit, setEdit] = useState(false);
-
-  const handleDayChange = (event) => {
-    const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
-    setSelectedDays(prevDays => {
-      const newDays = [...prevDays];
-      selectedOptions.forEach(day => {
-        if (newDays.includes(day)) {
-          const index = newDays.indexOf(day);
-          newDays.splice(index, 1); // إزالة اليوم
-        } else {
-          newDays.push(day); // إضافة اليوم
-        }
-      });
-      return newDays;
-    });
-  };
+    const [edit, setEdit] = useState(false);
+  
+  // const handleDayChange = (event) => {
+  //   const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
+  //   setSelectedDays(prevDays => {
+  //     const newDays = [...prevDays];
+  //     selectedOptions.forEach(day => {
+  //       if (newDays.includes(day)) {
+  //         const index = newDays.indexOf(day);
+  //         newDays.splice(index, 1); // إزالة اليوم
+  //       } else {
+  //         newDays.push(day); // إضافة اليوم
+  //       }
+  //     });
+  //     return newDays;
+  //   });
+  // };
   
 useEffect(()=>{
   console.log(selectedDays)
@@ -73,6 +75,7 @@ useEffect(()=>{
   const [errors, setErrors] = useState({
     tripName: '',
     busId: '',
+    train_id: '',
     pickupStationId: '',
     dropoffStationId: '',
     cityId: '',
@@ -106,17 +109,19 @@ useEffect(()=>{
     const { snedData } = location.state || {};
     if (snedData) {
       setTripName(snedData.name);
-      setBusId(snedData.bus?.id); // access bus.id safely
+      setBusId(snedData.bus?.id); 
+      settrain_id(snedData.train?.id); 
       setPickupStationId(snedData.route?.origin?.pickup_station?.id);
       setDropoffStationId(snedData.route?.destination?.dropoff_station?.id);
       setCityId(snedData.route?.origin?.city?.id);
+      setdatastart(snedData.start_date);
       setZoneId(snedData.route?.origin?.zone?.id);
       setDepartureTime(snedData.departure_time);
       setArrivalTime(snedData.arrival_time);
       setAvailableSeats(snedData.available_seats);
       setCountryId(snedData.route?.origin?.country_id);
       setToCountryId(snedData.route?.destination?.country_id);
-      setToCityId(snedData.route?.destination?.city?.id);
+      setToCityId(snedData.route?.destination?.city?.id); 
       setToZoneId(snedData.route?.destination?.zone?.id);
       setDate(snedData.date);
       setPrice(snedData.price);
@@ -192,7 +197,7 @@ useEffect(()=>{
     if (!toCountryId) formErrors.toCountryId = 'To country ID is required';
     if (!toCityId) formErrors.toCityId = 'To city ID is required';
     if (!toZoneId) formErrors.toZoneId = 'To zone ID is required';
-    if (!date) formErrors.date = 'Date is required';
+    // if (!date) formErrors.date = 'Date is required';
     if (!price) formErrors.price = 'Price is required';
     if (!agentId) formErrors.agentId = 'Agent ID is required';
     if (!maxBookDate) {
@@ -202,7 +207,7 @@ useEffect(()=>{
     }
     
     if (!type) formErrors.type = 'Type is required';
-    if (!fixedDate) formErrors.fixedDate = 'Fixed date is required';
+    // if (!fixedDate) formErrors.fixedDate = 'Fixed date is required';
     if (!cancellationPolicy) formErrors.cancellationPolicy = 'Cancellation policy is required';
     if (!cancellationPayAmount) formErrors.cancellationPayAmount = 'Cancellation pay amount is required';
     if (!cancellationPayValue) formErrors.cancellationPayValue = 'Cancellation pay value is required';
@@ -349,7 +354,7 @@ useEffect(()=>{
         });
       return;
     }
-
+    
     axios.post('https://bcknd.ticket-hub.net/api/admin/trip/add', newTrip, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -402,22 +407,42 @@ useEffect(()=>{
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
       <AddAll navGo='/Trips' name='add Trips' />
       <div className="flex flex-wrap gap-6 mt-6">
-        <InputField
+       
+<div className='w-full flex-col  '>
+  <h2 className='text-2xl text-one  font-bold'>Trip Information</h2>
+  <div className='flex w-full mt-4 flex-wrap gap-1.5 justify-start'>
+  <InputField
           placeholder="Trip Name"
           name="trip_name"
           value={tripName}
           onChange={handleChange}
           required
         />
-        <InputArrow
-          placeholder="Country "
+          <Inputfiltter
+          placeholder="Trip Type"
+          name="three"
+          value={tripType}
+          onChange={handleChange}
+          required
+        />
+  </div>
+</div>
+     
+        
+<div className='w-full flex-col  '>
+  <h2 className='text-2xl text-one  font-bold'>Location Information</h2>
+  <div>
+
+  <div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
+  <InputArrow
+          placeholder="from Country "
           name="countries"
           value={countryId}
           onChange={handleChange}
           required
         />
         <Inputfiltter
-          placeholder="City "
+          placeholder=" from City "
           name="cities"
           value={cityId}
           onChange={handleChange}
@@ -425,21 +450,18 @@ useEffect(()=>{
           required
         />
         <Inputfiltter
-          placeholder="Zone "
+          placeholder="from Zone "
           name="zones"
           value={zoneId}
           onChange={handleChange}
           shara={cityId}
           required
         />
-        <Inputfiltter
-          placeholder="Pickup Station"
-          name="stations"
-          shara={zoneId}
-          value={pickupStationId}
-          onChange={handleChange}
-          required
-        />
+        
+
+</div>
+<div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
+
         <InputArrow
           placeholder="To Country"
           name="countries"
@@ -463,7 +485,22 @@ useEffect(()=>{
           onChange={handleChangetwo}
           required
         />
-        <Inputfiltter
+    
+  </div>
+  </div>
+         </div>
+         <div className='w-full flex-col  '>
+         <h2 className='text-2xl text-one  font-bold'>PickUp & DropOff Information </h2>
+         <div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
+         <Inputfiltter
+          placeholder="Pickup Station"
+          name="stations"
+          shara={zoneId}
+          value={pickupStationId}
+          onChange={handleChange}
+          required
+        />
+            <Inputfiltter
           placeholder="Dropoff Station"
           name="stations"
           shara={toZoneId}
@@ -471,9 +508,48 @@ useEffect(()=>{
           onChange={handleChangetwo}
           required
         />
+           <InputField
+          placeholder="Available Seats"
+          name="avalible_seats"
+          value={availableSeats}
+          onChange={handleChange}
+          required
+        />
+      {tripType==="bus" &&(
+          <Inputfiltter
+          placeholder="bus"
+          name="busses"
+          value={busId}
+          onChange={handleChange}
+          required
+        />
+      )}
+      {tripType==="hiace"&&(
+          <Inputfiltter
+          placeholder="hiaces"
+          name="hiaces"
+          value={busId}
+          onChange={handleChange}
+          required
+        />
+      )}
+       {tripType==="train" &&(
+          <Inputfiltter
+          placeholder="trains "
+          name="trains"
+          value={busId}
+          onChange={handleChange}
+          required
+        />
+      )}
+       
+</div>
+</div>
+        
+       
 
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
-          <span>departureTime</span>
+        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10 '>
+          <span className='text-[12px] md:text-[16px]'>departureTime</span>
           <TimePicker
             onChange={handledepartureTime}
             value={departureTime}
@@ -481,8 +557,8 @@ useEffect(()=>{
             disableClock={true}
           />
         </div>
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
-          <span>Start data</span>
+        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven   pl-0 md:pl-10'>
+          <span className='text-[12px] md:text-[16px]'>Start date</span>
           <DatePicker 
             onChange={handstartDate}
             value={datastart}
@@ -490,8 +566,8 @@ useEffect(()=>{
             disableClock={true}
           />
         </div>
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
-          <span>arrivalTime</span>
+        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven  pl-0 md:pl-10'>
+        <span className='text-[12px] md:text-[16px]'>arrivalTime</span>
           <TimePicker
             onChange={handlearrivalTime}
             value={arrivalTime}
@@ -501,8 +577,8 @@ useEffect(()=>{
           />
         </div>
 
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10'>
-          <span>date</span>
+        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10'>
+        <span className='text-[12px] md:text-[16px]'>date</span>
           <DatePicker
             onChange={handleDatePickerChange}
             value={date}
@@ -511,13 +587,7 @@ useEffect(()=>{
             disableCalendar={false}
           />
         </div>
-        <InputField
-          placeholder="Available Seats"
-          name="avalible_seats"
-          value={availableSeats}
-          onChange={handleChange}
-          required
-        />
+     
 
         <InputField
           placeholder="Price"
@@ -552,7 +622,7 @@ useEffect(()=>{
           required
         />
         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-2'>
-          <span>Fixed Date</span>
+        <span className='text-[12px] md:text-[16px]'>Fixed Date</span>
           <DatePicker
             onChange={handlehandlemaxBookDate}
             value={fixedDate}
@@ -563,33 +633,7 @@ useEffect(()=>{
         </div>
 
      
-      <select
-  id="options"
-  value={selectedDays}
-  onChange={handleDayChange}
-  style={{
-
-  }}
-  className="w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-10"
->
-  <option value="null">Weekdays</option>
-  {['Saturday', 'Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'].map((day) => {
-  if (selectedDays.includes(day)) {
-    return (
-      <option key={day} value={day} className="bg-blue-500 text-white">
-        {day}
-      </option>
-    );
-  } else {
-    return (
-      <option key={day} value={day}>
-        {day}
-      </option>
-    );
-  }
-})}
-
-</select>
+        <WeekdaySelect selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
 
 
         <InputField
@@ -620,13 +664,7 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
-        <Inputfiltter
-          placeholder="Trip Type"
-          name="three"
-          value={tripType}
-          onChange={handleChange}
-          required
-        />
+      
         <InputArrow
           placeholder="Currency"
           name="currencies"
@@ -634,8 +672,8 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0'>
-          <span>Cancellation Date </span>
+        <div className=' flex flex-col md:flex-row gap-0.5 md:gap-0 md:justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0'>
+        <span className='text-[12px] md:text-[16px]'>Cancellation Date </span>
           <DatePicker
             onChange={handleCancellationDate}
             value={cancellationDate}
@@ -645,13 +683,6 @@ useEffect(()=>{
           />
         </div>
 
-        <InputArrow
-          placeholder="bus "
-          name="busses"
-          value={busId}
-          onChange={handleChange}
-          required
-        />
         <SwitchButton value={status} setValue={setStatus} />
 
 

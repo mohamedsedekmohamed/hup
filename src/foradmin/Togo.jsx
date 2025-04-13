@@ -13,6 +13,8 @@ import Bookingdetails from '../pages/Booking/Addbooking/Bookingdetails.jsx';
 import Bookingdetailsmore from '../pages/Booking/Addbooking/Bookingdetailsmore.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
+import Hiace from '../pages/hies/Hiace.jsx';
+import Addhiace from '../pages/hies/Addhiace.jsx';
 
 import Agents from '../pages/Agents/Agents.jsx';
 import AddAgents from '../pages/Agents/AddAgents.jsx'
@@ -60,9 +62,16 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
       setActiveLink('/User');
     } else if (location.pathname === '/Location/Cities' || location.pathname === '/Location/Zones' || location.pathname === '/Location/Stations' || location.pathname === '/Location/Addcountries' || location.pathname === '/Location/Addcities' || location.pathname === '/Location/Addzones' || location.pathname === '/Location/AddOffStation') {
       setActiveLink('/Location');
-    } else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/BusesHistory' || location.pathname === '/Buses/Operation' || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
+    } 
+    else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/BusesHistory' || location.pathname === '/Buses/Operation' || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
       setActiveLink('/Buses');
-    } else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings'
+    }
+    
+    else if (location.pathname === '/Car/BRANDS' || location.pathname === '/Car/MODELS' || location.pathname === '/Car/CARS' || 
+      location.pathname === '/Car/AddCaetogries' || location.pathname === '/Car/AddBRANDS' || location.pathname === '/Car/AddMODELS' || location.pathname === '/Car/AddCARS') {
+      setActiveLink('/Car');
+    }
+     else if (location.pathname === '/Booking/BookingHistory' || location.pathname === '/Booking/CurrentBookings'
       || location.pathname === '/Booking/CanceledBooking'
       || location.pathname === '/Bookingdetails'
       || location.pathname === '/Bookingdetailsmore'
@@ -100,9 +109,17 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
       setActiveLink('/Settings/Nationality');
     } else if (location.pathname === '/Settings/AddSubjectComplaints') {
       setActiveLink('/Settings/SubjectComplaints');
-    } else if (location.pathname === '/Settings/AddOperatorPayment') {
+    } 
+    else if (location.pathname === '/Settings/AddOperatorPayment') {
       setActiveLink('/Settings/OperatorPayment');
-    } else if (location.pathname === '/Tarins/Tarin') {
+    }
+    else if (location.pathname === '/Settings/AddFees') {
+      setActiveLink('/Settings/Fees');
+    }
+    else if (location.pathname === '/Addhiace') {
+      setActiveLink('/Hiace');
+    }
+     else if (location.pathname === '/Tarins/Tarin') {
       setActiveLink('/Tarins/Tarin');
     } else {
       setActiveLink(location.pathname);
@@ -137,6 +154,9 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
           <Route path='/Car/*' element={<Car />} />
           <Route path='/Train/*' element={<Train />} />
           {/*  */}
+
+          <Route path='/Hiace' element={<Hiace />} />
+          <Route path='/Addhiace' element={<Addhiace/>} />
 
           <Route path='/Commission' element={<CommissionSetup />} />
           <Route path='/AddCommission' element={<AddCommissionSetup />} />

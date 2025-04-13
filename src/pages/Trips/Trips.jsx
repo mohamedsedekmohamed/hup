@@ -7,7 +7,7 @@ import { useNavigate } from 'react-router-dom';
 import { CiSearch } from "react-icons/ci";
 import ThreeThing from '../../component/ThreeThing';
 
-import Swal from 'sweetalert2';
+import Swal from 'sweetalert2'
 const Trips = () => {
    const [data, setData] = useState([]);
      const [searchQuery, setSearchQuery] = useState(''); 
@@ -120,12 +120,12 @@ const labelMap = {
              
             </div>
       
-          <div className=" mt-10 ml-5">
-                  <table className="w-full  border-y border-black">
+            <div className="mt-10 ml-5 hidden lg:block">
+            <table className="w-full  border-y border-black">
                     <thead  className="w-full">
                       <tr className='bg-four w-[1012px] h-[56px]' >
                         <th className="w-[158px] h-[56px]  text-[12px] border-b text-left">name</th>
-                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">  type</th>
+                        <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">type</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">date</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">departure time</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">arrival time</th>
@@ -161,6 +161,59 @@ const labelMap = {
                       ))}
                     </tbody>
                   </table>
+                </div>
+                    {/* Mobile view */}
+                <div className="mt-10 ml-5 lg:hidden">
+                  <div className='w-[95%] bg-six'>
+                    {filteredData.map((item, index) => (
+                      <div key={index} className='flex flex-col gap-4 p-3'>
+                        <div className="flex gap-4">
+                          <strong>name:</strong>
+                          <span>{item.name}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>type:</strong>
+                          <span>{item.trip_type}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>date:</strong>
+                          <span>{item.date}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>departure time:</strong>
+                          <span>{item.departure_time}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>arrival time:</strong>
+                          <span>{item.arrival_time}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>price:</strong>
+                          <span>{item.price}</span>
+                        </div>
+                        <div className="flex gap-4">
+                          <strong>currency:</strong>
+                          <span>{item.currency_name}</span>
+                        </div>
+
+                        <div className="flex gap-4">
+                          <strong>Status:</strong>
+                          <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+                        </div>
+                     
+                        <div className='flex'>
+                          <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                          <img
+                            className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                            src={delet}
+                            onClick={() => handleDelete(item.id,item.name)}   
+                            alt="delete"
+                          />
+                        </div>
+                        <div className='w-full bg-white h-2'></div>
+                      </div>
+                    ))}
+                  </div>
                 </div>
     </div>
   )

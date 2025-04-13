@@ -4,12 +4,12 @@ import { NavLink } from 'react-router-dom';
 const Navcars = () => {
   return (
       <div>
-         <nav className=" flex flex-col md:grid md:grid-cols-4 gap-6 p-5">
+         <nav className=" flex   justify-evenly  md:grid md:grid-cols-4 gap-2 md:gap-6 p-5">
          <NavLink 
      to="/Car" 
      end
      className={({ isActive }) => 
-       `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
+       `text-center py-3 px-1 text-gray-800 font-semibold border border-transparent transition-colors 
        ${isActive ? 'border-b-1 border-b-three' : ''}`
      }
    >
@@ -18,7 +18,7 @@ const Navcars = () => {
            <NavLink 
              to="/Car/BRANDS"
              className={({ isActive }) => 
-               `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
+               `text-center py-3 px-1 text-gray-800 font-semibold border border-transparent transition-colors 
                ${isActive ? 'border-b-1 border-b-three' : ''}`
              }
            >
@@ -27,7 +27,7 @@ const Navcars = () => {
            <NavLink 
              to="/Car/MODELS"
              className={({ isActive }) => 
-               `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
+               `text-center py-3 px-1 text-gray-800 font-semibold border border-transparent transition-colors 
                ${isActive ? 'border-b-1 border-b-three' : ''}`
              }
            >
@@ -36,7 +36,7 @@ const Navcars = () => {
            <NavLink 
              to="/Car/CARS"
              className={({ isActive }) => 
-               `text-center py-3 px-4 text-gray-800 font-semibold border border-transparent transition-colors 
+               `text-center py-3 px-1 text-gray-800 font-semibold border border-transparent transition-colors 
                ${isActive ? 'border-b-1 border-b-three' : ''}`
              }
            >

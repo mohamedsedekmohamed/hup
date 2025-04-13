@@ -17,6 +17,7 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
     if (name === "three") {
       const typeArray = [
         { name: "bus" },
+        { name: "hiace" },
         { name: "train" }]
       setArrthing(typeArray)
     }
@@ -39,7 +40,10 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
       setArrthing(typeArray)
     }
     if (name === "cities" || name === "zones" || name === "countries" || name === "bus_types"
-      || name === "agents" || name === 'car_brands' || name === "car_models" || name === "stations") {
+      || name === "agents" || name === 'car_brands' 
+      || name === "car_models" || name === "stations"
+      ||name==="trains"
+    ||name==="hiaces"||name==="busses") {
       axios.get(`https://bcknd.ticket-hub.net/api/admin/${name}`, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -97,6 +101,15 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
     }
     else if (name === "car_models") {
       setArrthing(response.data);
+    }
+    else if (name === "trains") {
+      setArrthing(response.data.train);
+    }
+    else if (name === "hiaces") {
+      setArrthing(response.data.hiaces);
+    }
+    else if (name === "busses") {
+      setArrthing(response.data.buses);
     }
 
   })
@@ -216,6 +229,27 @@ return (
           return (
             <option key={index} value={item.id}>
               {item.name}
+            </option>
+          );
+        }
+        else if (control === "trains") {
+          return (
+            <option key={index} value={item.id}>
+              {item.name}
+            </option>
+          );
+        }
+        else if (control === "hiaces") {
+          return (
+            <option key={index} value={item.id}>
+              {item.name}
+            </option>
+          );
+        }
+        else if (control === "busses") {
+          return (
+            <option key={index} value={item.id}>
+            {`numbre ${item.bus_number} name ${item.bus_type_name}`}  
             </option>
           );
         }

@@ -154,10 +154,10 @@ const cheose = ["Filter","country_name", "name", "status"]
                 <span>{item.name}</span>
               </div>
               <div className="flex gap-4">
-              <div className="flex gap-4">
                 <strong>Country:</strong>
                 <span>{item.country_name}</span>
               </div>
+              <div className="flex gap-4">
                 <strong>Status:</strong>
                 <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
               </div>

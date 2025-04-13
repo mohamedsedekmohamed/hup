@@ -22,12 +22,10 @@ const Cancelpayout = () => {
          })
            .then(response => {
              setData(response.data.payout);
-             console.log(response.data.payout);
      
            })
-           .catch(error => {
-             console.log(token);
-             console.error('Error fetching data:', error);
+           .catch(() => {
+           
            });
        }, [update])
      
@@ -78,7 +76,7 @@ return (
              setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
              />
       </div>
-      <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
@@ -93,8 +91,6 @@ return (
 
             {filteredData.map((item, index) => (
               <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-               
-
                                 <td className="w-[143px] h-[56px]  text-[16px] ">{item.date}</td>
                                 <td className="w-[143px] h-[56px]  text-[16px]  ">{item.amount}</td>
                                 <td className="w-[143px] h-[56px]  text-[16px]  ">{item.currency.name}{item.currency.symbol}</td>
@@ -106,6 +102,38 @@ return (
             ))}
           </tbody>
         </table>
+      </div>
+    </div>
+      {/* Mobile view */}
+    <div className="mt-10 ml-5 lg:hidden">
+      <div className='w-[95%] bg-six'>
+        {filteredData.map((item, index) => (
+          <div key={index} className='flex flex-col gap-4 p-3'>
+            <div className="flex gap-4">
+              <strong>date:</strong>
+              <span>{item.date}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>amount:</strong>
+              <span>{item.amount}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>currency:</strong>
+              <span>{item.currency.name}{item.currency.symbol}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>agent:</strong>
+              <span>{item.agent.name}</span>
+            </div>
+            <div className="flex gap-4">
+              <strong>Status:</strong>
+              <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+            </div>
+        
+          
+            <div className='w-full bg-white h-2'></div>
+          </div>
+        ))}
       </div>
     </div>
                             <ToastContainer />

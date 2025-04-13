@@ -3,8 +3,8 @@ import { NavLink } from 'react-router-dom';
 
 const NavBuses= () => {
   return (
-    <div>
-      <nav className="grid grid-cols-3 gap-6 p-5">
+    <div  >
+      <nav className=" flex justify-evenly  md:grid md:grid-cols-3 gap-6 p-5">
       <NavLink 
   to="/Buses" 
   end

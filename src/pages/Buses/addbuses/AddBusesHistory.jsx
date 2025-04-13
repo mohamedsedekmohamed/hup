@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+ import React, { useEffect, useState } from 'react';
 import AddAll from '../../../ui/AddAll';
 import picdone from '../../../assets/picdone.svg';
 import { ToastContainer, toast } from 'react-toastify';
@@ -7,13 +7,14 @@ import axios from 'axios';
 import { useNavigate, useLocation } from 'react-router-dom';
 import InputField from '../../../ui/InputField';
 import SwitchButton from '../../../ui/SwitchButton';
+import  FileUploadButton from '../../../ui/FileUploadButton'
 
 const AddBusesHistory = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [name, setname] = useState('')
   const [edit, setEdit] = useState(false);
-  const [valuee, setValue] = useState("0");
+  const [valuee, setValue] = useState("inactive");
   const [icon, seticon] = useState('');
 
   const [errors, setErrors] = useState({
@@ -23,18 +24,32 @@ const AddBusesHistory = () => {
   const validateForm = () => {
     let formErrors = {};
     if (!name) formErrors.name = ' Aminit is required';
-    if (!icon) formErrors.name = ' icon is required';
     setErrors(formErrors);
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
     });
     return Object.keys(formErrors).length === 0;
   };
+  
+  function convertImageUrlToBase64(url) {
+    return fetch(url)
+      .then((response) => response.blob())
+      .then((blob) => {
+        return new Promise((resolve, reject) => {
+          const reader = new FileReader();
+          reader.onloadend = () => resolve(reader.result); 
+          reader.onerror = reject;
+          reader.readAsDataURL(blob); 
+        });
+      })
+      .catch((error) => {
+        console.error("Error converting image to Base64", error);
+      });
+  }
 
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") setname(value)
-    if (icon === "icon") seticon(value)
   }
 
 
@@ -42,8 +57,16 @@ const AddBusesHistory = () => {
     const { snedData } = location.state || {};
     if (snedData) {
       setname(snedData.name);
-      setname(snedData.icon);
-      setValue(snedData.status);
+      if(snedData.icon_link){
+        convertImageUrlToBase64(snedData.icon_link)
+        .then((base64Flag) => {
+          seticon(base64Flag);  
+          seticon(base64Flag); 
+        })
+        .catch((error) => {
+            console.error("Error converting flag image:", error);
+        });
+      }      setValue(snedData.status);
     }
   }, [location.state]);
 
@@ -55,9 +78,11 @@ const AddBusesHistory = () => {
     const newBus = {
       name: name,
       icon: icon,
-      status: valuee,
+      status:valuee,
     }
-
+    if(icon!=icon){
+      newBus.icon_link=icon
+    }
     const { snedData } = location.state || {};
     const token = localStorage.getItem('token');
 
@@ -100,10 +125,15 @@ const AddBusesHistory = () => {
     }
     setEdit('')
     setValue('0')
-    seticon('')
+    seticon(null)
     setname('')
   };
+  const handleFileChange = (file, type) => {
+    if (file) {
+      if (type === 'icon') seticon(file);
 
+    }
+  };
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
       <AddAll navGo='/Buses/BusesHistory' name="Add Aminit " />
@@ -113,14 +143,18 @@ const AddBusesHistory = () => {
         value={name}
         onChange={handleChange}
       />
-      
+        <FileUploadButton
+                name="icon"
+                kind="icon"
+                flag={icon}
+                onFileChange={handleFileChange}
+            />
 
 <SwitchButton value={valuee} setValue={setValue} />
 
-      <button onClick={handleSave}>
-        <img className="my-6 mx-5" src={picdone} alt="Save" />
-      </button>
-
+<button onClick={handleSave}>
+            <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
+            </button>
       <ToastContainer />
 
     </div>

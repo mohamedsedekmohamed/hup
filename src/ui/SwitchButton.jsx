@@ -1,12 +1,12 @@
-import React, { useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 
 const SwitchButton = ({ value, setValue, num, title }) => {
   const kind = num ? "checkbox" : "";
-useEffect(()=>{
-  console.log(value)
+// useEffect(()=>{
+//   console.log(value)
 
-},[])
+// },[value])
   const toggleValue = () => {
     if (num) {
       setValue(value === "0" ? "1" : "0");

@@ -123,7 +123,7 @@ const labelMap = {
           setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
         />
       </div>
-      <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
@@ -168,7 +168,61 @@ const labelMap = {
           </tbody>
         </table>
       </div>
-    
+    <div className="mt-10 ml-5 lg:hidden">
+            <div className='w-[95%] bg-six'>
+              {filteredData.map((item, index) => (
+                <div key={index} className='flex flex-col gap-4 p-3'>
+                  <div className="flex gap-4">
+                    <strong>model:</strong>
+                    <span>{item.model_name}</span>
+                  </div>
+                
+                  <div className="flex gap-4">
+                    <strong>image:</strong>
+                    <img 
+                      className="w-5 h-5"
+                      src={item.image === null ? `data:image/png;base64,${item.image}` : item.image}
+                    />
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>category:</strong>
+                    <span>{item.category_name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>brand:</strong>
+                    <span>{item.brand_name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>agent:</strong>
+                    <span>{item.agent_name}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>car number:</strong>
+                    <span>{item.car_number}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>car color:</strong>
+                    <span>{item.car_color}</span>
+                  </div>
+                  <div className="flex gap-4">
+                    <strong>year:</strong>
+                    <span>{item.car_year}</span>
+                  </div>
+                  <div className='flex'>
+                    <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                    <img
+                      className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                      src={delet}
+                      onClick={() => handleDelete(item.id,item.name)}   
+                      alt="delete"
+                    />
+                  </div>
+                  <div className='w-full bg-white h-2'></div>
+                </div>
+              ))}
+            </div>
+          </div>
+          
     </div>
   )
 }

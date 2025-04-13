@@ -112,7 +112,7 @@ const Nationality = () => {
              />
       </div>
 
-      <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
@@ -143,6 +143,29 @@ const Nationality = () => {
             ))}
           </tbody>
         </table>
+      </div>
+
+      <div className="mt-10 ml-5 lg:hidden">
+        <div className='w-[95%] bg-six'>
+          {filteredData.map((item, index) => (
+            <div key={index} className='flex flex-col gap-4 p-3'>
+              <div className="flex gap-4">
+                <strong>Country:</strong>
+                <span>{item.name}</span>
+              </div>
+            
+              <div className='flex'>
+                <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                <img
+                  className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                  src={delet}
+                  onClick={() => handleDelete(item.id,item.name)}   
+                />
+              </div>
+              <div className='w-full bg-white h-2'></div>
+            </div>
+          ))}
+        </div>
       </div>
 
     </div>

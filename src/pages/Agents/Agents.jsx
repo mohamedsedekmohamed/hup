@@ -138,7 +138,7 @@ const labelMap = {
         />
        
       </div>
-      <div className=" mt-10 ml-5">
+      <div className="mt-10 ml-5 hidden lg:block">
         <table className="w-full  border-y border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
@@ -182,6 +182,61 @@ const labelMap = {
           </tbody>
         </table>
       </div>
+         <div className="mt-10 ml-5 lg:hidden">
+              <div className='w-[95%] bg-six'>
+                {filteredData.map((item, index) => (
+                  <div key={index} className='flex flex-col gap-4 p-3'>
+                    <div className="flex gap-4">
+                      <strong>name:</strong>
+                      <span>{item.name}</span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <strong>phone:</strong>
+                      <span>{item.phone}</span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <strong>points:</strong>
+                      <span>{item.points}</span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <strong>role:</strong>
+                      <span>{item.role}</span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <strong>email:</strong>
+                      <span>{item.email}</span>
+                    </div>
+
+                    <div className="flex gap-4">
+                      <strong>commission:</strong>
+                      <button
+                className='bg-three px-2  rounded-4xl py-1'
+                onClick={()=>show(item.commissions)}>commission</button>
+                                    </div>
+                    <div className="flex gap-4">
+                      <strong>image:</strong>
+                      <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
+                      </div>
+
+  
+                    <div className='flex'>
+                      <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
+                      <img
+                        className='w-[24px] h-[24px] ml-2 cursor-pointer'
+                        src={delet}
+                        onClick={() => handleDelete(item.id,item.name)}   
+                        alt="delete"
+                      />
+                    </div>
+                    <div className='w-full bg-white h-2'></div>
+                  </div>
+                ))}
+              </div>
+            </div>
     </div>
   )
 }

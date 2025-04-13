@@ -207,6 +207,7 @@ setValue('inactive')
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
       <AddAll navGo='/Buses/TypeBuses' name="Add Type Buses " />
+<div className='flex flex-wrap gap-6'>
 
       <InputField
                 placeholder=" Name"
@@ -237,13 +238,14 @@ setValue('inactive')
                 flag={seatsImage}
                 onFileChange={handleFileChange}
                 kind="seatsImage"
-            />
+                />
 
 <SwitchButton value={valuee} setValue={setValue} />
 
 
-          <button onClick={handleSave}>
-                      <img className="my-6" src={picdone} alt="Save" />
+                </div>
+      <button onClick={handleSave}>
+                  <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
                   </button>
                   <ToastContainer />
     </div>
