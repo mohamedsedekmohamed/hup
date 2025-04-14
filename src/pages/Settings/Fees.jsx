@@ -115,6 +115,7 @@ const Fees = () => {
              setSelectedFilter={setSelectedFilter} // Function to update selectedFilter
              />)}
           
+          
       </div>
       <div className="mt-10 ml-5 hidden lg:block">
       <table className="w-full border-y border-x border-black ">
