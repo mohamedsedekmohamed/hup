@@ -291,8 +291,10 @@ useEffect(() => {
         <InputField placeholder="Phone" name="phone" value={phone} onChange={handleChange} required />
         <InputField placeholder="Email" name="email" value={email} onChange={handleChange} required />
         <InputField placeholder="Password" name="password" value={password} onChange={handleChange} required />
+        <div className='flex items-end justify-center'>
+
         <FileUploadButton name="image" kind="image" flag={flag} onFileChange={handleFileChange} />
-  
+</div>  
 </div>
 <div className=' flex  gap-2'>
 

@@ -148,11 +148,11 @@ const Complaints = () => {
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-            <table className="w-full  border-y border-black">
-              <thead  className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead  className="w-full">
                 <tr className='bg-four w-[1012px] h-[56px]' >
                   
-                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">message</th>
+                  <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left pl-3">message</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">date</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">reject</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">resolve</th>
@@ -164,10 +164,10 @@ const Complaints = () => {
               <tbody>
                
               {filteredData.map((item,index) => (
-                  <tr key={index} className='border-y relative hover:bg-six hover:border-y-2'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
       
                   
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.message}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px] px-1  ">{item.message}</td>
                     <td className="w-[143px] h-[56px]  text-[16px] ">{item.date}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">  <button onClick={()=>handreject(item.id,item.message)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
                      reject

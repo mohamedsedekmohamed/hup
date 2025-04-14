@@ -19,6 +19,8 @@ function LoginIn({ setIsLoggedIn }) {
 
     const handleLogin = () => {
     setLoading(true);
+    // localStorage.removeItem('isLoggedIn');
+    localStorage.removeItem('token');
     axios
       .post('https://bcknd.ticket-hub.net/api/login', { 
         email: username, 

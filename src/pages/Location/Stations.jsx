@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+  import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../component/ThreeThing';
@@ -23,8 +23,8 @@ const Stations = () => {
       headers: { Authorization: `Bearer ${token}` },
     })
       .then(response => {
-        setData(response.data.dropoff);
-        setDatatwo(response.data.pickup);
+        setData(response.data.pickup);
+        setDatatwo(response.data.dropoff);
       })
       .catch(error => {
         console.error('Error fetching data:', error);
@@ -90,10 +90,10 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
   return (
     <>
     <div className="mt-10 ml-5 hidden lg:block">
-      <table className="w-full border-y border-black">
+      <table className="w-full  border-y border-x border-black">
         <thead className="w-full">
           <tr className='bg-four w-[1012px] h-[56px]'>
-            <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Name</th>
+            <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">Name</th>
             <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
             <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City</th>
             <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Zone</th>
@@ -103,8 +103,8 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
         </thead>
         <tbody>
           {filtered.map((item, index) => (
-            <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-              <td className="w-[143px] h-[56px] text-[16px] ">{item.name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+              <td className="w-[143px] h-[56px] text-[16px] px-4">{item.name}</td>
               <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>
               <td className="w-[143px] h-[56px] text-[16px] ">{item.city_name}</td>
               <td className="w-[143px] h-[56px] text-[16px] ">{item.zone_name}</td>
@@ -165,8 +165,8 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
     <div>
       <NavLocation />
       <div className='flex mx-2 mt-6 gap-3'>
-        <Tiglebutton action={action === 'on' ? 'on' : 'off'} onClick={() => handleToggle('on')} title='Pick-up' />
-        <Tiglebutton action={action === 'on' ? 'off' : 'on'} onClick={() => handleToggle('off')} title='Drop-off' />
+        <Tiglebutton action={action === 'on' ? 'on' : 'off'} onClick={() => handleToggle('on')} title='Drop-off' />
+        <Tiglebutton action={action === 'on' ? 'off' : 'on'} onClick={() => handleToggle('off')} title='Pick-up' />
       </div>
 
       {/* Search Bar */}

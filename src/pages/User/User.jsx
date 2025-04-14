@@ -126,10 +126,10 @@
 
         {/* Table for larger screens */}
         <div className="mt-10 ml-5 hidden lg:block">
-          <table className="w-full border-y border-black">
-            <thead className="w-full">
+          <table className="w-full border-y border-x border-black ">
+            <thead className="w-full ">
               <tr className='bg-four w-[1012px] h-[56px]'>
-                <th className="w-[158px] h-[56px] text-[16px] border-b text-left">User</th>
+                <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">User</th>
                 <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Gmail</th>
                 <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country</th>
                 <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Cities</th>

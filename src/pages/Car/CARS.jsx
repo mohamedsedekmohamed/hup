@@ -124,10 +124,10 @@ const labelMap = {
         />
       </div>
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full  border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left"> model</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3"> model</th>
               <th className="w-[158px] h-[56px]  text-[16px] border-b text-left"> category</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">brand</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">agent</th>
@@ -141,8 +141,8 @@ const labelMap = {
           <tbody>
 
             {filteredData.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                <td className="flex gap-1 ">
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="flex gap-1 px-2 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
                   <span className='w-[143px] h-[56px]  text-[16px]'>{item.model_name}</span>
                   </td>

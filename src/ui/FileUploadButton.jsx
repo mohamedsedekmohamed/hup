@@ -3,6 +3,8 @@ import React, { useState } from 'react';
 const FileUploadButton = ({ onFileChange, kind }) => {
   const [file, setFile] = useState(null);
   const [error, setError] = useState(''); 
+  // const [show, showed] = useState(null); 
+
 
   const handleFileChange = (event) => {
     const selectedFile = event.target.files[0]; 
@@ -14,7 +16,8 @@ const FileUploadButton = ({ onFileChange, kind }) => {
         const reader = new FileReader();
 
         reader.onloadend = () => {
-          const base64String = reader.result;  
+          const base64String = reader.result; 
+          // showed(base64String); // Show the image preview
           if (onFileChange) onFileChange(base64String, kind); // Send the base64 string to onFileChange
         };
 
@@ -40,6 +43,10 @@ const FileUploadButton = ({ onFileChange, kind }) => {
       >
         {kind}
       </button>
+      {/* {flag && (  <div className='flex justify-center items-center  w-[200px] md:w-[300px] gap-2 mt-2'>
+       <img className='w-10 h-10' src={show|| `data:image/png;base64,${show}`}/>
+      </div>)}
+     */}
       
 
     

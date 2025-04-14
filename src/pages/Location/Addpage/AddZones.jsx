@@ -26,12 +26,12 @@ const Addzones= () => {
 
 
  useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setCountry(snedData.country_id);
-      setCity(snedData.city_id);
-      setName(snedData.name);
-      setValue(snedData.status);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setCountry(sendData.country_id);
+      setCity(sendData.city_id);
+      setName(sendData.name);
+      setValue(sendData.status);
       setEdit(true);
     }
   }, [location.state]);

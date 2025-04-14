@@ -45,14 +45,14 @@ const AddCountries = () => {
     }
 
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setCountry(snedData.name);
-            setValue(snedData.status);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setCountry(sendData.name);
+            setValue(sendData.status);
             setEdit(true);
 
-            if (snedData.flag) {
-                convertImageUrlToBase64(snedData.flag)
+            if (sendData.flag) {
+                convertImageUrlToBase64(sendData.flag)
                     .then((base64Flag) => {
                         setFlag(base64Flag);
                         setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
@@ -98,8 +98,8 @@ const AddCountries = () => {
         console.log("Data to be sent:", newCountryData);
 
         if (edit) {
-            const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/country/update/${snedData.id}`, newCountryData, {
+            const { sendData } = location.state || {};
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/country/update/${sendData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

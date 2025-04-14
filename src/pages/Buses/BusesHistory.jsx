@@ -112,10 +112,10 @@ const cheose = ["Filter","name","status"
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">Name</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Icon</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
@@ -123,8 +123,8 @@ const cheose = ["Filter","name","status"
           </thead>
           <tbody>
             {filteredData.map((item, index) => (
-              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px]  ">{item.name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item.name}</td>
                 <td><img className="w-5 h-5" src={item.icon_link} alt="Icon" /></td>
                 <td className="w-[143px] h-[56px] text-[16px]  ">{item.status}</td>
                 <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-2 items-center">

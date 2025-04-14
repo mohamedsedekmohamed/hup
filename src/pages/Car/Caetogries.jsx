@@ -119,10 +119,10 @@ const Caetogries = () => {
        
       </div>
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full  border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left"> Name</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3"> Name</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left"></th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
             </tr>
@@ -130,10 +130,10 @@ const Caetogries = () => {
           <tbody>
 
             {filteredData.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                <td className="flex gap-1 w-[143px] h-[56px] ">
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="flex gap-1 w-[143px] h-[56px] pl-2 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
-                  <span className='  text-[16px] px-4'>{item.name}</span>
+                  <span className='  text-[16px] px-1'>{item.name}</span>
                   </td>
 
 

@@ -111,10 +111,10 @@ const Currency = () => {
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full  border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">name</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3">name</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">symbol </th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Status</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">Action</th>
@@ -123,7 +123,7 @@ const Currency = () => {
           <tbody>
 
             {filteredData.map((item, index) => (
-              <tr key={index} className='border-y relative hover:bg-six hover:border-y-2'>
+                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
                 <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
 
 

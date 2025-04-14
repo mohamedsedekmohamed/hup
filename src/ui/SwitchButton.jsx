@@ -16,10 +16,10 @@ const SwitchButton = ({ value, setValue, num, title }) => {
   };
 
   return (
-    <div className='flex items-center gap-2'>
+    <div className='flex items-center  gap-2 w-full'>
       {num ? (
         <StyledWrapper>
-          <span>{title ?title:"statue"} </span>
+          <span className='mt-2 text-[18px]'>{title ?title:"statue"} </span>
           <label className="switch">
             <input  
               type={kind}
@@ -28,11 +28,12 @@ const SwitchButton = ({ value, setValue, num, title }) => {
               className="mr-2" 
             />
             <span className="slider" />
+            
           </label>
         </StyledWrapper>
       ) : (
         <StyledWrapper>
-          <span>statue </span>
+          <span className='mt-2 text-[18px]' >statue </span>
           <label className="switch">
             <input  
               type="checkbox"
@@ -40,10 +41,15 @@ const SwitchButton = ({ value, setValue, num, title }) => {
               onChange={toggleValue} 
               className="mr-2" 
             />
+
             <span className="slider" />
+            
           </label>
         </StyledWrapper>
+        
       )}
+           {num?( <span className={`${value!=="0"?"text-green-800":"text-red-700"}`}>{value!=="0"?"active":"inactive"} </span>):( <span className={`${value==="active"?"text-green-800":"text-red-700"}`}>{value} </span>)}    
+           
     </div>
   );
 };

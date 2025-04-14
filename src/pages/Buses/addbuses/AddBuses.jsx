@@ -218,14 +218,20 @@ const AddBuses = () => {
           value={capacity}
           onChange={handleChange}
         />
+        <div className='flex items-end justify-center'>
+          
         <FileUploadButton
           name="busImage"
           kind="busImage"
           flag={pic}
           onFileChange={handleFileChange}
         />
+        </div>
+        <div className='flex items-end justify-center'>
+
         <Aminites selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
 
+      </div>
         <SwitchButton value={status} title='status' setValue={setStatus} />
         <ToastContainer />
       </div>

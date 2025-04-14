@@ -221,12 +221,15 @@ setValue('inactive')
                 value={Count}
                 onChange={handleChange}
             />
+                    <div className='flex items-end justify-center'>
+
                <FileUploadButton
                 name="busImage"
                 kind="busImage"
                 flag={busImage}
                 onFileChange={handleFileChange}
               />
+              </div>
                 <FileUploadButton
                 name="planImage"
                 kind="planImage"

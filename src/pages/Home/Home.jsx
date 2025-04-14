@@ -1,19 +1,20 @@
-import React, { useEffect, useState } from 'react';
-import rang from '../../assets/rang.svg';
+import React, { useEffect } from 'react';
 import rrr from '../../assets/rrr.svg';
 import { FiAlignJustify } from "react-icons/fi";
 import { useLocation } from 'react-router-dom';
 import { BiLogOut } from "react-icons/bi";
 const Home = ({ setIsLoggedIn, open, setopen }) => {
   const location = useLocation();
-  const [name, setName] = useState("");
  
   const Handle = () => {
+    localStorage.clear('isLoggedIn');
+    localStorage.clear('token');
     setIsLoggedIn(false);
   }
 
   const handleopen = () => {
-    setopen(!open);
+      setopen(!open);
+
   }
 useEffect(() => {
     const handleResize = () => {
@@ -35,16 +36,7 @@ useEffect(() => {
     setopen(false); // إغلاق القائمة عند تغيير المسار
 
   },  [location.pathname]);
-  function removeSlash(inputString) {
-    // استبدال كل "/" بمسافة
-    return inputString.replace(/\//g, ' ');
-  }
-
-  // useEffect(() => {
-  //   const updatedName = removeSlash(location.pathname);  // استبدال الـ "/" بالمسافات
-  //   setName(updatedName);  // تحديث الحالة
-  // }, [location.pathname]);
-
+  
   return (
     <div>
       <div className='w-full h-[56px] hidden md:flex mt-6 px-[26px] justify-between'>

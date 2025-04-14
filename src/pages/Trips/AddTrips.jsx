@@ -50,28 +50,10 @@ const AddTrips = () => {
   const [cancellationDate, setCancellationDate] = useState();
   const [selectedDays, setSelectedDays] = useState([]);
     const [edit, setEdit] = useState(false);
-  
-  // const handleDayChange = (event) => {
-  //   const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
-  //   setSelectedDays(prevDays => {
-  //     const newDays = [...prevDays];
-  //     selectedOptions.forEach(day => {
-  //       if (newDays.includes(day)) {
-  //         const index = newDays.indexOf(day);
-  //         newDays.splice(index, 1); // إزالة اليوم
-  //       } else {
-  //         newDays.push(day); // إضافة اليوم
-  //       }
-  //     });
-  //     return newDays;
-  //   });
-  // };
-  
 useEffect(()=>{
   console.log(selectedDays)
 },[selectedDays])
   
-  // };
   const [errors, setErrors] = useState({
     tripName: '',
     busId: '',
@@ -104,7 +86,6 @@ useEffect(()=>{
     currencyId: '',
     cancellationDate: ''
   });
-
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
@@ -141,28 +122,21 @@ useEffect(()=>{
       setEdit(true);
     }
   }, [location.state]);
-  
   const handleChangetwo = (e) => {
     const { name, value } = e.target;
     if (name === 'countries') setToCountryId(value);
     if (name === 'cities') setToCityId(value);
     if (name === 'zones') setToZoneId(value);
     if (name === 'stations') setDropoffStationId(value);
-
   }
   const handleChange = (e) => {
     const { name, value } = e.target;
-
     if (name === 'trip_name') setTripName(value);
     if (name === 'cities') setCityId(value);
     if (name === 'countries') setCountryId(value);
     if (name === 'zones') setZoneId(value);
     if (name === 'stations') setPickupStationId(value);
-
-
     if (name === 'avalible_seats') setAvailableSeats(value);
-  
-
     if (name === 'price') setPrice(value);
     if (name === 'status') setStatus(value);
     if (name === 'operators') setAgentId(value);
@@ -174,14 +148,15 @@ useEffect(()=>{
     if (name === 'min_cost') setMinCost(value);
     if (name === 'three') setTripType(value);
     if (name === 'currencies') setCurrencyId(value);
-    if (name === 'busses') setBusId(value);
+    if (name === 'busses'||name==="hiaces") setBusId(value);
+    if (name === 'trains') settrain_id(value);
   };
-
   const validateForm = () => {
     let formErrors = {};
-
     if (!tripName) formErrors.tripName = 'Trip name is required';
-    if (!busId) formErrors.busId = 'Bus ID is required';
+    if(tripType==="bus" && !busId) formErrors.busId = 'Bus ID is required';
+    if(tripType==="hiace" && !busId) formErrors.busId = 'hiace ID is required';
+    if(tripType==="train" && !train_id) formErrors.busId = 'train ID is required';
     if (!pickupStationId) formErrors.pickupStationId = 'Pickup station ID is required';
     if (!dropoffStationId) formErrors.dropoffStationId = 'Dropoff station ID is required';
     if (!cityId) formErrors.cityId = 'City ID is required';
@@ -197,7 +172,6 @@ useEffect(()=>{
     if (!toCountryId) formErrors.toCountryId = 'To country ID is required';
     if (!toCityId) formErrors.toCityId = 'To city ID is required';
     if (!toZoneId) formErrors.toZoneId = 'To zone ID is required';
-    // if (!date) formErrors.date = 'Date is required';
     if (!price) formErrors.price = 'Price is required';
     if (!agentId) formErrors.agentId = 'Agent ID is required';
     if (!maxBookDate) {
@@ -205,9 +179,11 @@ useEffect(()=>{
     } else if (isNaN(maxBookDate)) {
       formErrors.maxBookDate = 'Max book date should be a number';
     }
-    
-    if (!type) formErrors.type = 'Type is required';
-    // if (!fixedDate) formErrors.fixedDate = 'Fixed date is required';
+    if (selected==="A"&&!date) formErrors.date = 'Date is required';
+    if (selected==="B"&& !type) formErrors.type = 'Recurrent Type is required';
+    if (selected==="B"&& !datastart) formErrors.datastart = 'start date is required';
+    if (selected==="B"&& !selectedDays) formErrors.selectedDays = 'selectedDays  is required';
+    if (!fixedDate) formErrors.fixedDate = 'Fixed date is required';
     if (!cancellationPolicy) formErrors.cancellationPolicy = 'Cancellation policy is required';
     if (!cancellationPayAmount) formErrors.cancellationPayAmount = 'Cancellation pay amount is required';
     if (!cancellationPayValue) formErrors.cancellationPayValue = 'Cancellation pay value is required';
@@ -215,18 +191,13 @@ useEffect(()=>{
     if (!tripType) formErrors.tripType = 'Trip type is required';
     if (!currencyId) formErrors.currencyId = 'Currency ID is required';
     if (!cancellationDate) formErrors.cancellationDate = 'Cancellation date is required';
-
-    
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
     });
-
-    // Update errors state
     setErrors(formErrors);
 
     return Object.keys(formErrors).length === 0;
   };
-
   const handleDatePickerChange = (newData) => {
     if (newData) {
       const day = newData.getDate() + 1;
@@ -239,7 +210,6 @@ useEffect(()=>{
       setDate("");
     }
   };
-
   const handlehandlemaxBookDate = (newData) => {
     if (newData) {
       const day = newData.getDate() + 1;
@@ -276,7 +246,6 @@ useEffect(()=>{
       setdatastart("");
     }
   };
-
   const handledepartureTime = (newTime) => {
     if (newTime) {
       const formattedTime = newTime;
@@ -286,7 +255,6 @@ useEffect(()=>{
       setDepartureTime(""); // في حالة حذف الوقت
     }
   };
-
   const handlearrivalTime = (newTime) => {
     if (newTime) {
       const formattedTime = newTime; // TimePicker سيعيد الوقت بتنسيق HH:mm
@@ -295,8 +263,7 @@ useEffect(()=>{
       setArrivalTime(""); // في حالة حذف الوقت
     }
   };
-
-
+  const [selected, setSelected] = useState("A");
   const handleSave = () => {
     if (!validateForm()) {
       return;
@@ -305,26 +272,25 @@ useEffect(()=>{
     const token = localStorage.getItem('token');
     const newTrip = {
       trip_name: tripName,
-      bus_id: busId,
       pickup_station_id: pickupStationId,
       dropoff_station_id: dropoffStationId,
       city_id: cityId,
       zone_id: zoneId,
+      //
       deputre_time: departureTime,
       arrival_time: arrivalTime,
+      max_book_date: maxBookDate,
+      //
       avalible_seats: availableSeats,
       country_id: countryId,
       to_country_id: toCountryId,
       to_city_id: toCityId,
       to_zone_id: toZoneId,
-      date,
       price,
       status,
       start_date:datastart,
       agent_id: agentId,
-      max_book_date: maxBookDate,
-      type,
-      day:selectedDays,
+      
       fixed_date: fixedDate,
       cancellation_policy: cancellationPolicy,
       cancelation_pay_amount: cancellationPayAmount,
@@ -333,7 +299,31 @@ useEffect(()=>{
       trip_type: tripType,
       currency_id: currencyId,
       cancelation_date: cancellationDate,
-    };
+      train_id: train_id,
+      bus_id: busId,
+    }
+
+    if(selected==="A")
+    newTrip.date=date
+    
+    if(selected==="B"){
+    
+        newTrip.start_date=datastart,
+        newTrip.type=type,
+newTrip.day=selectedDays,
+        newTrip.type=type
+      
+    }
+        
+
+    if(tripType==="bus"){
+        newTrip.bus_id=busId}
+      else if(tripType==="hiace"){
+          newTrip.bus_id=busId}
+        else if(tripType==="train"){
+          newTrip.train_id=train_id
+        }
+        console.log("Selected Days:", selectedDays);
 
     if (edit) {
       const { snedData } = location.state || {};
@@ -354,7 +344,6 @@ useEffect(()=>{
         });
       return;
     }
-    
     axios.post('https://bcknd.ticket-hub.net/api/admin/trip/add', newTrip, {
       headers: {
         Authorization: `Bearer ${token}`,
@@ -400,14 +389,12 @@ useEffect(()=>{
     setCurrencyId('');
     setCancellationDate('');
     setEdit(false);
+    setSelectedDays([])
   };
-
-
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
       <AddAll navGo='/Trips' name='add Trips' />
       <div className="flex flex-wrap gap-6 mt-6">
-       
 <div className='w-full flex-col  '>
   <h2 className='text-2xl text-one  font-bold'>Trip Information</h2>
   <div className='flex w-full mt-4 flex-wrap gap-1.5 justify-start'>
@@ -425,10 +412,35 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
+         {tripType==="bus" &&(
+          <Inputfiltter
+          placeholder="bus"
+          name="busses"
+          value={busId}
+          onChange={handleChange}
+          required
+        />
+      )}
+      {tripType==="hiace"&&(
+          <Inputfiltter
+          placeholder="hiaces"
+          name="hiaces"
+          value={busId}
+          onChange={handleChange}
+          required
+        />
+      )}
+       {tripType==="train" &&(
+          <Inputfiltter
+          placeholder="trains "
+          name="trains"
+          value={train_id}
+          onChange={handleChange}
+          required
+        />
+      )}
   </div>
 </div>
-     
-        
 <div className='w-full flex-col  '>
   <h2 className='text-2xl text-one  font-bold'>Location Information</h2>
   <div>
@@ -459,8 +471,6 @@ useEffect(()=>{
         />
         
 
-</div>
-<div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
 
         <InputArrow
           placeholder="To Country"
@@ -515,41 +525,70 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
-      {tripType==="bus" &&(
-          <Inputfiltter
-          placeholder="bus"
-          name="busses"
-          value={busId}
-          onChange={handleChange}
-          required
-        />
-      )}
-      {tripType==="hiace"&&(
-          <Inputfiltter
-          placeholder="hiaces"
-          name="hiaces"
-          value={busId}
-          onChange={handleChange}
-          required
-        />
-      )}
-       {tripType==="train" &&(
-          <Inputfiltter
-          placeholder="trains "
-          name="trains"
-          value={busId}
-          onChange={handleChange}
-          required
-        />
-      )}
-       
+     
 </div>
 </div>
-        
-       
+        <div className='w-full flex-col  '>
+         <h2 className='text-2xl text-one  font-bold'>Schedule </h2>
+         <div className="flex space-x-2 items-center gap-5 mt-2">
+          <spna>Schedule Type:</spna>
+      <button
+        onClick={() => setSelected("A")}
+        className={`px-4 py-2 rounded-lg border ${
+          selected === "A"
+            ? "bg-blue-500 text-white"
+            : "bg-white text-gray-700 border-gray-300"
+        }`}
+      >
+        One Time 
+      </button>
+      <button
+        onClick={() => setSelected("B")}
+        className={`px-4 py-2 rounded-lg border ${
+          selected === "B"
+            ? "bg-blue-500 text-white"
+            : "bg-white text-gray-700 border-gray-300"
+        }`}
+      >
+        Recurrent 
+      </button>
+    </div>
+    {selected === "B" && ( 
+      <div className='flex w-full mt-4  flex-col md:flex-row md:flex-wrap gap-2 justify-start'>
+         <Inputfiltter
+          placeholder="Recurrent Type"
+          name="Limit"
+          value={type}
+          onChange={handleChange}
+          required
+        />
+         <InputField
+          placeholder="maxBookDate"
+          name="maxBookDate"
+          value={maxBookDate}
+          onChange={handleChange}
+          required
+        />
 
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10 '>
-          <span className='text-[12px] md:text-[16px]'>departureTime</span>
+     <div className='flex justify-center items-center'>
+     <WeekdaySelect selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
+
+     </div>
+
+         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven  pl-0 md:pl-10'>
+        <span className='text-[12px] md:text-[16px]'>arrivalTime</span>
+          <TimePicker
+            onChange={handlearrivalTime}
+            value={arrivalTime}
+            format="HH:mm"
+            disableClock={true}
+            disableCalendar={false}
+          />
+        </div>
+        
+          <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven   pl-0 md:pl-10'>
+          <span className='text-[12px] md:text-[16px]'>departure Time </span>
+
           <TimePicker
             onChange={handledepartureTime}
             value={departureTime}
@@ -566,17 +605,12 @@ useEffect(()=>{
             disableClock={true}
           />
         </div>
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven  pl-0 md:pl-10'>
-        <span className='text-[12px] md:text-[16px]'>arrivalTime</span>
-          <TimePicker
-            onChange={handlearrivalTime}
-            value={arrivalTime}
-            format="HH:mm"
-            disableClock={true}
-            disableCalendar={false}
-          />
-        </div>
+       
 
+   
+        </div>)}
+        {selected === "A" && ( 
+      <div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10'>
         <span className='text-[12px] md:text-[16px]'>date</span>
           <DatePicker
@@ -587,25 +621,27 @@ useEffect(()=>{
             disableCalendar={false}
           />
         </div>
-     
+         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven  pl-0 md:pl-10'>
+        <span className='text-[12px] md:text-[16px]'>arrivalTime</span>
+          <TimePicker
+            onChange={handlearrivalTime}
+            value={arrivalTime}
+            format="HH:mm"
+            disableClock={true}
+            disableCalendar={false}
+          />
+        </div>
+          <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven   pl-0 md:pl-10'>
+          <span className='text-[12px] md:text-[16px]'>departure Time </span>
+          <TimePicker
+            onChange={handledepartureTime}
+            value={departureTime}
+            format="HH:mm"
+            disableClock={true}
+          />
+        </div>
+        <div className='w-full flex justify-start items-center'>
 
-        <InputField
-          placeholder="Price"
-          name="price"
-          value={price}
-          onChange={handleChange}
-          required
-        />
-
-
-        <InputArrow
-          placeholder="Agent "
-          name="operators"
-          value={agentId}
-          onChange={handleChange}
-          required
-        />
-    
         <InputField
           placeholder="maxBookDate"
           name="maxBookDate"
@@ -613,15 +649,31 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
-
-        <Inputfiltter
-          placeholder="Type"
-          name="Limit"
-          value={type}
+        </div>
+        </div>)}
+        </div>
+<div className='w-full flex-col  '>
+  <h2 className='text-2xl text-one  font-bold'>Pricing & Cancellation</h2>
+  <div>
+  <div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
+ 
+        <InputField
+          placeholder="Price"
+          name="price"
+          value={price}
           onChange={handleChange}
           required
         />
-        <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-2'>
+        <InputArrow
+          placeholder="Agent "
+          name="operators"
+          value={agentId}
+          onChange={handleChange}
+          required
+        />
+        <div className=' flex justify-center items-end'>
+
+         <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-2'>
         <span className='text-[12px] md:text-[16px]'>Fixed Date</span>
           <DatePicker
             onChange={handlehandlemaxBookDate}
@@ -629,14 +681,12 @@ useEffect(()=>{
             format="dd-MM-yyyy"
             disableClock={true}
             disableCalendar={false}
-          />
+            />
         </div>
-
-     
-        <WeekdaySelect selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
-
-
-        <InputField
+            </div>
+</div>
+<div className='flex w-full mt-4 flex-wrap gap-2 justify-start'>
+<InputField
           placeholder="Cancellation Policy"
           name="cancellation_policy"
           value={cancellationPolicy}
@@ -664,7 +714,6 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
-      
         <InputArrow
           placeholder="Currency"
           name="currencies"
@@ -672,6 +721,8 @@ useEffect(()=>{
           onChange={handleChange}
           required
         />
+                <div className=' flex justify-center items-end'>
+
         <div className=' flex flex-col md:flex-row gap-0.5 md:gap-0 md:justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0'>
         <span className='text-[12px] md:text-[16px]'>Cancellation Date </span>
           <DatePicker
@@ -681,18 +732,18 @@ useEffect(()=>{
             disableClock={true}
             disableCalendar={false}
           />
-        </div>
-
-        <SwitchButton value={status} setValue={setStatus} />
-
-
+        </div>  
+        </div>  
+  </div>
+  </div>
+         </div>
+        <SwitchButton   value={status} setValue={setStatus} />
       </div>
 
       <div className="flex gap-3">
-        <button onClick={handleSave}>
-          <img className="my-6" src={picdone} alt="Save" />
-        </button>
-
+         <button onClick={handleSave}>
+                   <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
+                   </button>
       </div>
       <ToastContainer />
     </div>

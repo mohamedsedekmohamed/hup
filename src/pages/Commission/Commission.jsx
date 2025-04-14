@@ -56,10 +56,10 @@ const Commission = () => {
 
 
 <div className="mt-10 ml-5 hidden lg:block">
-<table className="w-full  border-y border-black">
-              <thead  className="w-full">
+<table className="w-full border-y border-x border-black ">
+<thead  className="w-full">
                 <tr className='bg-four w-[1012px] h-[56px]' >
-                  <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">train </th>
+                  <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3">train </th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">bus </th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">hiace</th>
                   <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
@@ -70,7 +70,7 @@ const Commission = () => {
               <tbody>
                
             
-                  <tr  className='border-y relative hover:bg-six hover:border-y-2'>
+                <tr  className='border-y hover:border-y-3 relative hover:bg-six'>
         <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.train}%</td>
                     <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.bus}%</td>
                     <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.hiace}%</td>

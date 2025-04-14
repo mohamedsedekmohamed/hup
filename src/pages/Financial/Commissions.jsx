@@ -74,10 +74,10 @@ const Commissions = () => {
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-            <table className="w-full  border-y border-black">
-              <thead  className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead  className="w-full">
                 <tr className='bg-four w-[1012px] h-[56px]' >
-                  <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">amount</th>
+                  <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3">amount</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">receipt image</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">travelers</th>
                   <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">travel_date</th>
@@ -88,8 +88,8 @@ const Commissions = () => {
               <tbody>
                
               {filteredData.map((item,index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.amount}</td>
+                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                    <td className="w-[143px] h-[56px]  text-[16px] px-2">{item.amount}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">  <img  className="w-5 h-5"src={item.receipt_image===null?`data:image/png;base64,${item.receipt_image}`:item.receipt_image}/> </td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">{item.travelers}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">{item.travel_date}</td>

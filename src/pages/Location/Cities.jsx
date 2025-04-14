@@ -61,6 +61,7 @@ const Cities = () => {
 
   const handleEdit = (index) => {
     const sendData = data.find((item) => item.id === index);
+   
     navigate('/Location/Addcities', { state: { sendData } });
   };
 
@@ -109,10 +110,10 @@ const cheose = ["Filter","country_name", "name", "status"]
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full border-y border-black">
+        <table className="w-full  border-y border-x border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">City Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">City Name</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country Name</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
@@ -120,7 +121,7 @@ const cheose = ["Filter","country_name", "name", "status"]
           </thead>
           <tbody>
             {filteredData.map((item, index) => (
-              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                 <td className="w-[143px] h-[56px] text-[16px] px-4">{item.name}</td>
                 <td className="w-[143px] h-[56px] text-[16px] px-4">{item.country_name}</td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">

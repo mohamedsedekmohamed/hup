@@ -8,8 +8,8 @@ const InputArrow = ({ placeholder, value, like, onChange, name }) => {
   const [control, setControl] = useState(name);
 
   const shape = like
-    ? "absolute top-[40%] left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
-    : "absolute top-[40%] right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
+    ? "absolute top-[60%] left-43 md:left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
+    : "absolute top-[60%] right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
 
   useEffect(() => {
     
@@ -43,9 +43,9 @@ const InputArrow = ({ placeholder, value, like, onChange, name }) => {
   }, [name]);  
 
   return (
-    <div className="relative group">
+    <div className="relative group flex flex-col gap-3 items-start justify-center">
       <IoIosArrowDown className={shape} />
-
+      <span className='font-bold  text-one'>{placeholder}</span>
       <select
         id="options"
         value={value}

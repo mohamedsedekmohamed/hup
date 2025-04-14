@@ -226,13 +226,15 @@ const AddCARS = () => {
                 onChange={handleChange}
                 required
             />
-          
+                  <div className='flex items-end justify-center'>
+
             <FileUploadButton
                 name="flag"
                 kind="flag"
                 flag={flag}
                 onFileChange={handleFileChange}
             />
+            </div>
  <InputField
       placeholder="color"
       name="color"

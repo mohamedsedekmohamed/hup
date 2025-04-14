@@ -155,7 +155,8 @@ const AddComplaints = () => {
         />
         <InputField onChange={handleChange} name="subject" value={subject} placeholder="subject " />
         <InputField onChange={handleChange} name="message" value={message} placeholder="message " />
-
+<div className="flex items-end ">
+  
           <div className=' flex  justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0 md:pl-10'>
                 <span className='text-[12px] md:text-[16px]'>date</span>
                   <DatePicker
@@ -166,6 +167,7 @@ const AddComplaints = () => {
                     disableCalendar={false}
                   />
                 </div>
+      </div>
       </div>
 
       <button onClick={handleSave}>

@@ -215,12 +215,15 @@ const Addhiace = () => {
           value={capacity}
           onChange={handleChange}
         />
+                <div className='flex items-end justify-center'>
+
         <FileUploadButton
           name="busImage"
           kind="busImage"
           flag={pic}
           onFileChange={handleFileChange}
         />
+        </div>
         <SwitchButton value={status} title='status' setValue={setStatus} />
         <ToastContainer />
       </div>

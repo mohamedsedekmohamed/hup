@@ -121,10 +121,10 @@ const labelMap = {
             </div>
       
             <div className="mt-10 ml-5 hidden lg:block">
-            <table className="w-full  border-y border-black">
-                    <thead  className="w-full">
+            <table className="w-full border-y border-x border-black ">
+            <thead  className="w-full">
                       <tr className='bg-four w-[1012px] h-[56px]' >
-                        <th className="w-[158px] h-[56px]  text-[12px] border-b text-left">name</th>
+                        <th className="w-[158px] h-[56px]  text-[12px] border-b text-left pl-3">name</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">type</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">date</th>
                         <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">departure time</th>
@@ -138,8 +138,8 @@ const labelMap = {
                     <tbody>
                      
                     {filteredData.map((item,index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>  
-                             <td className="w-[143px] h-[56px]  text-[12px]  ">{item.name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                             <td className="w-[143px] h-[56px]  text-[12px] px-2 ">{item.name}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.trip_type}</td>
                           <td className="w-[143px] h-[56px]  text-[12px] ">{item.date}</td>
                           <td className="w-[143px] h-[56px]  text-[12px]  ">{item.departure_time}</td>

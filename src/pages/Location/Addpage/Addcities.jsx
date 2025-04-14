@@ -22,11 +22,12 @@ const AddCities = () => {
   });
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setCountry(snedData.country_id);
-      setName(snedData.name);
-      setValue(snedData.status);
+    const { sendData } = location.state || {};
+    console.log(sendData);
+    if (sendData) {
+      setCountry(sendData.country_id);
+      setName(sendData.name);
+      setValue(sendData.status);
       setEdit(true);
     }
   }, [location.state]);

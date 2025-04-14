@@ -29,16 +29,16 @@ const AddOffStation = () => {
     zone: '',
   });
   useEffect(() => {
-    const { snedData } = location.state || {};
-    console.log(snedData)
-    if (snedData) {
-      setCountry(snedData.country_id);
-      setCity(snedData.city_id);
-      setZone(snedData.zone_id)
-      setName(snedData.name);
-      setValue(snedData.status);
-      setpickup(snedData.pickup);
-      setdropoff(snedData.dropoff);
+    const { sendData } = location.state || {};
+    console.log(sendData)
+    if (sendData) {
+      setCountry(sendData.country_id);
+      setCity(sendData.city_id);
+      setZone(sendData.zone_id)
+      setName(sendData.name);
+      setValue(sendData.status);
+      setpickup(sendData.pickup);
+      setdropoff(sendData.dropoff);
       setEdit(true);
     }
   }, [location.state]);

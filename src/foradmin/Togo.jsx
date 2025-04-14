@@ -38,19 +38,12 @@ import Settings from '../pages/Settings/Settings.jsx';
 import Car from '../pages/Car/Car.jsx';
 //
 import Train from '../pages/Tarins/Tarin.jsx'
-const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
+const Togo = ({ setIsLoggedIn }) => {
   const [activeLink, setActiveLink] = useState('/');
   const [open, setopen] = useState(false);
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    if (!isLoggedIn) {
-      localStorage.removeItem('isLoggedIn');
-    } else {
-      localStorage.setItem('isLoggedIn', 'true');
-    }
-  }, [isLoggedIn, navigate]);
 
   useEffect(() => {
     console.log(location.pathname)
@@ -63,7 +56,10 @@ const Togo = ({ isLoggedIn, setIsLoggedIn }) => {
     } else if (location.pathname === '/Location/Cities' || location.pathname === '/Location/Zones' || location.pathname === '/Location/Stations' || location.pathname === '/Location/Addcountries' || location.pathname === '/Location/Addcities' || location.pathname === '/Location/Addzones' || location.pathname === '/Location/AddOffStation') {
       setActiveLink('/Location');
     } 
-    else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/BusesHistory' || location.pathname === '/Buses/Operation' || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
+    else if (location.pathname === '/Buses/TypeBuses' || location.pathname === '/Buses/AddBusesHistory' 
+      || location.pathname === '/Buses/Operation'
+      || location.pathname === '/Buses/BusesHistory'
+       || location.pathname === '/Buses/AddBuses' || location.pathname === '/Buses/AddTypeBuses') {
       setActiveLink('/Buses');
     }
     

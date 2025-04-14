@@ -120,13 +120,13 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
   }, [name, shara]);
 
 const shape = like
-  ? "absolute top-[40%] left-42 md:left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
-  : "absolute top-[40%] right-4 md:right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
+  ? "absolute top-[60%] left-42 md:left-65 w-[18px] h-[24px] transition group-focus-within:rotate-90"
+  : "absolute top-[60%] right-4 md:right-4 w-[18px] h-[24px] transition group-focus-within:rotate-90";
 
 return (
-  <div className="relative group">
+  <div className="relative group flex flex-col gap-3 items-start justify-center">
     <IoIosArrowDown className={shape} />
-
+    <span className='font-bold  text-one'>{placeholder}</span>
     <select
       id="options"
       value={value}
@@ -242,7 +242,7 @@ return (
         else if (control === "hiaces") {
           return (
             <option key={index} value={item.id}>
-              {item.name}
+              {item.agent_name}
             </option>
           );
         }

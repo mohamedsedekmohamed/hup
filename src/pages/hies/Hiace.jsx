@@ -110,10 +110,10 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">agent </th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">agent </th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">email</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Capacity</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Bus Image</th>
@@ -124,8 +124,8 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
           </thead>
           <tbody>
             {filteredData.map((item, index) => (
-              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.agent_name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px] text-[16px] px-2">{item.agent_name}</td>
                 <td className="w-[143px] h-[56px] text-[12px]">{item.agent_email}</td>
                 <td className="w-[143px] h-[56px] text-[16px]">{item.capacity}</td>
                 <td><img className="w-5 h-5" src={item.bus_image === null ? `data:image/png;base64,${item.bus_image}` : item.bus_image} alt="Bus" /></td>

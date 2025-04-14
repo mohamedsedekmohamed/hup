@@ -60,8 +60,8 @@ const Countries = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/Location/Addcountries', { state: { snedData } });
+    const sendData = data.find((item) => item.id === index);
+    navigate('/Location/Addcountries', { state: { sendData } });
   };
 
   const filteredData = data.filter((item) => {
@@ -108,24 +108,24 @@ const Countries = () => {
       </div>
 
       <div className="mt-10 ml-5 hidden lg:block">
-                <table className="w-full border-y border-black">
+                <table className="w-full  border-y border-x border-black">
           <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]'>
-              <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Country Name</th>
+              <th className="w-[158px] h-[56px] text-[16px] border-b text-left pl-3">Country Name</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Status</th>
               <th className="w-[158px] h-[56px] text-[16px] border-b text-left">Action</th>
             </tr>
           </thead>
           <tbody>
             {filteredData.map((item, index) => (
-              <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="flex gap-1">
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="flex gap-1  px-1">
                   <img 
-                    className="w-5 h-5"
+                    className="w-5 h-5 " 
                     src={item.flag === null ? `data:image/png;base64,${item.flag}` : item.flag}
                     alt={`${item.name} flag`} 
                   />
-                  <span className='w-[143px] h-[56px] text-[16px] px-4'>{item.name}</span>
+                  <span className='w-[143px] h-[56px] text-[16px] px-2'>{item.name}</span>
                 </td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">
                   <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>

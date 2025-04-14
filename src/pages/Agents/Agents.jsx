@@ -139,10 +139,10 @@ const labelMap = {
        
       </div>
       <div className="mt-10 ml-5 hidden lg:block">
-        <table className="w-full  border-y border-black">
-          <thead className="w-full">
+      <table className="w-full border-y border-x border-black ">
+      <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">name</th>
+              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3">name</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">phone</th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">points </th>
               <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">role </th>
@@ -155,12 +155,12 @@ const labelMap = {
           <tbody>
 
             {filteredData.map((item, index) => (
-              <tr key={index} className=' border-y hover:border-y-3 relative hover:bg-six  '>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.name}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.phone}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.points}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.role}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]   ">{item.email}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px]  text-[12px] px-2  ">{item.name}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.phone}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.points}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.role}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]   ">{item.email}</td>
                 <td className="w-[143px] h-[56px]  text-[12px]  underline  "><button
                 className='bg-three px-2  rounded-4xl py-1'
                 onClick={()=>show(item.commissions)}>commission</button></td>

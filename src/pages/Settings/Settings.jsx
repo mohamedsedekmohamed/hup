@@ -17,6 +17,7 @@ const Settings = () => {
     <div>
       <Routes>
       <Route path="/Fees" element={<Fees />} />
+      <Route path="/AddFees" element={<AddFees />} />
       <Route path="/Nationality" element={<Nationality />} />
       <Route path="/PaymentMethods" element={<PaymentMethods />} />
       <Route path="/OperatorPayment" element={<OperatorPayment />} />
@@ -24,7 +25,6 @@ const Settings = () => {
       <Route path="/AddOperatorPayment" element={<AddOperatorPayment />} />
       <Route path="/AddNationality" element={<AddNationality />} />
       <Route path="/AddSubjectComplaints" element={<AddSubjectComplaints />} />
-      <Route path="/AddFees" element={<AddFees />} />
       <Route path="/SubjectComplaints" element={<SubjectComplaints />} />
 
       </Routes>
