@@ -27,21 +27,7 @@ const AddPaymentMethods = () => {
         name: '',
         flag: '',
     });
-    function convertImageUrlToBase64(url) {
-        return fetch(url)
-            .then((response) => response.blob())
-            .then((blob) => {
-                return new Promise((resolve, reject) => {
-                    const reader = new FileReader();
-                    reader.onloadend = () => resolve(reader.result);
-                    reader.onerror = reject;
-                    reader.readAsDataURL(blob);
-                });
-            })
-            .catch((error) => {
-                console.error("Error converting image to Base64", error);
-            });
-    }
+   
 
     useEffect(() => {
         const { snedData } = location.state || {};
@@ -51,15 +37,10 @@ const AddPaymentMethods = () => {
             setEdit(true);
 
             if (snedData.image) {
-                convertImageUrlToBase64(snedData.image)
-                    .then((base64Flag) => {
-                        setFlag(base64Flag);
-                        setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
-                    })
-                    .catch(() => {
-                    });
-            }
-        }
+                        setFlag(snedData.image);
+                        setOriginalFlag(snedData.image); // حفظ الصورة الأصلية
+                
+        }}
     }, [location.state]);
  
     const handleChange = (e) => {

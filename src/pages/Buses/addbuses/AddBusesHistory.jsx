@@ -31,21 +31,7 @@ const AddBusesHistory = () => {
     return Object.keys(formErrors).length === 0;
   };
   
-  function convertImageUrlToBase64(url) {
-    return fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result); 
-          reader.onerror = reject;
-          reader.readAsDataURL(blob); 
-        });
-      })
-      .catch(() => {
-      });
-  }
-
+  
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name === "name") setname(value)
@@ -56,21 +42,15 @@ const AddBusesHistory = () => {
     const { snedData } = location.state || {};
     if (snedData) {
       setname(snedData.name);
+       setValue(snedData.status);
       if(snedData.icon_link){
-        convertImageUrlToBase64(snedData.icon_link)
-        .then((base64Flag) => {
-          seticon(base64Flag);  
-          seticon(base64Flag); 
-        })
-        .catch((error) => {
-        });
-      }      setValue(snedData.status);
-    }
+          seticon(snedData.icon_link);  
+       
+    }}
   }, [location.state]);
 
 
   const handleSave = () => {
-    // Validate before proceeding
     if (!validateForm()) return;
 
     const newBus = {

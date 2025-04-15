@@ -59,7 +59,7 @@ const Aminites = ({ selectedDays, setSelectedDays }) => {
       isMulti
       value={selectedValues}
       onChange={handleDayChange}
-      placeholder="اختر المرافق"
+      placeholder="ِAminites"
       styles={customStyles}
       className="w-[200px] md:w-[300px]"
     />

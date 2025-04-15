@@ -24,6 +24,7 @@ const AddAgents = () => {
   const [trainCommission, setTrainCommission] = useState('');
   const [busCommission, setBusCommission] = useState('');
   const [hiaceCommission, setHiaceCommission] = useState('');
+
   const [trainType, setTrainType] = useState('');
   const [busType, setBusType] = useState('');
   const [hiaceType, setHiaceType] = useState('');
@@ -53,20 +54,7 @@ const AddAgents = () => {
     }
   };
 
-  function convertImageUrlToBase64(url) {
-    return fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      })
-      .catch(() => {
-      });
-  }
+  
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
@@ -78,34 +66,57 @@ const AddAgents = () => {
       setEdit(true);
   
       if (snedData.image) {
-        convertImageUrlToBase64(snedData.image)
-          .then((base64Flag) => {
-            setFlag(base64Flag);
-            setOriginalFlag(base64Flag);
-          })
-          .catch(() => {
-          });
+            setFlag(snedData.image);
+            setOriginalFlag(snedData.image);
+        
       }
   
-      const commission = snedData.commissions[0] || {};
-      setTrainCommission(commission.train || '');
-      setBusCommission(commission.bus || '');
-      setHiaceCommission(commission.hiace || '');
-      setprivaterequset(snedData.commission.privateRequest|| '');
-  
-      setEnableTrain(snedData.modules.some(module => module.module === 'train'));
-      setEnableBus(snedData.modules.some(module => module.module === 'bus'));
-      setEnableHiace(snedData.modules.some(module => module.module === 'hiace'));
+      const commission = snedData.commissions[0] 
+      console.log(commission);
+      if(!commission){
+        setTrainCommission('');
+        setBusCommission('');
+        setHiaceCommission('');
+        setprivaterequset('');
+      }else{
+      setTrainCommission(commission.train);
+      setBusCommission(commission.bus);
+      setHiaceCommission(commission.hiace);
+      setprivaterequset(commission.privateRequest);
+      }
+      const token = localStorage.getItem('token');
+
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+        headers: {
+          Authorization: `Bearer ${token}`, 
+        }
+      })
+        .then(response => {
+          if(response.data.default_commission.train == commission.train){
+            setTrainType("Default");
+        }else{
+          setTrainType("Private")
+        }
+        if(response.data.default_commission.bus == commission.bus){
+          setBusType("Default");
+        }else{
+          setBusType("Private")
+        }
+        if(response.data.default_commission.hiace == commission.hiace){
+          setHiaceType("Default");
+        }else{
+          setHiaceType("Private")
+        }
+        })
+        .catch(() => {
+        });
+      setEnableTrain(true);
+      setEnableBus(true);
+      setEnableHiace(true);
       setEnableprivate(true);
   
-      setTrainType(snedData.trainType || '');
-      setBusType(snedData.busType || '');
-      setHiaceType(snedData.hiaceType || '');
-  
-      console.log(enableBus); 
-      console.log(enableprivate);
-      console.log(enableTrain);
-      console.log(enableHiace);
+     
+     
     }
   }, [location.state]);
   

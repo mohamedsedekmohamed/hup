@@ -31,21 +31,7 @@ const AddBuses = () => {
     agent: "",
     type: "",
   });
-  function convertImageUrlToBase64(url) {
-    return fetch(url)
-      .then((response) => response.blob())
-      .then((blob) => {
-        return new Promise((resolve, reject) => {
-          const reader = new FileReader();
-          reader.onloadend = () => resolve(reader.result);
-          reader.onerror = reject;
-          reader.readAsDataURL(blob);
-        });
-      })
-      .catch(() => {
-      });
-  }
-
+ 
 
   const handleFileChange = (file) => {
     if (file) {
@@ -95,17 +81,13 @@ const AddBuses = () => {
       setAgent(snedData.agent_id);
       setEdit(true);
       if (snedData.bus_image) {
-        convertImageUrlToBase64(snedData.bus_image)
-          .then((base64Flag) => {
-            setPic(base64Flag);
-            setOriginalFlag(base64Flag);
-          })
-          .catch((error) => {
-            console.error("Error converting flag image:", error);
-          });
+            setPic(snedData.bus_image);
+            setOriginalFlag(snedData.bus_image);
+        
+          };
 
       }
-    }
+    
   }, [location.state]);
 
   const handleSave = () => {
