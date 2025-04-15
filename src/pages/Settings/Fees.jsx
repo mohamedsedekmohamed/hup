@@ -25,6 +25,7 @@ const Fees = () => {
     .then(response => {
       const fees = response.data.fees;
       const feesArray = Array.isArray(fees) ? fees : [fees];
+      setUpdate(!update)
       setData(feesArray);
     })
       .catch(error => {
@@ -32,7 +33,7 @@ const Fees = () => {
       });
   }, [update]);
 
-  const handleDelete = (index, ) => { 
+  const handleDelete = (index ) => { 
     const token = localStorage.getItem('token');
     Swal.fire({
       title: `Are you sure you want to delete it ?`, 

@@ -16,7 +16,7 @@ const AddFees = () => {
     const [hiacs, sethiacs] = useState('');
     const [Private, setPrivate] = useState('');
     const [edit, setEdit] = useState(false);
-
+    const [show, setShow] = useState("enter value like this 0.00 or .00");
    
 
     const [errors, setErrors] = useState({
@@ -30,6 +30,7 @@ const AddFees = () => {
     useEffect(() => {
         const { snedData } = location.state || {};
         if (snedData) {
+          if(snedData.train_fees)
           settrain(snedData.train_fees);
           setbus(snedData.bus_fees);
           sethiacs(snedData.hiace_fees);
@@ -59,14 +60,18 @@ const AddFees = () => {
           if (trainStr.startsWith('.')) {
             trainStr = '0' + trainStr;
           }
-          if (trainStr.indexOf('.') !== -1) {
+        
+          // شرط رفض الأرقام الصحيحة (اللي ما فيها كسر عشري)
+          if (!trainStr.includes('.')) {
+            formErrors.train = 'Train must be a decimal number';
+          } else {
             const decimalPart = trainStr.split('.')[1];
             if (decimalPart.length > 2) {
               formErrors.train = 'Train must have at most 2 decimal places';
             }
           }
         }
-
+        
         
         if ( bus === '') {
           formErrors.bus = 'bus is required';
@@ -196,37 +201,51 @@ const AddFees = () => {
 
             <AddAll navGo='/Settings/Fees' name="Add Fees" />
         <div className=' flex flex-wrap mt-6 gap-6'>
+          <div>
+
             <InputField
                 placeholder="train fees "
                 name="train"
                 value={train}
                 email="number"
                 onChange={handleChange}
-            />
-          
+                />
+                <span className="text-red-500">{errors.train?`${show}`:""}</span>
+                </div>
+          <div>
+
             <InputField
                 placeholder="bus fees"
                 name="bus"
                 value={bus}
                 email="number"
                 onChange={handleChange}
-            />
-          
+                />
+             <span className="text-red-500">{errors.bus?`${show}`:""}</span>
+                </div>
+          <div>
+
             <InputField
                 placeholder="hiace fees"
                 name="hiace"
                 value={hiacs}
                 email="number"
                 onChange={handleChange}
-            />
-          
+                />
+            <span className="text-red-500">{errors.hiacs?`${show}`:""}</span>
+                </div>
+          <div>
+
             <InputField
                 placeholder="Private fees"
                 name="Private"
                 value={Private}
                 email="number"
                 onChange={handleChange}
-            />
+                />
+                            <span className="text-red-500">{errors.Private?`${show}`:""}</span>
+
+                </div>
                 </div>
 
             <button onClick={handleSave}>
