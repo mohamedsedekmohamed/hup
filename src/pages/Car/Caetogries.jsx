@@ -24,12 +24,10 @@ const Caetogries = () => {
     })
       .then(response => {
         setData(response.data);
-        console.log(response.data);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
+      .catch(() => {
+        
       });
   }, [update])
   const handleDelete = (index, userName) => { 
@@ -49,13 +47,11 @@ const Caetogries = () => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => {
-            console.log('car_category deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
           })
-          .catch((error) => {
-            console.error('Error deleting user:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
           });
       } else {

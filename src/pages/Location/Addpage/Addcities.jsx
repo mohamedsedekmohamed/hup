@@ -70,15 +70,13 @@ const AddCities = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('city updated successfully:', response.data);
+        .then(() => {
           toast.success('city updated successfully'); 
                     setTimeout(() => {
                       navigate('/Location/Cities');
                     }, 3000);
         })
-        .catch(error => {
-          console.error('Error updating country:', error);
+        .catch(() => {
         });
       return;
     }
@@ -88,16 +86,14 @@ const AddCities = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('city added successfully:', response.data);
+      .then(() => {
                 toast.success('city added  successfully'); 
               
                 setTimeout(() => {
                   navigate('/Location/Cities');
                 }, 3000);
       })
-      .catch(error => {
-        console.error('Error adding country:', error);
+      .catch(() => {
       });
 
     setCountry('');

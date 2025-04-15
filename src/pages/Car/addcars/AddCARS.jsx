@@ -51,8 +51,7 @@ const AddCARS = () => {
                     reader.readAsDataURL(blob);
                 });
             })
-            .catch((error) => {
-                console.error("Error converting image to Base64", error);
+            .catch(() => {
             });
     }
 
@@ -77,8 +76,7 @@ const AddCARS = () => {
                         setFlag(base64Flag);
                         setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                     })
-                    .catch((error) => {
-                        console.error("Error converting flag image:", error);
+                    .catch(() => {
                     });
             }
         }

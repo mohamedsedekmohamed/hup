@@ -58,15 +58,13 @@ const AddTraintype = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-                .then(response => {
-                    console.log('type updated successfully:', response.data);
+                .then(() => {
                     toast.success('type updated successfully');
                     setTimeout(() => {
                         navigate('/Train');
                     }, 3000);
                 })
-                .catch(error => {
-                    console.error('Error updating country:', error);
+                .catch(() => {
                 });
             return;
         }
@@ -76,16 +74,14 @@ const AddTraintype = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(response => {
-                console.log('type added successfully:', response.data);
+            .then(() => {
                 toast.success('type added  successfully');
 
                 setTimeout(() => {
                     navigate('/Train');
                 }, 3000);
             })
-            .catch(error => {
-                console.error('Error adding type:', error);
+            .catch(() => {
             });
 
         setName('');

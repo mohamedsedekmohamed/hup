@@ -40,8 +40,7 @@ const Addhiace = () => {
           reader.readAsDataURL(blob);
         });
       })
-      .catch((error) => {
-        console.error("Error converting image to Base64", error);
+      .catch(() => {
       });
   }
 
@@ -99,8 +98,7 @@ const Addhiace = () => {
             setPic(base64Flag);
             setOriginalFlag(base64Flag);
           })
-          .catch((error) => {
-            console.error("Error converting flag image:", error);
+          .catch(() => {
           });
 
       }
@@ -135,8 +133,7 @@ const Addhiace = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Bus updated successfully:', response.data);
+        .then(() => {
           toast.success('bus updated  successfully');
 
           setTimeout(() => {
@@ -144,8 +141,7 @@ const Addhiace = () => {
           }, 3000);
           resetForm();
         })
-        .catch(error => {
-          console.error('Error updating bus:', error);
+        .catch(() => {
         });
     } else {
       // Add Bus logic
@@ -154,8 +150,7 @@ const Addhiace = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Bus added successfully:', response.data);
+        .then(() => {
           toast.success('bus added  successfully');
 
           setTimeout(() => {
@@ -163,8 +158,7 @@ const Addhiace = () => {
           }, 3000);
           resetForm();
         })
-        .catch(error => {
-          console.error('Error adding bus:', error);
+        .catch(() => {
         });
     }
   };

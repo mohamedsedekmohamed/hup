@@ -26,8 +26,7 @@ const Countries = () => {
       .then(response => {
         setData(response.data.countries);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch(() => {
       });
   }, [update]);
 

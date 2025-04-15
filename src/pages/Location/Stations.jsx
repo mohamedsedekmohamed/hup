@@ -36,12 +36,10 @@ const Stations = () => {
     axios.delete(`https://bcknd.ticket-hub.net/api/admin/station/delete/${index}`, {
       headers: { Authorization: `Bearer ${token}` },
     })
-      .then(response => {
-        console.log('User deleted successfully:', response.data);
+      .then(() => {
         setUpdate(!update);
       })
-      .catch(error => {
-        console.error('Error deleting user:', error);
+      .catch(() => {
       });
   };
 

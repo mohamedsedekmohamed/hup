@@ -24,9 +24,8 @@ const Hiace = () => {
       .then(response => {
         setData(response.data.hiaces);
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
+      .catch(() => {
+       
       });
   }, [update]);
 
@@ -44,13 +43,11 @@ const Hiace = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-          .then((response) => {
-            console.log('Bus deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${busNumber} has been deleted successfully.`, 'success');
           })
-          .catch((error) => {
-            console.error('Error deleting bus:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting bus ${busNumber}.`, 'error');
           });
       } else {

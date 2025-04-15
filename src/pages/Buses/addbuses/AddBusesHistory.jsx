@@ -42,8 +42,7 @@ const AddBusesHistory = () => {
           reader.readAsDataURL(blob); 
         });
       })
-      .catch((error) => {
-        console.error("Error converting image to Base64", error);
+      .catch(() => {
       });
   }
 
@@ -64,7 +63,6 @@ const AddBusesHistory = () => {
           seticon(base64Flag); 
         })
         .catch((error) => {
-            console.error("Error converting flag image:", error);
         });
       }      setValue(snedData.status);
     }

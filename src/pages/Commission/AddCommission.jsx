@@ -35,10 +35,8 @@ const AddCommission = () => {
         setId(response.data.default_commission.id);
     
       })
-      .catch(error => {
+      .catch(() => {
         setIsLoading(true)
-        console.log(token);
-        console.error('Error fetching data:', error);
       });
 
   }, [location.state]);
@@ -77,39 +75,33 @@ const AddCommission = () => {
       hiace
     };
     if (isLoading) {
-            console.log('11111111111')
       axios.post(`https://bcknd.ticket-hub.net/api/admin/CommissionDefault/add`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Commission updated successfully:', response.data);
+        .then(() => {
           toast.success('Commission updated successfully');
           setTimeout(() => {
             navigate('/Commission');
           }, 3000);
         })
-        .catch(error => {
-          console.error('Error updating Commission:', error);
+        .catch(() => {
         });
       } else {
-        console.log('2222222222')
 
     axios.put(`https://bcknd.ticket-hub.net/api/admin/defaultCommission/update/${id}`, newUser, {
       headers: {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('Commission updated successfully:', response.data);
+      .then(() => {
         toast.success('Commission updated successfully');
         setTimeout(() => {
           navigate('/Commission');
         }, 3000);
       })
-      .catch(error => {
-        console.error('Error updating Commission:', error);
+      .catch(() => {
       });
       }
     settrain('');

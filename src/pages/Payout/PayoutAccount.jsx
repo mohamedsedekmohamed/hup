@@ -22,12 +22,9 @@ const PayoutAccount = () => {
     })
       .then(response => {
         setData(response.data.payout);
-        console.log(response.data.payout);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
+      .catch(() => {
       });
   }, [update])
   const handlecancel = (id) => {
@@ -39,14 +36,12 @@ const PayoutAccount = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log('confirm added successfully:', response.data);
+      .then(() => {
         toast.success('confirm  successfully');
         setUpdate(!update)
 
       })
       .catch((error) => {
-        console.error('confirm  resolve:', error);
 
         toast.error(error.response.data.message )
       });
@@ -91,13 +86,11 @@ const PayoutAccount = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-          .then((response) => {
-            console.log('User deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('canceled!', ` has been canceled successfully.`, 'success');
           })
-          .catch((error) => {
-            console.error('Error deleting cancel:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while cancel.`, 'error');
           });
       } else {

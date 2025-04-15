@@ -52,7 +52,7 @@ const UserDetails = () => {
           </thead>
           <tbody>
             {userData.bookings?.length > 0 ? (
-              userData.bookings.map((booking, index) => (
+              userData.bookings.slice().reverse().map((booking, index) => (
                 <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
                   <td className="w-[143px] h-[56px] px-1">{`${booking.city_residence} --> ${booking.to_city}`}</td>
                   <td className="w-[143px] h-[56px] px-1">{booking.date}</td>
@@ -73,7 +73,7 @@ const UserDetails = () => {
       {/* Small screen cards */}
       <div className="lg:hidden mt-6 flex flex-col gap-4 w-full">
         {userData.bookings?.length > 0 ? (
-          userData.bookings.map((booking, index) => (
+          userData.bookings.slice().reverse().map((booking, index) => (
             <div key={index} className="bg-six rounded-xl p-4 shadow-md">
               <div className="flex flex-col gap-2">
                 <p><strong>Route:</strong> {`${booking.city_residence} --> ${booking.to_city}`}</p>

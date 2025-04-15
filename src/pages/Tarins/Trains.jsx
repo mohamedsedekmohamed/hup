@@ -23,12 +23,10 @@ const Trains = () => {
       })
           .then(response => {
               setData(response.data.train);
-              console.log(response.data.train);
 
           })
-          .catch(error => {
-              console.log(token);
-              console.error('Error fetching data:', error);
+          .catch(() => {
+              
           });
   }, [update])
 
@@ -49,13 +47,11 @@ const Trains = () => {
                       Authorization: `Bearer ${token}`,
                   },
               })
-                  .then((response) => {
-                      console.log('User deleted successfully:', response.data);
+                  .then(() => {
                       setUpdate(!update);
                       Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success');
                   })
-                  .catch((error) => {
-                      console.error('Error deleting user:', error);
+                  .catch(() => {
                       Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error');
                   });
           } else {

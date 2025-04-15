@@ -41,8 +41,7 @@ const AddTypeBuses = () => {
             reader.readAsDataURL(blob); 
           });
         })
-        .catch((error) => {
-          console.error("Error converting image to Base64", error);
+        .catch(() => {
         });
     }
     
@@ -64,9 +63,7 @@ const AddTypeBuses = () => {
                     setBusImage(base64Flag);  
                     setBusImageor(base64Flag); 
                 })
-                .catch((error) => {
-                    console.error("Error converting flag image:", error);
-                });
+                
               }
               //
               if(snedData.plan_image){
@@ -75,9 +72,7 @@ const AddTypeBuses = () => {
                     setPlanImage(base64Flag);  
                     setPlanImageor(base64Flag);  
                 })
-                .catch((error) => {
-                    console.error("Error converting flag image:", error);
-                });
+              
               }
               //
               if(snedData.seats_image){
@@ -86,9 +81,7 @@ const AddTypeBuses = () => {
                     setSeatsImage(base64Flag);  
                     setSeatsImageor(base64Flag);  
                 })
-                .catch((error) => {
-                    console.error("Error converting flag image:", error);
-                });
+             
               }
 
                 setValue(snedData.status);

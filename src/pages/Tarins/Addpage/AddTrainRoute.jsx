@@ -83,16 +83,14 @@ const AddTrainRoute = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Route updated successfully:', response.data);
+        .then(() => {
           toast.success('Route added  successfully');
 
           setTimeout(() => {
             navigate('/Train/TrainRoute');
           }, 3000);
         })
-        .catch(error => {
-          console.error('Error updating Route:', error);
+        .catch(() => {
         });
       return;
     }
@@ -102,16 +100,14 @@ const AddTrainRoute = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('Route added successfully:', response.data);
+      .then(() => {
         toast.success('Route added  successfully');
 
         setTimeout(() => {
           navigate('/Train/TrainRoute');
         }, 3000);
       })
-      .catch(error => {
-        console.error('Error adding Route:', error);
+      .catch(() => {
       });
 
     setfromcity('');

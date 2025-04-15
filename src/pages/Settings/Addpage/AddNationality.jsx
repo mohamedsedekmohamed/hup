@@ -57,15 +57,13 @@ const AddNationality = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-                .then(response => {
-                    console.log('nationality updated successfully:', response.data);
+                .then(() => {
                     toast.success('nationality updated  successfully');
                     setTimeout(() => {
                         navigate('/Settings/Nationality');
                     }, 3000);
                 })
-                .catch(error => {
-                    console.error('Error updating nationality:', error);
+                .catch(() => {
                 });
             return;
         }
@@ -75,15 +73,13 @@ const AddNationality = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(response => {
-                console.log(' nationalityadd successfully:', response.data);
+            .then(() => {
                 toast.success('nationality added  successfully');
                 setTimeout(() => {
                     navigate('/Settings/Nationality');
                 }, 3000);
             })
-            .catch(error => {
-                console.error('Error adding nationality:', error);
+            .catch(() => {
             });
 
         setname('');

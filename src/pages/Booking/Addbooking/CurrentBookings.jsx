@@ -12,12 +12,7 @@ const CurrentBookings = () => {
           const [selectedFilter, setSelectedFilter] = useState(''); 
   useEffect(() => {
 const token = localStorage.getItem('token');
-if (!token) {
-  console.error('No token found');
-}
-    if (!token) {
-      console.error('No token found');
-    }
+
     
     axios.get("https://bcknd.ticket-hub.net/api/admin/booking/pending", {
       headers: {
@@ -29,10 +24,7 @@ if (!token) {
         console.log(response.data.bookingpending);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
-      });
+      
   }, [update])
 
   const handelconfirm=(id,one,two)=>{

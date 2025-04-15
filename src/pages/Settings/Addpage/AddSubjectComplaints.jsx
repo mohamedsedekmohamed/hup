@@ -56,15 +56,13 @@ const AddSubjectComplaints = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-                .then(response => {
-                    console.log('Subject Complaints updated successfully:', response.data);
+                .then(() => {
                     toast.success('Subject Complaints  updated  successfully');
                     setTimeout(() => {
                         navigate('/Settings/SubjectComplaints');
                     }, 3000);
                 })
-                .catch(error => {
-                    console.error('Error updating Subject Complaints:', error);
+                .catch(() => {
                 });
             return;
         }
@@ -74,15 +72,13 @@ const AddSubjectComplaints = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-            .then(response => {
-                console.log(' Subject Complaints add successfully:', response.data);
+            .then(() => {
                 toast.success('SubjectComplaints added  successfully');
                 setTimeout(() => {
                     navigate('/Settings/SubjectComplaints');
                 }, 3000);
             })
-            .catch(error => {
-                console.error('Error adding Subject Complaints:', error);
+            .catch(() => {
             });
 
         setname('');

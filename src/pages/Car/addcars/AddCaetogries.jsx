@@ -39,8 +39,7 @@ const AddCaetogries = () => {
                         reader.readAsDataURL(blob);
                     });
                 })
-                .catch((error) => {
-                    console.error("Error converting image to Base64", error);
+                .catch(() => {
                 });
         }
     
@@ -57,8 +56,7 @@ const AddCaetogries = () => {
                                 setFlag(base64Flag);
                                 setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                             })
-                            .catch((error) => {
-                                console.error("Error converting flag image:", error);
+                            .catch(() => {
                             });
                     }
                 }
@@ -104,15 +102,13 @@ const AddCaetogries = () => {
                                 Authorization: `Bearer ${token}`,
                             },
                         })
-                            .then(response => {
-                                console.log('car category updated successfully:', response.data);
+                            .then(() => {
                                 toast.success('car category updated successfully');
                                 setTimeout(() => {
                                     navigate('/Car');
                                 }, 3000);
                             })
-                            .catch(error => {
-                                console.error('Error updating category:', error);
+                            .catch(() => {
                                 toast.error("network");
 
                             });
@@ -124,16 +120,14 @@ const AddCaetogries = () => {
                             Authorization: `Bearer ${token}`,
                         },
                     })
-                        .then(response => {
-                            console.log('car category added successfully:', response.data);
+                        .then(() => {
                             toast.success('car category added  successfully');
             
                             setTimeout(() => {
                                 navigate('/Car');
                             }, 3000);
                         })
-                        .catch(error => {
-                            console.error('Error adding country:', error);
+                        .catch(() => {
                             toast.error("network");
 
                         });

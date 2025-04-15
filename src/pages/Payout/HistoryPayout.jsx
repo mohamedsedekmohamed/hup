@@ -21,12 +21,9 @@ const HistoryPayout = () => {
          })
            .then(response => {
              setData(response.data.payout);
-             console.log(response.data.payout);
      
            })
-           .catch(error => {
-             console.log(token);
-             console.error('Error fetching data:', error);
+           .catch(() => {
            });
        }, [update])
    

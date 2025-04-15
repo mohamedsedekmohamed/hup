@@ -42,8 +42,7 @@ const AddBuses = () => {
           reader.readAsDataURL(blob);
         });
       })
-      .catch((error) => {
-        console.error("Error converting image to Base64", error);
+      .catch(() => {
       });
   }
 

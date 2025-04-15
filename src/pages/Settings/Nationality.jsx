@@ -25,12 +25,10 @@ const Nationality = () => {
       })
         .then(response => {
           setData(response.data.nationalities);
-          console.log(response.data.nationalities);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);
+        .catch(() => {
+        
         });
     }, [update])
   
@@ -51,13 +49,11 @@ const Nationality = () => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => {
-              console.log('nationality deleted successfully:', response.data);
+            .then(() => {
               setUpdate(!update);
               Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
             })
-            .catch((error) => {
-              console.error('Error deleting user:', error);
+            .catch(() => {
               Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
             });
         } else {

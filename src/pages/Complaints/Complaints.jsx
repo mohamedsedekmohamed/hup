@@ -26,12 +26,9 @@ const Complaints = () => {
       })
         .then(response => {
           setData(response.data.complaints);
-          console.log(response.data.citcomplaintsies);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);
+        .catch(() => {
         });
     }, [update])
     const handleDelete = (index, subject_id) => { 
@@ -49,13 +46,11 @@ const Complaints = () => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => {
-              console.log('User deleted successfully:', response.data);
+            .then(() => {
               setUpdate(!update);
               Swal.fire('Deleted!', `${subject_id} has been deleted successfully.`, 'success'); 
             })
-            .catch((error) => {
-              console.error('Error deleting user:', error);
+            .catch(() => {
               Swal.fire('Error!', `There was an error while deleting ${subject_id}.`, 'error'); 
             });
         } else {
@@ -76,14 +71,12 @@ const Complaints = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log('reject  successfully:', response.data);
+      .then(() => {
         toast.success('reject  successfully');
       
       })
-      .catch((error) => {
-        console.error('Error  reject:', error);
-        toast.error('Error  reject:', error)
+      .catch(() => {
+        toast.error('Error  reject:', )
       });
     }
     const handresolve=(id,message)=>{
@@ -95,14 +88,12 @@ const Complaints = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log('resolve added successfully:', response.data);
+      .then(() => {
         toast.success('resolve  successfully');
       
       })
-      .catch((error) => {
-        console.error('Error  resolve:', error);
-        toast.error('Error  resolve:', error)
+      .catch(() => {
+        toast.error('Error  resolve:', )
       });
     }
     const filteredData = data.filter((item) => {

@@ -43,8 +43,7 @@ const AddMODELS = () => {
                             reader.readAsDataURL(blob);
                         });
                     })
-                    .catch((error) => {
-                        console.error("Error converting image to Base64", error);
+                    .catch(() => {
                     });
             }
         
@@ -62,8 +61,7 @@ const AddMODELS = () => {
                                 setFlag(base64Flag);
                                 setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                             })
-                            .catch((error) => {
-                                console.error("Error converting flag image:", error);
+                            .catch(() => {
                             });
                     }
                 }
@@ -112,15 +110,13 @@ const AddMODELS = () => {
                                 Authorization: `Bearer ${token}`,
                             },
                         })
-                            .then(response => {
-                                console.log('car BRANDS updated successfully:', response.data);
+                            .then(() => {
                                 toast.success('car BRANDS updated successfully');
                                 setTimeout(() => {
                                     navigate('/Car/MODELS');
                                 }, 3000);
                             })
-                            .catch(error => {
-                                console.error('Error updating BRANDS:', error);
+                            .catch( ()=> {
                                 toast.error("network");
             
                             });
@@ -132,16 +128,14 @@ const AddMODELS = () => {
                             Authorization: `Bearer ${token}`,
                         },
                     })
-                        .then(response => {
-                            console.log('car BRANDS added successfully:', response.data);
+                        .then(() => {
                             toast.success('car MODELS added  successfully');
             
                             setTimeout(() => {
                                 navigate('/Car/MODELS');
                             }, 3000);
                         })
-                        .catch(error => {
-                            console.error('Error adding country:', error);
+                        .catch(() => {
                             toast.error("network");
             
                         });

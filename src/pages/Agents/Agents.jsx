@@ -23,12 +23,10 @@ const Agents = () => {
     })
       .then(response => {
         setData(response.data.operators);
-        console.log(response.data.operators);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
+      .catch(() => {
+    
       });   
       
   }, [update])

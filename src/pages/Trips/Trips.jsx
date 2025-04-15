@@ -25,13 +25,9 @@ const Trips = () => {
     })
       .then(response => {
         setData(response.data.trips);
-        console.log(response.data.trips);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);   
-      });
+   
   },[update])
 
   const handleDelete = (index, userName) => { 
@@ -50,13 +46,11 @@ const Trips = () => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => {
-            console.log('trip deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
           })
-          .catch((error) => {
-            console.error('Error deleting trip:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
           });
       } else {

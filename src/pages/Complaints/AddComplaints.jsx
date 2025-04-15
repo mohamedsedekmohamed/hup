@@ -100,17 +100,15 @@ const AddComplaints = () => {
             Authorization: `Bearer ${token}`,
           },
         })
-        .then((response) => {
-          console.log('Complaints updated successfully:', response.data);
+        .then(() => {
              toast.success('Complaints updated successfully');
                               setTimeout(() => {
                                   navigate('/Complaints');
                               }, 3000);
         })
-        .catch((error) => {
-          toast.error('Error updating country:', error)
+        .catch(() => {
+          toast.error('Error updating Complaints:')
 
-          console.error('Error updating country:', error);
         });
       return;
     }
@@ -121,19 +119,16 @@ const AddComplaints = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-      .then((response) => {
-        console.log('Complaints added successfully:', response.data);
+      .then(() => {
         toast.success('Complaints updated successfully');
         setTimeout(() => {
                               navigate('/Complaints');
                             }, 3000);
       })
       .catch((error) => {
-        console.error('Error adding Complaints:', error);
         toast.error('Error adding Complaints:', error)
       });
-    console.log('data will send');
-    console.log(newUser);
+  
 
     setuser('');
     setdata('');

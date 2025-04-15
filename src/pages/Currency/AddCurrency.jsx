@@ -71,7 +71,6 @@ const AddCurrency = () => {
                                 },
                               })
                                 .then(response => {
-                                  console.log('Currency updated successfully:', response.data);
                                   toast.success('Currency updated successfully');
                                   setTimeout(() => {
                                     navigate('/Currency');
@@ -88,19 +87,16 @@ const AddCurrency = () => {
                                 Authorization: `Bearer ${token}`,
                               },
                             })
-                              .then(response => {
-                                console.log('Currency added successfully:', response.data);
+                              .then(() => {
                                 toast.success('Currency added successfully');
 
                                 setTimeout(() => {
                                   navigate('/Currency');
                                 }, 3000);
                               })
-                              .catch(error => {
-                                console.error('Error adding country:', error);
+                              .catch(() => {
                               }); 
-                            console.log("data will send")
-                            console.log(newUser)
+                         
                    
                             setsymbol('');
                             setName('');

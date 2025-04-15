@@ -91,15 +91,13 @@ const Addtrains = () => {
                             Authorization: `Bearer ${token}`,
                         },
                     })
-                        .then(response => {
-                            console.log('Train updated successfully:', response.data);
+                        .then(() => {
                             toast.success('Train updated successfully');
                             setTimeout(() => {
                                 navigate('/Train/Trains');
                             }, 3000);
                         })
-                        .catch(error => {
-                            console.error('Error updating country:', error);
+                        .catch(() => {
                         });
                     return;
                 }
@@ -109,17 +107,14 @@ const Addtrains = () => {
                         Authorization: `Bearer ${token}`,
                     },
                 })
-                    .then(response => {
-                        console.log('Class added successfully:', response.data);
+                    .then(() => {
                         toast.success('Class added  successfully');
         
                         setTimeout(() => {
                             navigate('/Train/Trains');
                         }, 3000);
                     })
-                    .catch(error => {
-                        console.error('Error adding Class:', error);
-                    });
+                    .catch(() => {                    });
         
                 setName('');
                 setagent("");

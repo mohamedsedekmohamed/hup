@@ -48,16 +48,20 @@ useEffect(() => {
     <button  onClick={Handle}>
     <BiLogOut className='w-8 text-one h-8'/>
       </button>     
+
           <img src={rrr} />
         </div>
       </div>
+      {!open &&(
 
       <div className='flex items-center md:hidden'>
         <button className='w-15 h-15 pl-10' onClick={handleopen}>
           <FiAlignJustify />
         </button>
-        {/* <span className='w-full text-center lg:hidden  font-bold text-[20px]'>{name}</span> */}
+        
       </div>
+                )}
+
 
     </div>
   );

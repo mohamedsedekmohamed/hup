@@ -19,13 +19,9 @@ const CanceledBooking = () => {
     })
       .then(response => {
         setData(response.data.bookingCanceled);
-        console.log(response.data.bookingCanceled);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
-      });
+     
   }, [update])
 
   const filteredData = data.filter((item) => {

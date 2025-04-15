@@ -18,10 +18,15 @@ import IconSetting from '../../IconsImprot/IconSetting';
 import IconTrain from '../../IconsImprot/IconTrain';
 import { FaCarAlt } from "react-icons/fa";
 import { TbCarSuv } from "react-icons/tb";
-const Dash = ({ activeLink ,open}) => {
+import { FiAlignJustify } from "react-icons/fi";
+
+const Dash = ({ activeLink ,open ,setopen}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
+  const handleopen = () => {
+    setopen(!open);
 
+}
   
   const menuItems = [
     { icon: <IconHome />, iconactive: <IconHome active />, text: "Home", href: "/" },
@@ -179,15 +184,27 @@ const Dash = ({ activeLink ,open}) => {
         </div>
       </div>
      
+     
+
+
   {open&&(
 
      <div className={`direction-rtl  md:hidden`}>
-        <div className='flex-col sm:w-[200px] md:w-[250px] h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+        <div className='flex-col w-[200px] z-10    h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+        <div className='flex '>
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[16px]'>Ticket hub</span>
             <img src={mainicon} className='rounded-full w-6 h-6 p-1 bg-three' alt="Main Icon" />
           </div>
-
+          {open &&(
+          
+          <div className='flex justify-center items-center'>
+            <button className='w-5 h-5' onClick={handleopen}>
+              <FiAlignJustify />
+            </button> 
+            
+          </div>
+                    )}           </div>
           {/* Separator Line */}
           <div className='bg-white w-[160px] h-0.5 text-center mx-auto'></div>
 
@@ -233,7 +250,7 @@ const Dash = ({ activeLink ,open}) => {
                             {activeLink === option.href && (
                               <img
                                 src={ro}
-                                className="absolute left-15 transition-transform w-15 h-15"
+                                className="absolute left-18 transition-transform w-15 h-15"
                                 alt="Icon"
                               />
                             )}
@@ -259,7 +276,7 @@ const Dash = ({ activeLink ,open}) => {
                             {activeLink === option.href && (
                               <img
                                 src={ro}
-                                className="absolute left-15 transition-transform w-15 h-15"
+                                className="absolute left-18 transition-transform w-15 h-15"
                                 alt="Icon"
                               />
                             )}

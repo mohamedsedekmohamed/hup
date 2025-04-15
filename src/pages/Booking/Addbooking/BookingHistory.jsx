@@ -22,13 +22,9 @@ const BookingHistory = () => {
     })
       .then(response => {
         setData(response.data.userBookings);
-        console.log(response.data.userBookings);
 
       })
-      .catch(error => {
-        console.log(token);
-        console.error('Error fetching data:', error);
-      });
+     
   }, [update])
 
   const Details = (index) => {

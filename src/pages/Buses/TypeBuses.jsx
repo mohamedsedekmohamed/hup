@@ -50,7 +50,7 @@ const TypeBuses = () => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success');
           })
-          .catch((error) => {
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error');
           });
       } else {

@@ -39,8 +39,7 @@ const AddCountries = () => {
                     reader.readAsDataURL(blob);
                 });
             })
-            .catch((error) => {
-                console.error("Error converting image to Base64", error);
+            .catch(() => {
             });
     }
 
@@ -57,8 +56,7 @@ const AddCountries = () => {
                         setFlag(base64Flag);
                         setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                     })
-                    .catch((error) => {
-                        console.error("Error converting flag image:", error);
+                    .catch(() => {
                     });
             }
         }
@@ -104,15 +102,13 @@ const AddCountries = () => {
                     Authorization: `Bearer ${token}`,
                 },
             })
-                .then(response => {
-                    console.log('Country updated successfully:', response.data);
+                .then(() => {
                     toast.success('Country updated successfully');
                     setTimeout(() => {
                         navigate('/Location');
                     }, 3000);
                 })
-                .catch(error => {
-                    console.error('Error updating country:', error);
+                .catch(() => {
                 });
             return;
         }

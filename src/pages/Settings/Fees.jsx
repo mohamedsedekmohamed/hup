@@ -25,13 +25,12 @@ const Fees = () => {
     .then(response => {
       const fees = response.data.fees;
       const feesArray = Array.isArray(fees) ? fees : [fees];
-      setUpdate(!update)
       setData(feesArray);
     })
       .catch(error => {
         console.error('Error fetching data:', error);
       });
-  }, [update]);
+  }, [data]);
 
   const handleDelete = (index ) => { 
     const token = localStorage.getItem('token');
@@ -49,8 +48,8 @@ const Fees = () => {
           },
         })
           .then(() => {
-            setUpdate(!update);
             Swal.fire('Deleted!', `it has been deleted successfully.`, 'success'); 
+            setData([])            
           })
           .catch(() => {
             Swal.fire('Error!', `There was an error while deleting  it.`, 'error'); 
@@ -130,7 +129,7 @@ const Fees = () => {
             </tr>
           </thead>
           <tbody>
-            {filteredData.map((item, index) => (
+          {filteredData.length !== 0 && filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
                 <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item.train_fees} </td>
                 <td className="w-[143px] h-[56px] text-[16px] ">{item.bus_fees} </td>
@@ -147,14 +146,15 @@ const Fees = () => {
                   />
                 </td>
               </tr>
-            ))}
+))}        
           </tbody>
         </table>
       </div>
       {/* Mobile view */}
+
 <div className="mt-10 ml-5 lg:hidden">
   <div className='w-[95%] bg-six'>
-    {filteredData.map((item, index) => (
+  {filteredData.length !== 0 && filteredData.map((item, index) => (
       <div key={index} className='flex flex-col gap-4 p-3'>
         <div className="flex gap-4">
           <strong>Train :</strong>

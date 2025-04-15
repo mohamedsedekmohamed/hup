@@ -18,12 +18,9 @@ const Commission = () => {
       })
         .then(response => {
           setData(response.data.default_commission);
-          console.log(response.data.default_commission);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);   
+        .catch(() => {
         });
     },[update])
     const handleEdit = () => {

@@ -20,12 +20,9 @@ const PendingPayments = () => {
       })
         .then(response => {
           setData(response.data.canceledPayment);
-          console.log(response.data.canceledPayment);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);   
+        .catch(() => {
         });
     },[update])
     const filteredData = data.filter((item) => {

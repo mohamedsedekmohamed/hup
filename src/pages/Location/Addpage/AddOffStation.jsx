@@ -80,7 +80,6 @@ const AddOffStation = () => {
       basic_station: "0"
     };
 
-    console.log("Data to be sent:", newUser);
 
     if (edit) {
       const { snedData } = location.state || {};
@@ -89,8 +88,7 @@ const AddOffStation = () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Stations updated successfully:', response.data);
+        .then(() => {
           toast.success('Stations updated successfully');
 
           setTimeout(() => {
@@ -108,19 +106,16 @@ const AddOffStation = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('Stations added successfully:', response.data);
+      .then(() => {
         toast.success('Stations added successfully');
 
         setTimeout(() => {
           navigate('/Location/Stations');
         }, 3000);
       })
-      .catch(error => {
-        console.error('Error adding country:', error);
+      .catch(() => {
       });
-    console.log("data will send")
-    console.log(newUser)
+
     setpickup("0")
     setdropoff("0")
     setValue("inactive");

@@ -41,7 +41,6 @@ import Train from '../pages/Tarins/Tarin.jsx'
 const Togo = ({ setIsLoggedIn }) => {
   const [activeLink, setActiveLink] = useState('/');
   const [open, setopen] = useState(false);
-  // const navigate = useNavigate();
   const location = useLocation();
 
 
@@ -125,7 +124,7 @@ const Togo = ({ setIsLoggedIn }) => {
   return (
     <div className='flex overflow-hidden relative'>
       <div className='bg-one  '>
-        <Dash activeLink={activeLink} open={open} />
+        <Dash activeLink={activeLink}  setopen={setopen} open={open} />
       </div>
       <div className='w-full'>
         <Home setIsLoggedIn={setIsLoggedIn} setopen={setopen} open={open} />

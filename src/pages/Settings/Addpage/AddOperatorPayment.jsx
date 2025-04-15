@@ -38,8 +38,7 @@ const AddOperatorPayment = () => {
                     reader.readAsDataURL(blob);
                 });
             })
-            .catch((error) => {
-                console.error("Error converting image to Base64", error);
+            .catch(() => {
             });
     }
 
@@ -56,8 +55,7 @@ const AddOperatorPayment = () => {
                         setFlag(base64Flag);
                         setOriginalFlag(base64Flag); // حفظ الصورة الأصلية
                     })
-                    .catch((error) => {
-                        console.error("Error converting flag image:", error);
+                    .catch(() => {
                     });
             }
         }
@@ -104,15 +102,13 @@ const AddOperatorPayment = () => {
                 Authorization: `Bearer ${token}`,
             },
         })
-        .then(response => {
-            console.log(' Add Payment Methods updated successfully:', response.data);
+        .then(() => {
              toast.success(' Add Payment Methods updated  successfully'); 
                                 setTimeout(() => {
                                   navigate('/Settings/OperatorPayment');
                                 }, 3000);
         })
-        .catch(error => {
-            console.error('Error updating country:', error);
+        .catch(() => {
         });
         return;
     }
@@ -123,15 +119,13 @@ const AddOperatorPayment = () => {
             Authorization: `Bearer ${token}`,
         },
     })
-    .then(response => {
-        console.log(' Add Payment Methods add successfully:', response.data);
+    .then(() => {
         toast.success(' Add Payment Methods added  successfully'); 
         setTimeout(() => {
           navigate('/Settings/OperatorPayment');
         }, 3000);
     })
-    .catch(error => {
-        console.error('Error adding country:', error);
+    .catch(() => {
     });
 
     setname('');

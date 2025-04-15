@@ -25,10 +25,8 @@ const [searchQuery, setSearchQuery] = useState('');
     })
       .then(response => {
         setData(response.data.zones);
-        console.log(response.data.zones);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
+      .catch(() => {
       });
   }, [update]);
 
@@ -48,13 +46,11 @@ const [searchQuery, setSearchQuery] = useState('');
             Authorization: `Bearer ${token}`,
           },
         })
-          .then((response) => {
-            console.log('Zone deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${zoneName} has been deleted successfully.`, 'success');
           })
-          .catch((error) => {
-            console.error('Error deleting zone:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${zoneName}.`, 'error');
           });
       } else {

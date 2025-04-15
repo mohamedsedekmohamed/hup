@@ -20,12 +20,10 @@ const Commissions = () => {
       })
         .then(response => {
           setData(response.data.confirmedPayment);
-          console.log(response.data.confirmedPayment);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);   
+        .catch(() => {
+         
         });
     },[update])
     const filteredData = data.filter((item) => {

@@ -77,16 +77,14 @@ const Addzones= () => {
             Authorization: `Bearer ${token}`,
           },
         })
-          .then(response => {
-            console.log('zone updated successfully:', response.data);
+          .then(() => {
              toast.success('zone added  successfully'); 
                   
                     setTimeout(() => {
                       navigate('/Location/Zones');
                     }, 3000);
           })
-          .catch(error => {
-            console.error('Error updating country:', error);
+          .catch(() => {
           });
         return;
       }
@@ -96,16 +94,14 @@ const Addzones= () => {
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('zone added successfully:', response.data);
+        .then(() => {
            toast.success('zone added  successfully'); 
                 
                   setTimeout(() => {
                     navigate('/Location/Zones');
                   }, 3000);
         })
-        .catch(error => {
-          console.error('Error adding country:', error);
+        .catch(() => {
         });
   
       setCountry('');

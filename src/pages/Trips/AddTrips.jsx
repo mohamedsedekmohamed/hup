@@ -332,16 +332,13 @@ newTrip.day=selectedDays,
           Authorization: `Bearer ${token}`,
         },
       })
-        .then(response => {
-          console.log('Trip updated successfully:', response.data);
+        .then(() => {
           toast.success('Trip updated successfully');
           setTimeout(() => {
             navigate('/Trips');
           }, 3000);
         })
-        .catch(error => {
-          console.error('Error updating trip:', error);
-        });
+       
       return;
     }
     axios.post('https://bcknd.ticket-hub.net/api/admin/trip/add', newTrip, {
@@ -349,16 +346,14 @@ newTrip.day=selectedDays,
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('Trip added successfully:', response.data);
+      .then(() => {
         toast.success('Trip added successfully');
 
         setTimeout(() => {
           navigate('/Trips');
         }, 3000);
       })
-      .catch(error => {
-        console.error('Error adding trip:', error);
+      .catch(() => {
       });
       setdatastart('')
     setTripName('');

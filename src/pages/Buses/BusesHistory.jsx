@@ -24,11 +24,8 @@ const BusesHistory = () => {
     })
       .then(response => {
         setData(response.data.aminty);
-        console.log(response.data.aminty);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+     
   }, [update]);
 
   const handleDelete = (index, userName) => { 
@@ -47,13 +44,11 @@ const BusesHistory = () => {
               Authorization: `Bearer ${token}`,
             },
           })
-          .then((response) => {
-            console.log('Amenities deleted successfully:', response.data);
+          .then(() => {
             setUpdate(!update);
             Swal.fire('Deleted!', `${userName} has been deleted successfully.`, 'success'); 
           })
-          .catch((error) => {
-            console.error('Error deleting user:', error);
+          .catch(() => {
             Swal.fire('Error!', `There was an error while deleting ${userName}.`, 'error'); 
           });
       } else {

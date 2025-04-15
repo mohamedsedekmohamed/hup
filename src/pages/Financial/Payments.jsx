@@ -22,12 +22,9 @@ const Payments = () => {
       })
         .then(response => {
           setData(response.data.pendintPayment);
-          console.log(response.data.pendintPayment);
   
         })
-        .catch(error => {
-          console.log(token);
-          console.error('Error fetching data:', error);   
+        .catch(() => {
         });
     },[update])
     const handelconfirm=(id,one,two)=>{
@@ -46,13 +43,11 @@ const Payments = () => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => {
-              console.log('User deleted successfully:', response.data);
+            .then(() => {
               setUpdate(!update);
               Swal.fire('confirmed!', ` has been confirmed successfully.`, 'success'); 
             })
-            .catch((error) => {
-              console.error('Error deleting confirm:', error);
+            .catch(() => {
               Swal.fire('Error!', `There was an error while confirm.`, 'error'); 
             });
         } else {
@@ -79,13 +74,11 @@ const Payments = () => {
                 Authorization: `Bearer ${token}`,
               },
             })
-            .then((response) => {
-              console.log('User deleted successfully:', response.data);
+            .then(() => {
               setUpdate(!update);
               Swal.fire('canceled!', ` has been canceled successfully.`, 'success'); 
             })
-            .catch((error) => {
-              console.error('Error deleting cancel:', error);
+            .catch(() => {
               Swal.fire('Error!', `There was an error while cancel.`, 'error'); 
             });
         } else {
