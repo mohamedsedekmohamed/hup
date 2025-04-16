@@ -18,6 +18,7 @@ import 'react-calendar/dist/Calendar.css';
 import WeekdaySelect from '../../ui/WeekdaySelect';
 const AddTrips = () => {
   const navigate = useNavigate();
+    const [loading, setLoading] = useState(true);
   const location = useLocation();
   const [tripName, setTripName] = useState('');
   const [busId, setBusId] = useState('');
@@ -47,7 +48,7 @@ const AddTrips = () => {
   const [tripType, setTripType] = useState('');
   const [currencyId, setCurrencyId] = useState('');
   const [datastart, setdatastart] = useState('');
-  const [cancellationDate, setCancellationDate] = useState();
+  // const [cancellationDate, setCancellationDate] = useState();
   const [selectedDays, setSelectedDays] = useState([]);
     const [edit, setEdit] = useState(false);
 useEffect(()=>{
@@ -84,7 +85,7 @@ useEffect(()=>{
     minCost: '',
     tripType: '',
     currencyId: '',
-    cancellationDate: ''
+    // cancellationDate: ''
   });
   useEffect(() => {
     const { snedData } = location.state || {};
@@ -117,10 +118,15 @@ useEffect(()=>{
       setMinCost(snedData.min_cost);
       setTripType(snedData.trip_type);
       setCurrencyId(snedData.currency_id);
-      setCancellationDate(snedData.cancellation_policy?.cancelation_hours); // assuming this is what you mean
+      // setCancellationDate(snedData.cancellation_policy?.cancelation_hours); // assuming this is what you mean
       setdatastart(snedData.start_date);
       setEdit(true);
     }
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 2000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
   const handleChangetwo = (e) => {
     const { name, value } = e.target;
@@ -190,7 +196,7 @@ useEffect(()=>{
     if (!minCost) formErrors.minCost = 'Min cost is required';
     if (!tripType) formErrors.tripType = 'Trip type is required';
     if (!currencyId) formErrors.currencyId = 'Currency ID is required';
-    if (!cancellationDate) formErrors.cancellationDate = 'Cancellation date is required';
+    // if (!cancellationDate) formErrors.cancellationDate = 'Cancellation date is required';
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
     });
@@ -222,18 +228,18 @@ useEffect(()=>{
       setFixedDate("");
     }
   };
-  const handleCancellationDate = (newData) => {
-    if (newData) {
-      const day = newData.getDate() + 1;
-      const month = newData.getMonth() + 1;
-      const year = newData.getFullYear();
+  // const handleCancellationDate = (newData) => {
+  //   if (newData) {
+  //     const day = newData.getDate() + 1;
+  //     const month = newData.getMonth() + 1;
+  //     const year = newData.getFullYear();
 
-      const formattedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
-      setCancellationDate(formattedDate);
-    } else {
-      setCancellationDate("");
-    }
-  };
+  //     const formattedDate = `${year}-${month < 10 ? `0${month}` : month}-${day < 10 ? `0${day}` : day}`;
+  //     setCancellationDate(formattedDate);
+  //   } else {
+  //     setCancellationDate("");
+  //   }
+  // };
   const handstartDate = (newData) => {
     if (newData) {
       const day = newData.getDate() + 1;
@@ -298,7 +304,7 @@ useEffect(()=>{
       min_cost: minCost,
       trip_type: tripType,
       currency_id: currencyId,
-      cancelation_date: cancellationDate,
+      // cancelation_date: cancellationDate,
       train_id: train_id,
       bus_id: busId,
     }
@@ -382,10 +388,17 @@ newTrip.day=selectedDays,
     setMinCost('');
     setTripType('');
     setCurrencyId('');
-    setCancellationDate('');
+    // setCancellationDate('');
     setEdit(false);
     setSelectedDays([])
   };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
       <AddAll navGo='/Trips' name='add Trips' />
@@ -718,7 +731,7 @@ newTrip.day=selectedDays,
         />
                 <div className=' flex justify-center items-end'>
 
-        <div className=' flex flex-col md:flex-row gap-0.5 md:gap-0 md:justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0'>
+        {/* <div className=' flex flex-col md:flex-row gap-0.5 md:gap-0 md:justify-between items-center w-[200px] md:w-[300px] h-[48px] md:h-[72px] border-1 border-two rounded-[8px] placeholder-seven pl-0'>
         <span className='text-[12px] md:text-[16px]'>Cancellation Date </span>
           <DatePicker
             onChange={handleCancellationDate}
@@ -727,7 +740,7 @@ newTrip.day=selectedDays,
             disableClock={true}
             disableCalendar={false}
           />
-        </div>  
+        </div>   */}
         </div>  
   </div>
   </div>

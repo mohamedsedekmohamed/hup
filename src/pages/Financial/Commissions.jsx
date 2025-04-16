@@ -2,7 +2,8 @@ import React, { useEffect, useState} from 'react';
 import ThreeThing from '../../component/ThreeThing'
 import axios from 'axios';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Commissions = () => {
   const [data, setData] = useState([]);
     const [update, setUpdate] = useState(false);
@@ -22,9 +23,9 @@ const Commissions = () => {
           setData(response.data.confirmedPayment);
   
         })
-        .catch(() => {
-         
-        });
+      .catch(() => {
+              toast.error("Error fetching data")
+            });
     },[update])
     const filteredData = data.filter((item) => {
       if(selectedFilter==="Filter"){
@@ -52,6 +53,8 @@ const Commissions = () => {
     };
   return (
     <div>
+              <ToastContainer />
+      
          {/* <ThreeThing navGo='/Location/AddZones' like/> */}
          <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -87,11 +90,11 @@ const Commissions = () => {
                
               {filteredData.map((item,index) => (
                 <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                    <td className="w-[143px] h-[56px]  text-[16px] px-2">{item.amount}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px] px-2">{item?.amount??"N//A"}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">  <img  className="w-5 h-5"src={item.receipt_image===null?`data:image/png;base64,${item.receipt_image}`:item.receipt_image}/> </td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.travelers}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.travel_date}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.total}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.travelers??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.travel_date??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.total??"N//A"}</td>
                     <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                     
                   </tr>
@@ -105,7 +108,7 @@ const Commissions = () => {
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>amount:</strong>
-                <span>{item.amount}</span>
+                <span>{item?.amount??"N//A"}</span>
               </div>
               <div className="flex gap-4">
           <strong>receipt:</strong>
@@ -116,16 +119,16 @@ const Commissions = () => {
         </div>
               <div className="flex gap-4">
                 <strong>travelers:</strong>
-                <span>{item.travelers}</span>
+                <span>{item?.travelers??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>travel_date:</strong>
-                <span>{item.travel_date}</span>
+                <span>{item?.travel_date??"N//A"}</span>
               </div>
        
               <div className="flex gap-4">
                 <strong>total:</strong>
-                <span>{item.total}</span>
+                <span>{item?.total??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>Status:</strong>

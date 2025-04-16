@@ -3,6 +3,8 @@ import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing';
 import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Commission = () => {
    const [data, setData] = useState([]);
@@ -20,8 +22,9 @@ const Commission = () => {
           setData(response.data.default_commission);
   
         })
-        .catch(() => {
-        });
+      .catch(() => {
+              toast.error("Error fetching data")
+            });
     },[update])
     const handleEdit = () => {
       
@@ -48,6 +51,7 @@ const Commission = () => {
 </div>
 
 )}
+        <ToastContainer />
 
 
 
@@ -67,7 +71,7 @@ const Commission = () => {
               <tbody>
                
             
-                <tr  className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr  className='border-y hover:border-3 relative hover:bg-six'>
         <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.train}%</td>
                     <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.bus}%</td>
                     <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{data.hiace}%</td>

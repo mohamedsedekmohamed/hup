@@ -3,7 +3,8 @@ import axios from 'axios';
 import NavBooking from '../NavBooking'
 import ThreeThing from '../../../component/ThreeThing'
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const CanceledBooking = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -19,8 +20,9 @@ const CanceledBooking = () => {
     })
       .then(response => {
         setData(response.data.bookingCanceled);
-
-      })
+      })  .catch(() => {
+                toast.error("Error fetching data")
+              });
      
   }, [update])
 
@@ -56,6 +58,8 @@ code:"code"
   return (
  
 <div>
+          <ToastContainer />
+  
 <NavBooking/>
 
 <div className='flex justify-between items-center mt-10 px-5'>
@@ -91,11 +95,11 @@ code:"code"
                
               {filteredData.map((item,index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                    <td className="w-[143px] h-[56px]  text-[16px]  px-1 ">{item.destenation_from}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.destenation_to}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.date}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.code}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item.seats_count}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  px-1 ">{item?.destenation_from??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.destenation_to??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.date??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.code??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.seats_count??"N//A"}</td>
                     <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                 
                   </tr>
@@ -109,27 +113,27 @@ code:"code"
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>destenation_from:</strong>
-                <span>{item.destenation_from}</span>
+                <span>{item?.destenation_from??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>destenation_to:</strong>
-                <span>{item.destenation_to}</span>
+                <span>{item?.destenation_to??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>date:</strong>
-                <span>{item.date}</span>
+                <span>{item?.date??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>seats_count:</strong>
-                <span>{item.seats_count}</span>
+                <span>{item?.seats_count??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>code:</strong>
-                <span>{item.code}</span>
+                <span>{item?.code??"N//A"}</span>
               </div>
              
               

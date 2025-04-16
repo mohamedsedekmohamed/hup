@@ -22,6 +22,7 @@ const AddTypeBuses = () => {
   const [Count, setCount] = useState('');
   const [valuee, setValue] = useState("inactive");
   const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(true);
 
   const navigate = useNavigate();
   const location = useLocation();
@@ -40,35 +41,39 @@ const AddTypeBuses = () => {
     }
   };
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setCount(snedData.seat_count);
-      setName(snedData.name);
-      setValue(snedData.status);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setCount(sendData.seat_count);
+      setName(sendData.name);
+      setValue(sendData.status);
       setEdit(true);
-      if (snedData.bus_image) {
+      if (sendData.bus_image) {
 
-        setBusImage(snedData.bus_image);
-        setBusImageor(snedData.bus_image);
+        setBusImage(sendData.bus_image);
+        setBusImageor(sendData.bus_image);
       }
 
     }
 
-    if (snedData.plan_image) {
-      setPlanImage(snedData.plan_image);
-      setPlanImageor(snedData.plan_image);
+    if (sendData.plan_image) {
+      setPlanImage(sendData.plan_image);
+      setPlanImageor(sendData.plan_image);
     }
 
 
 
-    if (snedData.seats_image) {
-      setSeatsImage(snedData.seats_image);
-      setSeatsImageor(snedData.seats_image);
+    if (sendData.seats_image) {
+      setSeatsImage(sendData.seats_image);
+      setSeatsImageor(sendData.seats_image);
 
 
     }
 
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
 
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
   const handleChange = (e) => {
@@ -120,8 +125,8 @@ const AddTypeBuses = () => {
     console.log("Data to be sent:", newUser);
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_type/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus_type/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -147,8 +152,7 @@ const AddTypeBuses = () => {
         Authorization: `Bearer ${token}`,
       },
     })
-      .then(response => {
-        console.log('TypeBuses added successfully:', response.data);
+      .then(() => {
         toast.success('TypeBuses added  successfully');
 
         setTimeout(() => {
@@ -179,6 +183,13 @@ const AddTypeBuses = () => {
     setValue('inactive')
     setEdit(false);
   };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
       <AddAll navGo='/Buses/TypeBuses' name="Add Type Buses " />

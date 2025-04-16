@@ -8,6 +8,8 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import styled from 'styled-components';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const TypeBuses = () => {
   const [data, setData] = useState([]);
@@ -26,8 +28,9 @@ const TypeBuses = () => {
       .then(response => {
         setData(response.data.bus_type);
       })
-      .catch(() => {
-      });
+    .catch(() => {
+             toast.error("Error fetching data")
+           });
   }, [update]);
 
   const handleDelete = (index, userName) => {
@@ -60,8 +63,8 @@ const TypeBuses = () => {
   };
 
   const handleEdit = (id) => {
-    const snedData = data.find((item) => item.id === id);
-    navigate('/Buses/AddTypeBuses', { state: { snedData } });
+    const sendData = data.find((item) => item.id === id);
+    navigate('/Buses/AddTypeBuses', { state: { sendData } });
   };
 
   const onchangething = (id, currentStatus) => {
@@ -103,6 +106,8 @@ const TypeBuses = () => {
   return (
     <div>
       <NavBuses />
+              <ToastContainer />
+      
 
       {/* Search Box */}
       <div className='flex justify-between items-center mt-10 px-5'>
@@ -140,11 +145,11 @@ const TypeBuses = () => {
           <tbody>
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] px-2">{item.name}</td>
-                <td><img className="w-5 h-5" src={item.bus_image} alt="Bus" /></td>
-                <td className="w-[143px] h-[56px] text-[16px]">{item.seat_count}</td>
-                <td><img className="w-5 h-5" src={item.plan_image} alt="Plan" /></td>
-                <td><img className="w-5 h-5" src={item.seats_image} alt="Seats" /></td>
+                <td className="w-[143px] h-[56px] text-[16px] px-2">{item?.name??"N//A"}</td>
+                <td><img className="w-5 h-5" src={item.bus_image}  /></td>
+                <td className="w-[143px] h-[56px] text-[16px]">{item?.seat_count??"N//A"}</td>
+                <td><img className="w-5 h-5" src={item.plan_image}  /></td>
+                <td><img className="w-5 h-5" src={item.seats_image}  /></td>
                 <td className="w-[143px] h-[56px] text-[16px] flex items-center gap-0.5">
                   <div className='flex my-auto'>
                     <StyledWrapper>
@@ -179,7 +184,7 @@ const TypeBuses = () => {
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>agent:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>bus Image:</strong>
@@ -208,12 +213,20 @@ const TypeBuses = () => {
 
               <div className="flex gap-4">
                 <strong>seat_count:</strong>
-                <span>{item.seat_count}</span>
+                <span>{item?.seat_count??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>Status:</strong>
-                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
-              </div>
+                <StyledWrapper>
+                      <label className="switch">
+                        <input
+                          type="checkbox"
+                          checked={item.status === "active"} 
+                          onClick={() => onchangething(item.id, item.status)}  
+                        />
+                        <span className="slider" />
+                      </label>
+                    </StyledWrapper>              </div>
             
               <div className='flex'>
                 <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />

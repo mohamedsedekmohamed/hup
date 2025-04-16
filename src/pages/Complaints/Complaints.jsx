@@ -28,8 +28,9 @@ const Complaints = () => {
           setData(response.data.complaints);
   
         })
-        .catch(() => {
-        });
+         .catch(() => {
+                toast.error("Error fetching data")
+              });
     }, [update])
     const handleDelete = (index, subject_id) => { 
       
@@ -158,8 +159,8 @@ const Complaints = () => {
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
       
                   
-                    <td className="w-[143px] h-[56px]  text-[16px] px-1  ">{item.message}</td>
-                    <td className="w-[143px] h-[56px]  text-[16px] ">{item.date}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px] px-1  ">{item?.message??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[16px] ">{item?.date??"N//A"}</td>
                     <td className="w-[143px] h-[56px]  text-[16px]  ">  <button onClick={()=>handreject(item.id,item.message)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
                      reject
                     </button>
@@ -193,11 +194,11 @@ const Complaints = () => {
                 <div key={index} className='flex flex-col gap-4 p-3'>
                   <div className="flex gap-4">
                     <strong>message:</strong>
-                    <span>{item.message}</span>
+                    <span>{item?.message??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>date:</strong>
-                    <span>{item.date}</span>
+                    <span>{item?.date??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>reject:</strong>

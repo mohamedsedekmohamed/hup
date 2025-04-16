@@ -7,7 +7,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Countries = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -26,8 +27,9 @@ const Countries = () => {
       .then(response => {
         setData(response.data.countries);
       })
-      .catch(() => {
-      });
+      .catch(() => 
+               toast.error("Error fetching data")
+             );
   }, [update]);
 
   const handleDelete = (index, countryName) => { 
@@ -124,10 +126,10 @@ const Countries = () => {
                     src={item.flag === null ? `data:image/png;base64,${item.flag}` : item.flag}
                     alt={`${item.name} flag`} 
                   />
-                  <span className='w-[143px] h-[56px] text-[16px] px-2'>{item.name}</span>
+                  <span className='w-[143px] h-[56px] text-[16px] px-2'>{item?.name??"N//A"}</span>
                 </td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">
-                  <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>
+                  <span className="bg-eight font-normal p-2 rounded-[8px]">{item?.status??"N//A"}</span>
                 </td>
                 <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
@@ -150,11 +152,11 @@ const Countries = () => {
       <div key={index} className='flex flex-col gap-4 p-3'>
         <div className="flex gap-4">
           <strong>Country:</strong>
-          <span>{item.name}</span>
+          <span>{item?.name??"N//A"}</span>
         </div>
         <div className="flex gap-4">
           <strong>Status:</strong>
-          <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+          <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item?.status??"N//A"}</span>
         </div>
         <div className="flex gap-4">
           <strong>Flag:</strong>
@@ -178,7 +180,7 @@ const Countries = () => {
     ))}
   </div>
 </div>
-
+<ToastContainer/>
     </div>
   );
 }

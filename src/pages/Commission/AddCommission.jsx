@@ -14,6 +14,8 @@ const AddCommission = () => {
   const [hiace, sethiace] = useState('');
   const [id, setId] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
+  
   const [errors, setErrors] = useState({
     train: '',
     bus: '',
@@ -38,6 +40,11 @@ const AddCommission = () => {
       .catch(() => {
         setIsLoading(true)
       });
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+  
+      return () => clearTimeout(timeout);
 
   }, [location.state]);
   const handleChange = (e) => {
@@ -110,6 +117,13 @@ const AddCommission = () => {
 
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
 

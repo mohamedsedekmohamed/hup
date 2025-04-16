@@ -7,7 +7,8 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../component/ThreeThing.jsx';
 import { CiSearch } from "react-icons/ci";
-
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const CARS = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -26,8 +27,9 @@ const CARS = () => {
         setData(response.data);
 
       })
-      .catch(() => {
-      });
+   .catch(() => {
+           toast.error("Error fetching data")
+         });
   }, [update])
   const handleDelete = (index, userName) => { 
     const token = localStorage.getItem('token');
@@ -98,6 +100,8 @@ const labelMap = {
 };
   return (
     <div>
+              <ToastContainer />
+
       <Navcars/>
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -139,14 +143,14 @@ const labelMap = {
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                 <td className="flex gap-1 px-2 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
-                  <span className='w-[143px] h-[56px]  text-[16px]'>{item.model_name}</span>
+                  <span className='w-[143px] h-[56px]  text-[16px]'>{item?.model_name??"N//A"}</span>
                   </td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.category_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.brand_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.agent_name}</td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_number}</td>
-                <td className="w-[143px]  h-[56px]  text-[12px]">{item.car_color}</td>
-                <td className="w-[143px]  h-[56px]  text-[10px]">{item.car_year}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item?.category_name??"N//A"}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item?.brand_name??"N//A"}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item?.agent_name??"N//A"}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item?.car_number??"N//A"}</td>
+                <td className="w-[143px]  h-[56px]  text-[12px]">{item?.car_color??"N//A"}</td>
+                <td className="w-[143px]  h-[56px]  text-[10px]">{item?.car_year??"N//A"}</td>
                 <td className="w-[143px]  h-[56px]  text-[12px]">{item.status}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin}
@@ -169,7 +173,7 @@ const labelMap = {
                 <div key={index} className='flex flex-col gap-4 p-3'>
                   <div className="flex gap-4">
                     <strong>model:</strong>
-                    <span>{item.model_name}</span>
+                    <span>{item?.model_name??"N//A"}</span>
                   </div>
                 
                   <div className="flex gap-4">
@@ -181,27 +185,27 @@ const labelMap = {
                   </div>
                   <div className="flex gap-4">
                     <strong>category:</strong>
-                    <span>{item.category_name}</span>
+                    <span>{item?.category_name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>brand:</strong>
-                    <span>{item.brand_name}</span>
+                    <span>{item?.brand_name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>agent:</strong>
-                    <span>{item.agent_name}</span>
+                    <span>{item?.agent_name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>car number:</strong>
-                    <span>{item.car_number}</span>
+                    <span>{item?.car_number??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>car color:</strong>
-                    <span>{item.car_color}</span>
+                    <span>{item?.car_color??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>year:</strong>
-                    <span>{item.car_year}</span>
+                    <span>{item?.car_year??"N//A"}</span>
                   </div>
                   <div className='flex'>
                     <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />

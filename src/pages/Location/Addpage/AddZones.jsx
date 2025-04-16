@@ -18,6 +18,8 @@ const Addzones= () => {
       const [name, setName] = useState('');
       const [valuee, setValue] = useState("inactive");
       const [edit, setEdit] = useState(false);
+        const [loading, setLoading] = useState(true);
+      
       const [errors, setErrors] = useState({
         country: '',
         city:"",
@@ -34,6 +36,11 @@ const Addzones= () => {
       setValue(sendData.status);
       setEdit(true);
     }
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
   const handleChange = (e) => {
@@ -71,8 +78,8 @@ const Addzones= () => {
       console.log("Data to be sent:", newUser);
   
       if (edit) {
-        const { snedData } = location.state || {};
-        axios.put(`https://bcknd.ticket-hub.net/api/admin/zone/update/${snedData.id}`, newUser, {
+        const { sendData } = location.state || {};
+        axios.put(`https://bcknd.ticket-hub.net/api/admin/zone/update/${sendData.id}`, newUser, {
           headers: {
             Authorization: `Bearer ${token}`,
           },
@@ -109,7 +116,13 @@ const Addzones= () => {
       setCity('');
       setEdit(false);
     };
-  
+    if (loading) {
+      return (
+        <div className="flex justify-center items-center h-screen">
+          <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+        </div>
+      );
+    }
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
     <AddAll navGo='/Location/Zones' name="Add zone" />

@@ -8,7 +8,8 @@ import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const BusesBuses = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -25,7 +26,9 @@ const BusesBuses = () => {
     })
       .then(response => {
         setData(response.data.buses);
-      })
+      })    .catch(() => {
+                toast.error("Error fetching data")
+              });
      
   }, [update]);
 
@@ -57,8 +60,8 @@ const BusesBuses = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/Buses/AddBuses', { state: { snedData } });
+    const sendData = data.find((item) => item.id === index);
+    navigate('/Buses/AddBuses', { state: { sendData } });
   };
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){
@@ -88,6 +91,8 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
   return (
     <div>
       <NavBuses />
+              <ToastContainer />
+      
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
           <input
@@ -123,12 +128,12 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
           <tbody>
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item.agent_name}</td>
-                <td className="w-[143px] h-[56px] text-[12px]">{item.agent_email}</td>
-                <td className="w-[143px] h-[56px] text-[16px]">{item.capacity}</td>
+                <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item?.agent_name??"N//A"}</td>
+                <td className="w-[143px] h-[56px] text-[12px]">{item?.agent_email??"N//A"}</td>
+                <td className="w-[143px] h-[56px] text-[16px]">{item?.capacity??"N//A"}</td>
                 <td><img className="w-5 h-5" src={item.bus_image === null ? `data:image/png;base64,${item.bus_image}` : item.bus_image} alt="Bus" /></td>
                 <td className="w-[143px] h-[56px] text-[16px] text-nine">
-                  <span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span>
+                  <span className="bg-eight font-normal p-2 rounded-[8px]">{item?.status??"N//A"}</span>
                 </td>
                 <td className="w-[143px] h-[56px] text-[16px]">
                   {item.amenities && item.amenities.length > 0
@@ -159,15 +164,15 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>agent:</strong>
-                <span>{item.agent_name}</span>
+                <span>{item?.agent_name??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>email:</strong>
-                <span>{item.agent_email}</span>
+                <span>{item?.agent_email??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>Capacity:</strong>
-                <span>{item.capacity}</span>
+                <span>{item?.capacity??"N//A"}</span>
               </div>
               <div className="flex gap-4">
           <strong>bus Image:</strong>
@@ -180,7 +185,7 @@ const cheose = ["Filter","agent_name", "agent_email", "capacity","status",
               
               <div className="flex gap-4">
                 <strong>Status:</strong>
-                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+                <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item?.status??"N//A"}</span>
               </div>
               <div className="flex gap-2 items-center">
               <strong> Amenities:</strong>

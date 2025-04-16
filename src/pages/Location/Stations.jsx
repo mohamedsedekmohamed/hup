@@ -7,7 +7,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Tiglebutton from '../../ui/Tiglebutton';
 import { CiSearch } from 'react-icons/ci'; // Import the search icon for the search field
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Stations = () => {
   const [data, setData] = useState([]);
   const [datatwo, setDatatwo] = useState([]);
@@ -26,9 +27,9 @@ const Stations = () => {
         setData(response.data.pickup);
         setDatatwo(response.data.dropoff);
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+        .catch(() => {
+                toast.error("Error fetching data")
+              });
   }, [update]);
 
   const handleDelete = (index) => {
@@ -87,6 +88,8 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
 
   return (
     <>
+            <ToastContainer />
+
     <div className="mt-10 ml-5 hidden lg:block">
       <table className="w-full  border-y border-x border-black">
         <thead className="w-full">
@@ -102,11 +105,11 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
         <tbody>
           {filtered.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-              <td className="w-[143px] h-[56px] text-[16px] px-4">{item.name}</td>
-              <td className="w-[143px] h-[56px] text-[16px] ">{item.country_name}</td>
-              <td className="w-[143px] h-[56px] text-[16px] ">{item.city_name}</td>
-              <td className="w-[143px] h-[56px] text-[16px] ">{item.zone_name}</td>
-              <td className="w-[143px] h-[56px] text-[16px] ">{item.status}</td>
+              <td className="w-[143px] h-[56px] text-[16px] px-4">{item?.name??"N//A"}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item?.country_name??"N//A"}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item?.city_name??"N//A"}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item?.zone_name??"N//A"}</td>
+              <td className="w-[143px] h-[56px] text-[16px] ">{item?.status??"N//A"}</td>
               <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-5 items-center">
                 <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
                 <img className='w-[24px] h-[24px] ml-2 cursor-pointer' src={delet} onClick={() => handleDelete(item.id)} alt="delete" />
@@ -122,23 +125,23 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
                 <div key={index} className='flex flex-col gap-4 p-3'>
                   <div className="flex gap-4">
                     <strong>name:</strong>
-                    <span>{item.name}</span>
+                    <span>{item?.name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>Country:</strong>
-                    <span>{item.country_name}</span>
+                    <span>{item?.country_name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>city:</strong>
-                    <span>{item.name}</span>
+                    <span>{item?.name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>Zone:</strong>
-                    <span>{item.zone_name}</span>
+                    <span>{item?.zone_name??"N//A"}</span>
                   </div>
                   <div className="flex gap-4">
                     <strong>Status:</strong>
-                    <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+                    <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item?.status??"N//A"}</span>
                   </div>
                   <div className='flex'>
                     <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
@@ -163,10 +166,9 @@ const cheose = ["Filter","name", "country_name","city_name", "zone_name"]
     <div>
       <NavLocation />
       <div className='flex mx-2 mt-6 gap-3'>
-        <Tiglebutton action={action === 'on' ? 'on' : 'off'} onClick={() => handleToggle('on')} title='Drop-off' />
-        <Tiglebutton action={action === 'on' ? 'off' : 'on'} onClick={() => handleToggle('off')} title='Pick-up' />
+        <Tiglebutton action={action === 'on' ? 'on' : 'off'} onClick={() => handleToggle('on')} title='Pick-up' />
+        <Tiglebutton action={action === 'on' ? 'off' : 'on'} onClick={() => handleToggle('off')} title='Drop-off' />
       </div>
-
       {/* Search Bar */}
       <div className='flex justify-between items-center gap-3 relative mt-6 px-5'>
         

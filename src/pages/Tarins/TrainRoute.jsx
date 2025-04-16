@@ -6,7 +6,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 const TrainRoute = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -24,7 +25,9 @@ const TrainRoute = () => {
       .then(response => {
         setData(response.data.routes);
 
-      })
+      }).catch(() => {
+                toast.error("Error fetching data")
+              });
     
   }, [update])
 
@@ -92,6 +95,8 @@ to_city:"to city"
 };
   return (
     <div>
+              <ToastContainer />
+      
       <NavTrains />
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -126,11 +131,11 @@ to_city:"to city"
 
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.from_country}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.from_city}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.to_country}</td>
-                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.to_city}</td>
+                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item?.name??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.from_country??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.from_city??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.to_country??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.to_city??"N//A"}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin}
                     onClick={() => handleEdit(item.id)} />
@@ -152,23 +157,23 @@ to_city:"to city"
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>train Route:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>from country :</strong>
-                <span>{item.from_country}</span>
+                <span>{item?.from_country??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>from city :</strong>
-                <span>{item.from_city}</span>
+                <span>{item?.from_city??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>to country :</strong>
-                <span>{item.to_country}</span>
+                <span>{item?.to_country??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>to city:</strong>
-                <span>{item.to_city}</span>
+                <span>{item?.to_city??"N//A"}</span>
               </div>
               
               <div className='flex'>

@@ -14,17 +14,19 @@ const Addhiace = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [busNumber, setBusNumber] = useState('');
-  const [busType, setBusType] = useState('');
+  // const [busType, setBusType] = useState('');
   const [capacity, setCapacity] = useState('');
   const [agent, setAgent] = useState('');
   const [pic, setPic] = useState(null);
   const [originalFlag, setOriginalFlag] = useState(null);
   const [status, setStatus] = useState('inactive');
   const [edit, setEdit] = useState(false);
+    const [loading, setLoading] = useState(true);
+  
   const [errors, setErrors] = useState({
     busNumber: '',
     pic: '',
-    busType: '',
+    // busType: '',
     capacity: '',
     agent: "",
     type: "",
@@ -42,7 +44,7 @@ const Addhiace = () => {
     if (!busNumber) formErrors.busNumber = 'Bus number is required';
     if (!pic && !edit) formErrors.pic = 'Bus image is required';
     if (!capacity) formErrors.capacity = 'Capacity is required or should write number';
-    if (!busType) formErrors.busType = 'Bus type is required';
+    // if (!busType) formErrors.busType = 'Bus type is required';
     if (!agent) formErrors.agent = 'Agent type is required';
 
     setErrors(formErrors);
@@ -61,7 +63,7 @@ const Addhiace = () => {
       }
     } else {
       if (name === 'busNumber') setBusNumber(value);
-      if (name === 'bus_types') setBusType(value);
+      // if (name === 'bus_types') setBusType(value);
       if (name === 'agents') setAgent(value);
     }
   };
@@ -73,7 +75,7 @@ const Addhiace = () => {
       setBusNumber(snedData.bus_number);
       setPic(snedData.bus_image);
       setCapacity(snedData.capacity);
-      setBusType(snedData.bus_type_id);
+      // setBusType(snedData.bus_type_id);
       setStatus(snedData.status);
       setAgent(snedData.agent_id);
       setEdit(true);
@@ -84,6 +86,11 @@ const Addhiace = () => {
 
       }
     }
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
   const handleSave = () => {
@@ -92,7 +99,7 @@ const Addhiace = () => {
     const newBus = {
       type: "hiace",
       bus_number: busNumber,
-      bus_type_id: busType,
+      bus_type_id:null,
       agent_id: agent,
       capacity: capacity,
       status: status,
@@ -146,33 +153,41 @@ const Addhiace = () => {
   const resetForm = () => {
     setAgent('');
     setBusNumber('');
-    setBusType('');
+    // setBusType('');
     setCapacity('');
     setPic(null);
     setStatus('inactive');
     setEdit(false);
   };
 
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
+
   return (
 <div>
 
-      <AddAll navGo='/Hiace' name="Add Bus" />
+      <AddAll navGo='/Hiace' name="Add Hiace" />
       <div className='ml-6 flex flex-wrap mt-6 gap-6'>
 
         <InputField
-          placeholder="Bus Number"
+          placeholder="hiace Number"
           name="busNumber"
           value={busNumber}
           onChange={handleChange}
         />
-        <Inputfiltter
+        {/* <Inputfiltter
           like
-          placeholder="Bus Type"
+          placeholder="hiace Type"
           name="bus_types"
           value={busType}
           onChange={handleChange}
           required
-        />
+        /> */}
         <Inputfiltter
           like
           placeholder="Agents"

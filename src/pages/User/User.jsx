@@ -5,15 +5,14 @@
   import axios from 'axios';
   import { useNavigate } from 'react-router-dom';
   import Swal from 'sweetalert2';
-  import { ToastContainer } from 'react-toastify';
   import { CiSearch } from "react-icons/ci";
+  import { ToastContainer,toast } from 'react-toastify';
   import 'react-toastify/dist/ReactToastify.css';
-
   const User = () => {
     const [data, setData] = useState([]);
     const [update, setUpdate] = useState(false);
     const [searchQuery, setSearchQuery] = useState(''); 
-    const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
+    const [selectedFilter, setSelectedFilter] = useState(''); 
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -28,6 +27,7 @@
           setData(response.data.data);
         })
         .catch(() => {
+          toast.error("Error fetching data")
         });
     }, [update]);
 
@@ -98,7 +98,7 @@
 
     const names = ["User", "email", "Country", "Cities", "Zones", "Action"];
     const fieldsToShow = ["name", "email", "country", "city", "zone",];
-
+    
     return (
       <div>
         <ToastContainer />
@@ -140,15 +140,15 @@
             </thead>
             <tbody>
               {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                   <td className="flex flex-col w-[143px] h-[56px] absolute top-1 gap-1 items-start justify-start">
-                    <span className=" lg:text-[12px] xl:text-[16px] font-normal text-five px-1">{item.name}</span>
-                    <span className=" lg:text-[12px] xl:text-[16px] font-normal text-five px-1">{item.phone}</span>
+                    <span className=" lg:text-[12px] xl:text-[16px] font-normal text-five px-1">{item?.name??"N//A"}</span>
+                    <span className=" lg:text-[12px] xl:text-[16px] font-normal text-five px-1">{item?.phone??"N//A"}</span>
                   </td> 
-                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item.email}</td>
-                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item.country}</td>
-                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item.city}</td>
-                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item.zone}</td>
+                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item?.email??"N//A"}</td>
+                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item?.country??"N//A"}</td>
+                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item?.city??"N//A"}</td>
+                  <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">{item?.zone??"N//A"}</td>
                   <td className="w-[143px] h-[56px] lg:text-[12px] xl:text-[16px] px-1">
                     <button className='underline' onClick={() => Details(item.id)}>Details</button>
                   </td>
@@ -175,7 +175,7 @@
           {fieldsToShow.map((field, i) => (
                   <div key={i} className="flex gap-4">
                     <span><strong>{names[i]}:</strong></span>
-                    <span>{item[field] ? item[field] : "   "}</span>
+                    <span>{item[field] ? item[field] : "N//A"}</span>
                   </div>
                 ))}
                 <div> 

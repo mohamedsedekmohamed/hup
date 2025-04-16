@@ -22,6 +22,8 @@ const AddOffStation = () => {
   const [pickup, setpickup] = useState("0");
   const [dropoff, setdropoff] = useState("0");
   const [edit, setEdit] = useState(false);
+    const [loading, setLoading] = useState(true);
+  
   const [errors, setErrors] = useState({
     country: '',
     city: "",
@@ -41,6 +43,11 @@ const AddOffStation = () => {
       setdropoff(sendData.dropoff);
       setEdit(true);
     }
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
   const handleChange = (e) => {
     const { name, value } = e.target;
@@ -82,8 +89,8 @@ const AddOffStation = () => {
 
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/station/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/station/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -126,7 +133,13 @@ const AddOffStation = () => {
     setZone('')
     setEdit(false);
   };
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
     <div className='ml-6 flex flex-col  mt-6 gap-6'>
 

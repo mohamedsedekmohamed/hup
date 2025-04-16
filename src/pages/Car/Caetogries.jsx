@@ -7,7 +7,9 @@ import axios from 'axios';
 import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../component/ThreeThing.jsx';
 import { CiSearch } from "react-icons/ci";
+import 'react-toastify/dist/ReactToastify.css';
 
+import { ToastContainer,toast } from 'react-toastify';
 const Caetogries = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -26,9 +28,9 @@ const Caetogries = () => {
         setData(response.data);
 
       })
-      .catch(() => {
-        
-      });
+    .catch(() => {
+            toast.error("Error fetching data")
+          });
   }, [update])
   const handleDelete = (index, userName) => { 
     const token = localStorage.getItem('token');
@@ -91,6 +93,7 @@ const Caetogries = () => {
   return (
     <div>
       <Navcars/>
+              <ToastContainer />
       
 
       <div className='flex justify-between items-center mt-10 px-5'>
@@ -129,7 +132,7 @@ const Caetogries = () => {
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                 <td className="flex gap-1 w-[143px] h-[56px] pl-2 ">
                   <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
-                  <span className='  text-[16px] px-1'>{item.name}</span>
+                  <span className='  text-[16px] px-1'>{item?.name??"N//A"}</span>
                   </td>
 
 
@@ -156,7 +159,7 @@ const Caetogries = () => {
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>Name:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
             
               <div className="flex gap-4">

@@ -17,6 +17,7 @@ const AddOperatorPayment = () => {
     const [originalFlag, setOriginalFlag] = useState(null);
     const [valuee, setValue] = useState("inactive");
     const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(true);
 
     const handleFileChange = (file) => {
         if (file) {
@@ -37,10 +38,15 @@ const AddOperatorPayment = () => {
             setEdit(true);
 
             if (snedData.image) {
-                        setFlag(snedData.image);
-                        setOriginalFlag(snedData.image); // حفظ الصورة الأصلية
+                        setFlag(snedData.image_link);
+                        setOriginalFlag(snedData.image_link); // حفظ الصورة الأصلية
              }
         }
+        const timeout = setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+      
+          return () => clearTimeout(timeout);
     }, [location.state]);
  
     const handleChange = (e) => {
@@ -75,7 +81,6 @@ const AddOperatorPayment = () => {
         newCountryData.image= flag;
     }
 
-    console.log("Data to be sent:", newCountryData);
 
     if (edit) {
         const { snedData } = location.state || {};
@@ -117,6 +122,15 @@ const AddOperatorPayment = () => {
 };
 
     
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
+  
+
     return (
         <div className='ml-6 flex flex-col mt-6 gap-6'>
         <AddAll navGo='/Settings/OperatorPayment' name="add Operator Payment" />

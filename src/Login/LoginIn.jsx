@@ -4,7 +4,8 @@ import Loginpic from '../assets/Loginpic.png';
 import { FaRegEyeSlash } from "react-icons/fa6";
 import { MdOutlineRemoveRedEye } from "react-icons/md";
 import axios from 'axios';
-
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 function LoginIn({ setIsLoggedIn }) {
   const [data, setData] = useState(null);
   const [loading, setLoading] = useState(true);
@@ -30,16 +31,21 @@ function LoginIn({ setIsLoggedIn }) {
         setData(response.data);
         if (response.data.message === "Login Successfully") {
           localStorage.setItem('token', response.data.token);
-          setIsLoggedIn(true);
+          toast.success(`welcome`);
+
+          setTimeout(() => {
+            setIsLoggedIn(true);  
+          }, 2000);
+
         } else {
-          alert('بيانات الدخول غير صحيحة');
+          toast.error(' write email or password right');
         }
         setLoading(false);
       })
       .catch((error) => {
         setError(error);
         setLoading(false);
-        alert('حدث خطأ أثناء محاولة تسجيل الدخول');
+        toast.error(' Connection failed ');
       });
   };
 
@@ -86,6 +92,8 @@ function LoginIn({ setIsLoggedIn }) {
       <div className='hidden md:flex'>
         <img src={Loginpic} className='object-fill w-full h-screen max-h-[800px]' />
       </div>
+            <ToastContainer />
+      
     </div>
   );
 }

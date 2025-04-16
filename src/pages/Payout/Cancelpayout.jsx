@@ -24,9 +24,9 @@ const Cancelpayout = () => {
              setData(response.data.payout);
      
            })
-           .catch(() => {
-           
-           });
+         .catch(() => {
+                   toast.error("Error fetching data")
+                 });
        }, [update])
      
       const filteredData = data.filter((item) => {
@@ -90,13 +90,13 @@ return (
           <tbody>
 
             {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                                <td className="w-[143px] h-[56px]  text-[16px] px-1">{item.date}</td>
-                                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.amount}</td>
-                                <td className="w-[143px] h-[56px]  text-[16px]  ">{item.currency.name}{item.currency.symbol}</td>
-                                <td className="w-[143px] h-[56px]  text-[16px] ">{item.agent.name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                                <td className="w-[143px] h-[56px]  text-[16px] px-1">{item?.date?? ''}</td>
+                                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.amount?? ''}</td>
+                                <td className="w-[143px] h-[56px]  text-[16px]  ">{item?.currency?.name?? ''}{item?.currency?.symbol?? ''}</td>
+                                <td className="w-[143px] h-[56px]  text-[16px] ">{item?.agent?.name?? ''}</td>
 
-                <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal  rounded-[8px]">{item.status}</span></td>
+                <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal  rounded-[8px]">{item?.status?? ''}</span></td>
               
               </tr>
             ))}
@@ -111,23 +111,23 @@ return (
           <div key={index} className='flex flex-col gap-4 p-3'>
             <div className="flex gap-4">
               <strong>date:</strong>
-              <span>{item.date}</span>
+              <span>{item?.date?? ''}</span>
             </div>
             <div className="flex gap-4">
               <strong>amount:</strong>
-              <span>{item.amount}</span>
+              <span>{item?.amount?? ''}</span>
             </div>
             <div className="flex gap-4">
               <strong>currency:</strong>
-              <span>{item.currency.name}{item.currency.symbol}</span>
+              <span>{item?.currency?.name}{item?.currency?.symbol?? ''}</span>
             </div>
             <div className="flex gap-4">
               <strong>agent:</strong>
-              <span>{item.agent.name}</span>
+              <span>{item?.agent?.name?? ''}</span>
             </div>
             <div className="flex gap-4">
               <strong>Status:</strong>
-              <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item.status}</span>
+              <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item?.status?? ''}</span>
             </div>
         
           

@@ -13,9 +13,12 @@ const AddBusesHistory = () => {
   const navigate = useNavigate();
   const location = useLocation();
   const [name, setname] = useState('')
+  const [nametwo, setnametowo] = useState('')
   const [edit, setEdit] = useState(false);
   const [valuee, setValue] = useState("inactive");
   const [icon, seticon] = useState('');
+  const [icontwo, seticontwo] = useState('');
+  const [loading, setLoading] = useState(true);
 
   const [errors, setErrors] = useState({
     name: '',
@@ -41,12 +44,19 @@ const AddBusesHistory = () => {
   useEffect(() => {
     const { snedData } = location.state || {};
     if (snedData) {
+      setnametowo(snedData.name)
       setname(snedData.name);
        setValue(snedData.status);
+       setEdit(true);
       if(snedData.icon_link){
           seticon(snedData.icon_link);  
-       
+          seticontwo(snedData.icon_link);
     }}
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
 
@@ -54,18 +64,21 @@ const AddBusesHistory = () => {
     if (!validateForm()) return;
 
     const newBus = {
-      name: name,
-      icon: icon,
       status:valuee,
+      icon:icon,
     }
-    if(icon!=icon){
-      newBus.icon_link=icon
+   
+    if (edit && nametwo === name) {
+      return toast.error('You should change the amenities name');
     }
+    
+    // لو إضافة أو الاسم اتغير → ضيف الاسم عادي
+    newBus.name = name;
     const { snedData } = location.state || {};
     const token = localStorage.getItem('token');
 
-    if (edit && snedData) {
-      // Update Bus logic
+    if (edit ) {
+
       axios.put(`https://bcknd.ticket-hub.net/api/admin/aminity/update/${snedData.id}`, newBus, {
         headers: {
           Authorization: `Bearer ${token}`,
@@ -112,6 +125,13 @@ const AddBusesHistory = () => {
 
     }
   };
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
     <div className='ml-6 flex flex-col mt-6 gap-6'>
       <AddAll navGo='/Buses/BusesHistory' name="Add Aminit " />

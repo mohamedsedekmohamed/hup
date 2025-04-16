@@ -13,6 +13,7 @@ import SwitchButton from '../../../ui/SwitchButton';
 const AddCARS = () => {
     const navigate = useNavigate();
     const location = useLocation();
+      const [loading, setLoading] = useState(true);
     const [category, setcategory] = useState('');
     const [flag, setFlag] = useState(null);
     const [brand, setbrand] = useState('')
@@ -62,6 +63,11 @@ const AddCARS = () => {
                 
             }
         }
+        const timeout = setTimeout(() => {
+            setLoading(false);
+          }, 1000);
+      
+          return () => clearTimeout(timeout);
     }, [location.state]);
 
 
@@ -171,6 +177,15 @@ const AddCARS = () => {
         setValue('inactive');
         setEdit(false);
     };
+    
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
+
     return (
         <div className='ml-6 flex flex-col mt-6 gap-6'>
             <AddAll navGo='/Car/CARS' name="Add cars  " />
@@ -237,7 +252,7 @@ const AddCARS = () => {
       required
     />
 
-            <SwitchButton num value={valuee} setValue={setValue} />
+            <SwitchButton avl value={valuee} setValue={setValue} />
             <button onClick={handleSave}>
             <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
             </button>

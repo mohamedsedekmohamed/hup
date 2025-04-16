@@ -28,9 +28,9 @@ useEffect(() => {
    
     window.addEventListener('resize', handleResize);
 
-    return () => {
-      window.removeEventListener('resize', handleResize);
-    };
+    // return () => {
+    //   window.removeEventListener('resize', handleResize);
+    // };
   }, []);
   useEffect(() => {
     setopen(false); // إغلاق القائمة عند تغيير المسار

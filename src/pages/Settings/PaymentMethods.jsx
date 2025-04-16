@@ -6,7 +6,8 @@ import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing.jsx';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 
 const PaymentMethods = () => {
       const [data, setData] = useState([]);
@@ -26,8 +27,9 @@ const PaymentMethods = () => {
             setData(response.data);
     
           })
-          .catch(() => {
-          });
+         .catch(() => {
+                  toast.error("Error fetching data")
+                });
       }, [update])
 
     
@@ -89,6 +91,8 @@ const PaymentMethods = () => {
       };
   return (
     <div>
+              <ToastContainer />
+
     <div>
 
       <div className='flex justify-between items-center mt-10 px-5'>
@@ -122,10 +126,10 @@ const PaymentMethods = () => {
           <tbody>
 
             {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                
 
-                                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
+                                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item?.name??"N//A"}</td>
                                 <img  className="w-5 h-5"src={item.image===null?`data:image/png;base64,${item.image}`:item.image}/>
 
                 <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status}</span></td>

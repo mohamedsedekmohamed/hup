@@ -60,7 +60,6 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
               }));
 
             setArrthing(filteredCities);
-            console.log("Filtered Cities:", filteredCities);
           } else if (name === "zones") {
             const filteredZones = response.data.zones
               .filter(city => city.city_id == shara)
@@ -69,14 +68,13 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
                 id: city.id,
               }));
             setArrthing(filteredZones);
-            console.log("Filtered zones:", filteredZones);
           } else if (name === "stations") {
             let filteredZones = response.data;
             if(placeholder === "Pickup Station") {
                filteredZones = response.data.pickup
-            }else{
+            }else(placeholder==="Dropoff Station")
+            {
                filteredZones = response.data.dropoff
-
             }
         //     filteredZones.filter(zone => zone.zone_id == shara)
         // .map(zone => ({
@@ -84,7 +82,6 @@ const Inputfiltter = ({ placeholder, value, like, onChange, name, shara }) => {
         //   id: zone.id,
         // }));
       setArrthing(filteredZones);
-      console.log("Filtered zones:", filteredZones);
 
     } else if (name === "countries") {
       setArrthing(response.data.countries);

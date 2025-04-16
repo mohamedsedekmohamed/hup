@@ -16,6 +16,8 @@ const AddCities = () => {
   const [name, setName] = useState('');
   const [edit, setEdit] = useState(false);
   const [valuee, setValue] = useState("inactive");
+    const [loading, setLoading] = useState(true);
+  
   const [errors, setErrors] = useState({
     country: '',
     name: '',
@@ -23,13 +25,17 @@ const AddCities = () => {
 
   useEffect(() => {
     const { sendData } = location.state || {};
-    console.log(sendData);
     if (sendData) {
       setCountry(sendData.country_id);
       setName(sendData.name);
       setValue(sendData.status);
       setEdit(true);
     }
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
   const handleChange = (e) => {
@@ -45,27 +51,28 @@ const AddCities = () => {
     setErrors(formErrors);
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
+      console.log(error);
     });
     return Object.keys(formErrors).length === 0;
   };
   
   const handleSave = () => {
     if (!validateForm()) {
-      return;
+        return;
     }
+
     const token = localStorage.getItem('token');
 
     const newUser = {
       name: name,
-      country_id: country,
-      status: valuee,
+      country_id:country,
+      status:valuee,
     };
 
-    console.log("Data to be sent:", newUser);
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/city/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/city/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -76,7 +83,10 @@ const AddCities = () => {
                       navigate('/Location/Cities');
                     }, 3000);
         })
-        .catch(() => {
+        .catch((error) => {
+          console.log("2 2 2");
+          console.log(error);
+
         });
       return;
     }
@@ -104,7 +114,13 @@ const AddCities = () => {
 
 
 
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+        </div>
+    );
+  }
 
   return (
 

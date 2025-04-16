@@ -49,12 +49,12 @@ const Bookingdetails = () => {
                   className="border-y hover:border-y-4 relative hover:bg-six"
                 >
                   <td className="w-[143px] h-[56px]  text-[16px] font-normal text-five px-1 ">
-              {`${booking.city_residence}-->${booking.to_city}`}
+              {`${booking?.city_residence??"N//A"}-->${booking?.to_city??"N//A"}`}
                   </td>
 
-                  <td className="w-[143px] h-[56px]  px-1">{booking.date}</td>
-                  <td className="w-[143px] h-[56px] px-1">{booking.country_residence}</td>
-                  <td className="w-[143px] h-[56px] px-1">{booking.deputre_time}</td>
+                  <td className="w-[143px] h-[56px]  px-1">{booking?.date??"N//A"}</td>
+                  <td className="w-[143px] h-[56px] px-1">{booking?.country_residence??"N//A"}</td>
+                  <td className="w-[143px] h-[56px] px-1">{booking?.deputre_time??"N//A"}</td>
                   <td className="w-[143px] h-[56px] px-1">
                     <button className="underline bg-three text-white rounded-3xl px-2 py-1" onClick={() => handlegoid(index)}>Details</button>
                   </td>
@@ -75,10 +75,10 @@ const Bookingdetails = () => {
           userData.bookings.slice().reverse().map((booking, index) => (
             <div key={index} className="bg-six rounded-xl p-4 shadow-md">
               <div className="flex flex-col gap-2">
-                <p><strong>Route:</strong> {`${booking.city_residence} --> ${booking.to_city}`}</p>
-                <p><strong>Date:</strong> {booking.date}</p>
-                <p><strong>Country residence:</strong> {booking.country_residence}</p>
-                <p><strong>Time:</strong> {booking.deputre_time}</p>
+                <p><strong>Route:</strong> {`${booking?.city_residence??"N//A"} --> ${booking.to_city??"N//A"}`}</p>
+                <p><strong>Date:</strong> {booking?.date??"N//A"}</p>
+                <p><strong>Country residence:</strong> {booking?.country_residence??"N//A"}</p>
+                <p><strong>Time:</strong> {booking?.deputre_time??"N//A"}</p>
                 <div>
                   <strong>Booking:</strong>{' '}
                   <button className="underline bg-three text-white rounded-3xl px-2 py-1 mt-1" onClick={() => handlegoid(index)}>Details</button>

@@ -6,7 +6,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Nationality = () => {
    const [data, setData] = useState([]);
      const [searchQuery, setSearchQuery] = useState(''); // State for search query
@@ -28,8 +29,8 @@ const Nationality = () => {
   
         })
         .catch(() => {
-        
-        });
+                 toast.error("Error fetching data")
+               });
     }, [update])
   
     const handleDelete = (index, userName) => { 
@@ -89,6 +90,8 @@ const Nationality = () => {
     };
   return (
     <div>
+              <ToastContainer />
+
             <div className='flex justify-between items-center mt-10 px-5'>
 
         <div className='flex justify-center items-center gap-3 relative'>
@@ -119,9 +122,9 @@ const Nationality = () => {
           <tbody>
 
             {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                 <td className="">
-                  <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item.name}</span>
+                  <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item?.name??"N//A"}</span>
                   </td>
 
 
@@ -147,7 +150,7 @@ const Nationality = () => {
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>Country:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
             
               <div className='flex'>

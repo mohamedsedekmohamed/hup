@@ -5,7 +5,9 @@ import Swal from 'sweetalert2';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import ThreeThing from '../../component/ThreeThing'
-import { CiSearch } from "react-icons/ci"; // Import search icon for UI
+import { CiSearch } from "react-icons/ci"; // Import search icon for UI  import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer,toast } from 'react-toastify';
 
 const Currency = () => {
   const [data, setData] = useState([]);
@@ -27,9 +29,9 @@ const Currency = () => {
         setData(response.data.currancies);
 
       })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+       .catch(() => {
+              toast.error("Error fetching data")
+            });
   }, [update])
   const handleDelete = (index, subject_id) => {
     const token = localStorage.getItem('token');
@@ -88,6 +90,8 @@ const Currency = () => {
   };
   return (
     <div>
+              <ToastContainer />
+      
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
           <input
@@ -119,11 +123,11 @@ const Currency = () => {
           <tbody>
 
             {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.name}</td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item?.name??"N//A"}</td>
 
 
-                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item.symbol}</td>
+                <td className="w-[143px] h-[56px]  text-[16px] px-4 ">{item?.symbol??"N//A"}</td>
               {item.status===1?(  
                              <td className="w-[143px]  h-[56px]  text-[16px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">active</span></td>
 ):(
@@ -152,11 +156,11 @@ const Currency = () => {
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>name:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>symbol:</strong>
-                <span>{item.symbol}</span>
+                <span>{item?.symbol??"N//A"}</span>
               </div>
               <div className="flex gap-2">
                 <strong>Status:</strong>

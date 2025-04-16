@@ -22,6 +22,8 @@ const AddBuses = () => {
   const [status, setStatus] = useState('inactive');
   const [edit, setEdit] = useState(false);
     const [selectedDays, setSelectedDays] = useState([]);
+    const [loading, setLoading] = useState(true);
+  
   
   const [errors, setErrors] = useState({
     busNumber: '',
@@ -71,22 +73,27 @@ const AddBuses = () => {
 
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setBusNumber(snedData.bus_number);
-      setPic(snedData.bus_image);
-      setCapacity(snedData.capacity);
-      setBusType(snedData.bus_type_id);
-      setStatus(snedData.status);
-      setAgent(snedData.agent_id);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setBusNumber(sendData.bus_number);
+      setPic(sendData.bus_image);
+      setCapacity(sendData.capacity);
+      setBusType(sendData.bus_type_id);
+      setStatus(sendData.status);
+      setAgent(sendData.agent_id);
       setEdit(true);
-      if (snedData.bus_image) {
-            setPic(snedData.bus_image);
-            setOriginalFlag(snedData.bus_image);
+      if (sendData.bus_image) {
+            setPic(sendData.bus_image);
+            setOriginalFlag(sendData.bus_image);
         
           };
 
       }
+      const timeout = setTimeout(() => {
+        setLoading(false);
+      }, 1000);
+  
+      return () => clearTimeout(timeout);
     
   }, [location.state]);
 
@@ -109,12 +116,12 @@ const AddBuses = () => {
     }
 
 
-    const { snedData } = location.state || {};
+    const { sendData } = location.state || {};
     const token = localStorage.getItem('token');
 
-    if (edit && snedData) {
+    if (edit ) {
       // Update Bus logic
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus/update/${snedData.id}`, newBus, {
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus/update/${sendData.id}`, newBus, {
         headers: {
           Authorization: `Bearer ${token}`,
         },
@@ -162,7 +169,13 @@ const AddBuses = () => {
     setStatus('inactive');
     setEdit(false);
   };
-
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
   return (
 <div>
 

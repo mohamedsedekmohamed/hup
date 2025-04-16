@@ -6,10 +6,11 @@ import ThreeThing from '../../component/ThreeThing.jsx';
 import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
+import { ToastContainer,toast } from 'react-toastify';
+  import 'react-toastify/dist/ReactToastify.css';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
 const Fees = () => {
   const [data, setData] = useState([]);
-  const [update, setUpdate] = useState(false);
   const [searchQuery, setSearchQuery] = useState(''); // State for search query
     const [selectedFilter, setSelectedFilter] = useState(''); // Track selected filter option
   
@@ -27,9 +28,9 @@ const Fees = () => {
       const feesArray = Array.isArray(fees) ? fees : [fees];
       setData(feesArray);
     })
-      .catch(error => {
-        console.error('Error fetching data:', error);
-      });
+    .catch(() => {
+             toast.error("Error fetching data")
+           });
   }, [data]);
 
   const handleDelete = (index ) => { 
@@ -90,6 +91,7 @@ const Fees = () => {
   };
   return (
     <div>
+        <ToastContainer />
 
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -130,11 +132,11 @@ const Fees = () => {
           </thead>
           <tbody>
           {filteredData.length !== 0 && filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item.train_fees} </td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.bus_fees} </td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.hiace_fees} </td>
-                <td className="w-[143px] h-[56px] text-[16px] ">{item.private_request_fees} </td>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
+                <td className="w-[143px] h-[56px] text-[16px] px-2 ">{item?.train_fees??"N//A"} </td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item?.bus_fees??"N//A"} </td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item?.hiace_fees??"N//A"} </td>
+                <td className="w-[143px] h-[56px] text-[16px] ">{item?.private_request_fees??"N//A"} </td>
               
                 <td className="w-[143px] h-[56px] text-[16px] flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />
@@ -158,19 +160,19 @@ const Fees = () => {
       <div key={index} className='flex flex-col gap-4 p-3'>
         <div className="flex gap-4">
           <strong>Train :</strong>
-          <span>{item.train_fees}</span>
+          <span>{item?.train_fees??"N//A"}</span>
         </div>
         <div className="flex gap-4">
           <strong>Bus :</strong>
-          <span>{item.bus_fees}</span>
+          <span>{item?.bus_fees??"N//A"}</span>
         </div>
         <div className="flex gap-4">
           <strong>Hiace:</strong>
-          <span>{item.hiace_fees}</span>
+          <span>{item?.hiace_fees??"N//A"}</span>
         </div>
         <div className="flex gap-4">
           <strong>Private Request:</strong>
-          <span>{item.private_request_fees}</span>
+          <span>{item?.private_request_fees??"N//A"}</span>
         </div>
        
        

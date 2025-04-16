@@ -6,7 +6,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci";
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const Agents = () => {
   const [data, setData] = useState([]);
   const [searchQuery, setSearchQuery] = useState(''); 
@@ -25,9 +26,9 @@ const Agents = () => {
         setData(response.data.operators);
 
       })
-      .catch(() => {
-    
-      });   
+       .catch(() => {
+               toast.error("Error fetching data")
+             });
       
   }, [update])
 
@@ -115,6 +116,8 @@ const labelMap = {
   }
   return (
     <div>
+              <ToastContainer />
+      
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
           <input
@@ -154,11 +157,11 @@ const labelMap = {
 
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[12px] px-2  ">{item.name}</td>
-                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.phone}</td>
-                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.points}</td>
-                <td className="w-[143px] h-[56px]  text-[12px]  ">{item.role}</td>
-                <td className="w-[143px] h-[56px]  text-[12px]   ">{item.email}</td>
+                <td className="w-[143px] h-[56px]  text-[12px] px-2  ">{item?.name??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item?.phone??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item?.points??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]  ">{item?.role??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[12px]   ">{item?.email??"N//A"}</td>
                 <td className="w-[143px] h-[56px]  text-[12px]  underline  "><button
                 className='bg-three px-2  rounded-4xl py-1'
                 onClick={()=>show(item.commissions)}>commission</button></td>
@@ -186,27 +189,27 @@ const labelMap = {
                   <div key={index} className='flex flex-col gap-4 p-3'>
                     <div className="flex gap-4">
                       <strong>name:</strong>
-                      <span>{item.name}</span>
+                      <span>{item?.name??"N//A"}</span>
                     </div>
 
                     <div className="flex gap-4">
                       <strong>phone:</strong>
-                      <span>{item.phone}</span>
+                      <span>{item?.phone??"N//A"}</span>
                     </div>
 
                     <div className="flex gap-4">
                       <strong>points:</strong>
-                      <span>{item.points}</span>
+                      <span>{item?.points??"N//A"}</span>
                     </div>
 
                     <div className="flex gap-4">
                       <strong>role:</strong>
-                      <span>{item.role}</span>
+                      <span>{item?.role??"N//A"}</span>
                     </div>
 
                     <div className="flex gap-4">
                       <strong>email:</strong>
-                      <span>{item.email}</span>
+                      <span>{item?.email??"N//A"}</span>
                     </div>
 
                     <div className="flex gap-4">

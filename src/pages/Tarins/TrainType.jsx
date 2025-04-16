@@ -6,7 +6,8 @@ import delet from '../../assets/delete.svg';
 import pin from '../../assets/pin.svg';
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const TrainType = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -23,8 +24,10 @@ const TrainType = () => {
     })
       .then(response => {
         setData(response.data.trainTypes);
-
-      })
+  })
+        .catch(() => {
+          toast.error("Error fetching data")
+        });
       
   }, [update])
 
@@ -90,6 +93,8 @@ const cheose = ["Filter","name",
   return (
     <div>
       <NavTrains />
+      <ToastContainer />
+
       <div className='flex justify-between items-center mt-10 px-5'>
      <div className='flex justify-center items-center gap-3 relative'>
 
@@ -122,7 +127,7 @@ const cheose = ["Filter","name",
 
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[16px] px-2 ">{item.name}</td>
+                <td className="w-[143px] h-[56px]  text-[16px] px-2 ">{item?.name??"N//A"}</td>
                 <td className="w-[143px]  h-[56px]  text-[16px]  flex justify-start gap-2 items-center">
                   <img className='w-[24px] h-[24px]' src={pin}
                     onClick={() => handleEdit(item.id)} />
@@ -144,7 +149,7 @@ const cheose = ["Filter","name",
                          <div key={index} className='flex flex-col gap-4 p-3'>
                            <div className="flex gap-4">
                              <strong>type:</strong>
-                             <span>{item.name}</span>
+                             <span>{item?.name??"N//A"}</span>
                            </div>
                            <div className='flex'>
                              <img className='w-[24px] h-[24px]' src={pin} onClick={() => handleEdit(item.id)} />

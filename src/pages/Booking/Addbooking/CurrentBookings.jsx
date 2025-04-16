@@ -4,7 +4,8 @@ import NavBooking from '../NavBooking'
 import ThreeThing from '../../../component/ThreeThing'
 import Swal from 'sweetalert2';
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const CurrentBookings = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -21,9 +22,10 @@ const token = localStorage.getItem('token');
     })
       .then(response => {
         setData(response.data.bookingpending);
-        console.log(response.data.bookingpending);
 
-      })
+      })  .catch(() => {
+                toast.error("Error fetching data")
+              });
       
   }, [update])
 
@@ -125,6 +127,8 @@ code:"code"
   return (
  
 <div>
+          <ToastContainer />
+  
 <NavBooking/>
 <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -161,11 +165,11 @@ code:"code"
                
               {filteredData.map((item,index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                    <td className="w-[143px] h-[56px]  text-[14px] px-2 ">{item.destenation_from}</td>
-                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item.destenation_to}</td>
-                    <td className="w-[143px] h-[56px]  text-[14x]  ">{item.date}</td>
-                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item.seats_count}</td>
-                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item.code}</td>
+                    <td className="w-[143px] h-[56px]  text-[14px] px-2 ">{item?.destenation_from??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.destenation_to??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[14x]  ">{item?.date??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.seats_count??"N//A"}</td>
+                    <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.code??"N//A"}</td>
                     <td className="w-[143px]  h-[56px]  text-[14px]  text-nine  "><span className="bg-eight font-normal p-2 rounded-[8px]">{item.status }</span></td>
                    
                     {item.status !=='canceled'?(  <td className="w-[143px]    flex gap-1 justify-center items-center h-12  ">

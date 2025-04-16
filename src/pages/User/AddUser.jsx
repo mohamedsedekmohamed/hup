@@ -9,6 +9,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import { useNavigate } from 'react-router-dom';
 import { useLocation } from 'react-router-dom';
 import Inputfiltter from '../../ui/Inputfiltter';
+
 const AddUser = () => {
   const navigate = useNavigate();
   const location = useLocation();
@@ -21,7 +22,7 @@ const AddUser = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [edit, setEdit] = useState(false);
-
+  const [loading, setLoading] = useState(true);
 
   const [errors, setErrors] = useState({
     name: '',
@@ -44,6 +45,13 @@ const AddUser = () => {
       setEmail(snedData.email);
       setEdit(true);
     }
+
+    // تأخير ظهور الصفحة على الأقل ثانية
+    const timeout = setTimeout(() => {
+      setLoading(false);
+    }, 1000);
+
+    return () => clearTimeout(timeout);
   }, [location.state]);
 
   const handleChange = (e) => {
@@ -70,17 +78,15 @@ const AddUser = () => {
     if (!city) formErrors.city = 'City is required';
     if (!zone) formErrors.zone = 'Zone is required';
     if (!email.includes('@gmail.com')) formErrors.email = 'Email should contain @gmail.com';
-    if(!edit){
-      if (password.length < 6) formErrors.password = 'Password must be at least 6 characters';
-    } 
+    if (!edit && password.length < 6) {
+      formErrors.password = 'Password must be at least 6 characters';
+    }
 
     Object.values(formErrors).forEach((error) => {
       toast.error(error);
     });
 
-    // Update errors state
     setErrors(formErrors);
-
     return Object.keys(formErrors).length === 0;
   };
 
@@ -97,10 +103,11 @@ const AddUser = () => {
       city_id: city,
       zone_id: zone,
       email,
-      
     };
-    if(!edit) {newUser.password=password}
-    
+
+    if (!edit) {
+      newUser.password = password;
+    }
 
     if (edit) {
       const { snedData } = location.state || {};
@@ -115,8 +122,8 @@ const AddUser = () => {
             navigate('/User');
           }, 3000);
         })
-        .catch(()=> {
-          toast.error("failed network");
+        .catch(() => {
+          toast.error("Failed network");
         });
       return;
     }
@@ -127,14 +134,13 @@ const AddUser = () => {
       },
     })
       .then(() => {
-        toast.success('User added  successfully'); 
-      
+        toast.success('User added successfully'); 
         setTimeout(() => {
           navigate('/User');
         }, 3000);
       })
       .catch(() => {
-        toast.error("failed network");
+        toast.error("Failed network");
       });
 
     setName('');
@@ -146,6 +152,14 @@ const AddUser = () => {
     setPassword('');
     setEdit(false);
   };
+
+  if (loading) {
+    return (
+      <div className="flex justify-center items-center h-screen">
+        <div className="loader ease-linear rounded-full border-8 border-t-8 h-24 w-24 animate-spin border-orange-500"></div>
+      </div>
+    );
+  }
 
   return (
     <div className="ml-6">
@@ -209,7 +223,6 @@ const AddUser = () => {
         <button onClick={handleSave}>
           <img className="my-6 w-75 h-20" src={picdone} alt="Save" />
         </button>
-      
       </div>
       <ToastContainer />
     </div>

@@ -4,7 +4,8 @@ import NavBooking from '../NavBooking'
 import { useNavigate } from 'react-router-dom';
 import ThreeThing from '../../../component/ThreeThing'
 import { CiSearch } from "react-icons/ci"; // Import search icon for UI
-
+import { ToastContainer,toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 const BookingHistory = () => {
   const [data, setData] = useState([]);
   const [update, setUpdate] = useState(false);
@@ -23,7 +24,9 @@ const BookingHistory = () => {
       .then(response => {
         setData(response.data.userBookings);
 
-      })
+      }).catch(() => {
+                toast.error("Error fetching data")
+              });
      
   }, [update])
 
@@ -63,6 +66,8 @@ zone:"zone"
   return (
 
     <div>
+              <ToastContainer />
+      
       <NavBooking />
       <div className='flex justify-between items-center mt-10 px-5'>
         <div className='flex justify-center items-center gap-3 relative'>
@@ -97,11 +102,11 @@ zone:"zone"
 
             {filteredData.map((item, index) => (
                 <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[14px] px-1 ">{item.name}</td>
-                <td className="w-[143px] h-[56px]  text-[12px] ">{item.email}</td>
-                <td className="w-[143px] h-[56px]  text-[14px] ">{item.country}</td>
-                <td className="w-[143px] h-[56px]  text-[14px]  ">{item.city}</td>
-                <td className="w-[143px] h-[56px]  text-[14px]  ">{item.zone}</td>
+                <td className="w-[143px] h-[56px]  text-[14px] px-1 ">{item?.name??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[12px] ">{item?.email??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[14px] ">{item?.country??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.city??"N//A"}</td>
+                <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.zone??"N//A"}</td>
                 <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">
                 <button className='underline bg-three px-2 py-1 rounded-4xl' 
                 onClick={()=>Details(item.id)}>Details</button></td>    
@@ -118,32 +123,32 @@ zone:"zone"
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
                 <strong>name:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>name:</strong>
-                <span>{item.name}</span>
+                <span>{item?.name??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>email:</strong>
-                <span>{item.email}</span>
+                <span>{item?.email??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>country:</strong>
-                <span>{item.country}</span>
+                <span>{item?.country??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>city:</strong>
-                <span>{item.city}</span>
+                <span>{item?.city??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
                 <strong>zone:</strong>
-                <span>{item.zone}</span>
+                <span>{item?.zone??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>Details:</strong>

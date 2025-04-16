@@ -116,9 +116,9 @@ const SubjectComplaints = () => {
            <tbody>
  
              {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-y-3 relative hover:bg-six'>
+                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
                  <td className="">
-                   <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item.name}</span>
+                   <span className='w-[143px] h-[56px]  text-[16px] px-4'>{item?.name??"N//A"}</span>
                    </td>
  
  
