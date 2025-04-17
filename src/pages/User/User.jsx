@@ -61,13 +61,13 @@
     };
 
     const handleEdit = (index) => {
-      const snedData = data.find((item) => item.id === index);
-      navigate('/AddUser', { state: { snedData } });
+      const sendData = data.find((item) => item.id === index);
+      navigate('/AddUser', { state: { sendData } });
     };
 
     const Details = (index) => {
-      const snedData = data.find((item) => item.id === index);
-      navigate('/UserDetails', { state: { snedData } });
+      const sendData = data.find((item) => item.id === index);
+      navigate('/UserDetails', { state: { sendData } });
     };
 
     // Filtering data based on selected filter and search query

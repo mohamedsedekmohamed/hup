@@ -44,22 +44,22 @@ const AddCARS = () => {
 
 
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setcategory(snedData.category_id);
-            setbrand(snedData.brand_id)
-            setmodel(snedData.model_id)
-            setagent(snedData.agent_id)
-            setcarnumber(snedData.car_number)
-            setcarcolor(snedData.car_color)
-            setcaryear(snedData.car_year)
-            setValue(snedData.status);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setcategory(sendData.category_id);
+            setbrand(sendData.brand_id)
+            setmodel(sendData.model_id)
+            setagent(sendData.agent_id)
+            setcarnumber(sendData.car_number)
+            setcarcolor(sendData.car_color)
+            setcaryear(sendData.car_year)
+            setValue(sendData.status);
             setEdit(true);
 
-            setbrand(snedData.brand_id)
-            if (snedData.image) {
-                        setFlag(snedData.image);
-                        setOriginalFlag(snedData.image); // حفظ الصورة الأصلية
+            setbrand(sendData.brand_id)
+            if (sendData.image) {
+                        setFlag(sendData.image);
+                        setOriginalFlag(sendData.image); // حفظ الصورة الأصلية
                 
             }
         }
@@ -126,8 +126,8 @@ const AddCARS = () => {
         console.log("Data to be sent:", newCountryData);
 
         if (edit) {
-            const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/car/update/${snedData.id}`, newCountryData, {
+            const { sendData } = location.state || {};
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/car/update/${sendData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

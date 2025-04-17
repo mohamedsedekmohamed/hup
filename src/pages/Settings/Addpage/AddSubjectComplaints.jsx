@@ -17,9 +17,9 @@ const AddSubjectComplaints = () => {
         name: '',
     });
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setname(snedData.name);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setname(sendData.name);
             setEdit(true);
         }
         const timeout = setTimeout(() => {
@@ -57,8 +57,8 @@ const AddSubjectComplaints = () => {
         console.log("Data to be sent:", newCountryData);
 
         if (edit) {
-            const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/complaint_subject/update/${snedData.id}`, newCountryData, {
+            const { sendData } = location.state || {};
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/complaint_subject/update/${sendData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

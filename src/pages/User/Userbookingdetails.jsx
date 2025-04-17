@@ -12,9 +12,9 @@ const Userbookingdetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setUserData(snedData);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setUserData(sendData);
     }
   }, [location.state]);
 

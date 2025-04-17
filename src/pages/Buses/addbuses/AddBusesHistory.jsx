@@ -42,15 +42,15 @@ const AddBusesHistory = () => {
 
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setnametowo(snedData.name)
-      setname(snedData.name);
-       setValue(snedData.status);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setnametowo(sendData.name)
+      setname(sendData.name);
+       setValue(sendData.status);
        setEdit(true);
-      if(snedData.icon_link){
-          seticon(snedData.icon_link);  
-          seticontwo(snedData.icon_link);
+      if(sendData.icon_link){
+          seticon(sendData.icon_link);  
+          seticontwo(sendData.icon_link);
     }}
     const timeout = setTimeout(() => {
       setLoading(false);
@@ -74,12 +74,12 @@ const AddBusesHistory = () => {
     
     // لو إضافة أو الاسم اتغير → ضيف الاسم عادي
     newBus.name = name;
-    const { snedData } = location.state || {};
+    const { sendData } = location.state || {};
     const token = localStorage.getItem('token');
 
     if (edit ) {
 
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/aminity/update/${snedData.id}`, newBus, {
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/aminity/update/${sendData.id}`, newBus, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

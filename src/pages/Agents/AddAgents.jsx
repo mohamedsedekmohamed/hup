@@ -20,7 +20,7 @@ const AddAgents = () => {
   const [phone, setPhone] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  
   const [trainCommission, setTrainCommission] = useState('');
   const [busCommission, setBusCommission] = useState('');
   const [hiaceCommission, setHiaceCommission] = useState('');
@@ -57,70 +57,78 @@ const AddAgents = () => {
 
   
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setName(snedData.name);
-      setDescription(snedData.description);
-      setEmail(snedData.email);
-      setPassword(snedData.password);
-      setPhone(snedData.phone);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setName(sendData.name);
+      setDescription(sendData.description);
+      setEmail(sendData.email);
+      setPassword(sendData.password);
+      setPhone(sendData.phone);
       setEdit(true);
   
-      if (snedData.image) {
-            setFlag(snedData.image);
-            setOriginalFlag(snedData.image);
-        
+      if (sendData.image) {
+        setFlag(sendData.image);
+        setOriginalFlag(sendData.image);
       }
   
-      const commission = snedData.commissions[0] 
-      console.log(commission);
-      if(!commission){
-        setTrainCommission('');
-        setBusCommission('');
-        setHiaceCommission('');
-        setprivaterequset('');
-      }else{
-      setTrainCommission(commission.train);
-      setBusCommission(commission.bus);
-      setHiaceCommission(commission.hiace);
-      setprivaterequset(commission.privateRequest);
-      }
-      const token = localStorage.getItem('token');
-
-      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
-        headers: {
-          Authorization: `Bearer ${token}`, 
-        }
-      })
-        .then(response => {
-          if(response.data.default_commission.train == commission.train){
-            setTrainType("Default");
-        }else{
-          setTrainType("Private")
-        }
-        if(response.data.default_commission.bus == commission.bus){
-          setBusType("Default");
-        }else{
-          setBusType("Private")
-        }
-        if(response.data.default_commission.hiace == commission.hiace){
-          setHiaceType("Default");
-        }else{
-          setHiaceType("Private")
-        }
-        })
-        .catch(() => {
-        });
+    
       setEnableTrain(true);
       setEnableBus(true);
       setEnableHiace(true);
       setEnableprivate(true);
+    
+      const token = localStorage.getItem('token');
+      const commission = sendData.commissions[0];
+      console.log(commission)
+      axios.get("https://bcknd.ticket-hub.net/api/admin/defaultCommission", {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        }
+      })
+        .then(response => {
+          const defaultCommission = response.data.default_commission;
+
+
+          if (commission.train === defaultCommission.train) {
+            setTrainType("Default");
+          } else {
+            setTrainType("Private");
+          }
   
+          if (commission.bus === defaultCommission.bus) {
+            setBusType("Default");
+          } else {
+            setBusType("Private");
+          }
+  
+          if (commission.hiace === defaultCommission.hiace) {
+            setHiaceType("Default");
+          } else {
+            setHiaceType("Private");
+          }
+        })
+        .catch(err => {
+          console.error("Error fetching default commission:", err);
+        });
+      
+  
+      if (!commission) {
+        setTrainCommission('');
+        setBusCommission('');
+        setHiaceCommission('');
+        setprivaterequset('');
+      } else {
+        setTrainCommission(commission.train);
+        setBusCommission(commission.bus);
+        setHiaceCommission(commission.hiace);
+        setprivaterequset(commission.privateRequest);
+      }
+
     }
     const timeout = setTimeout(() => {
       setLoading(false);
     }, 1000);
-
+  
     return () => clearTimeout(timeout);
   }, [location.state]);
   
@@ -191,8 +199,8 @@ const AddAgents = () => {
     }
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/operator/update/${snedData.id}`, newCountryData, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/operator/update/${sendData.id}`, newCountryData, {
         headers: { Authorization: `Bearer ${token}` },
       })
         .then(() => {
@@ -252,7 +260,6 @@ useEffect(() => {
       }).catch(error => toast.error(error.message));
     } else if (trainType === "Private") {
       setfixedone(true);
-      setTrainCommission('');
     }
   }
 }, [enableTrain, trainType]);
@@ -269,9 +276,7 @@ useEffect(() => {
         setBusCommission(response.data.default_commission.bus);
       }).catch(error => toast.error(error.message));
     } else if (busType === "Private") {
-      setfixedtwo(true);
-      setBusCommission('');
-    }
+      setfixedtwo(true);    }
   }
 }, [enableBus, busType]);
 
@@ -288,7 +293,6 @@ useEffect(() => {
       }).catch(error => toast.error(error.message));
     } else if (hiaceType === "Private") {
       setfixedthree(true);
-      setHiaceCommission('');
     }
   }
 }, [enableHiace, hiaceType]);

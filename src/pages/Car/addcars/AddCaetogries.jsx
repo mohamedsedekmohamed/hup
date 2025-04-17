@@ -32,15 +32,15 @@ const AddCaetogries = () => {
        
     
         useEffect(() => {
-                const { snedData } = location.state || {};
-                if (snedData) {
-                    setName(snedData.name);
-                    setValue(snedData.status);
+                const { sendData } = location.state || {};
+                if (sendData) {
+                    setName(sendData.name);
+                    setValue(sendData.status);
                     setEdit(true);
         
-                    if (snedData.image) {
-                                setFlag(snedData.image);
-                                setOriginalFlag(snedData.image); // حفظ الصورة الأصلية
+                    if (sendData.image) {
+                                setFlag(sendData.image);
+                                setOriginalFlag(sendData.image); // حفظ الصورة الأصلية
                       
                     }
                 }
@@ -85,8 +85,8 @@ const AddCaetogries = () => {
                     console.log("Data to be sent:", newCountryData);
             
                     if (edit) {
-                        const { snedData } = location.state || {};
-                        axios.put(`https://bcknd.ticket-hub.net/api/admin/car_category/update/${snedData.id}`, newCountryData, {
+                        const { sendData } = location.state || {};
+                        axios.put(`https://bcknd.ticket-hub.net/api/admin/car_category/update/${sendData.id}`, newCountryData, {
                             headers: {
                                 Authorization: `Bearer ${token}`,
                             },

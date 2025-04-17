@@ -18,9 +18,9 @@ const AddTrainClass = () => {
         name: '',
     });
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setName(snedData.name);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setName(sendData.name);
             setEdit(true);
 
         }
@@ -57,8 +57,8 @@ const AddTrainClass = () => {
         console.log("Data to be sent:", newCountryData);
 
         if (edit) {
-            const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/trainclass/update/${snedData.id}`, newCountryData, {
+            const { sendData } = location.state || {};
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/trainclass/update/${sendData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

@@ -63,8 +63,8 @@ const Currency = () => {
     });
   };
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/AddCurrency', { state: { snedData } });
+    const sendData = data.find((item) => item.id === index);
+    navigate('/AddCurrency', { state: { sendData } });
   }
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){
@@ -141,7 +141,7 @@ const Currency = () => {
                   <img
                     className='w-[24px] h-[24px] ml-2 cursor-pointer'
                     src={delet}
-                    onClick={() => handleDelete(item.id, item.subject_id)}
+                    onClick={() => handleDelete(item.id, item.name)}
                     alt="delete"
                   />
                 </td>

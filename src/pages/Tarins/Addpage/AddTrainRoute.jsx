@@ -27,13 +27,13 @@ const AddTrainRoute = () => {
     tocity: '',
   });
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setName(snedData.name);
-      setfromcountry(snedData.from_country_id);
-      settocountry(snedData.to_country_id);
-      setfromcity(snedData.from_city_id);
-      settocity(snedData.to_city_id);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setName(sendData.name);
+      setfromcountry(sendData.from_country_id);
+      settocountry(sendData.to_country_id);
+      setfromcity(sendData.from_city_id);
+      settocity(sendData.to_city_id);
       setEdit(true);
     }
     const timeout = setTimeout(() => {
@@ -84,8 +84,8 @@ const AddTrainRoute = () => {
     console.log("Data to be sent:", newUser);
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/trainRoute/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/trainRoute/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

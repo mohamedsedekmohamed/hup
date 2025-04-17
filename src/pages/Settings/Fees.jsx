@@ -62,8 +62,8 @@ const Fees = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/Settings/AddFees', { state: { snedData } });
+    const sendData = data.find((item) => item.id === index);
+    navigate('/Settings/AddFees', { state: { sendData } });
   };
 
   const filteredData = data.filter((item) => {

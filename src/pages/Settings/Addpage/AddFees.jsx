@@ -28,12 +28,12 @@ const AddFees = () => {
 
   
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-          settrain(Number(snedData.train_fees).toFixed(2));
-          setbus(Number(snedData.bus_fees).toFixed(2));
-          sethiacs(Number(snedData.hiace_fees).toFixed(2));
-          setPrivate(Number(snedData.private_request_fees).toFixed(2));
+        const { sendData } = location.state || {};
+        if (sendData) {
+          settrain(Number(sendData.train_fees).toFixed(2));
+          setbus(Number(sendData.bus_fees).toFixed(2));
+          sethiacs(Number(sendData.hiace_fees).toFixed(2));
+          setPrivate(Number(sendData.private_request_fees).toFixed(2));
             
 
             setEdit(true);
@@ -111,8 +111,8 @@ const AddFees = () => {
         
 
         if (edit) {
-            const { snedData } = location.state || {};
-            axios.put(`https://bcknd.ticket-hub.net/api/admin/fees/update/${snedData.id}`, newCountryData, {
+            const { sendData } = location.state || {};
+            axios.put(`https://bcknd.ticket-hub.net/api/admin/fees/update/${sendData.id}`, newCountryData, {
                 headers: {
                     Authorization: `Bearer ${token}`,
                 },

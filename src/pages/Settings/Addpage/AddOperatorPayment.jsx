@@ -31,15 +31,15 @@ const AddOperatorPayment = () => {
  
 
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setname(snedData.name);
-            setValue(snedData.status);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setname(sendData.name);
+            setValue(sendData.status);
             setEdit(true);
 
-            if (snedData.image) {
-                        setFlag(snedData.image_link);
-                        setOriginalFlag(snedData.image_link); // حفظ الصورة الأصلية
+            if (sendData.image) {
+                        setFlag(sendData.image_link);
+                        setOriginalFlag(sendData.image_link); // حفظ الصورة الأصلية
              }
         }
         const timeout = setTimeout(() => {
@@ -83,8 +83,8 @@ const AddOperatorPayment = () => {
 
 
     if (edit) {
-        const { snedData } = location.state || {};
-        axios.put(`https://bcknd.ticket-hub.net/api/admin/operator_payment_method/update/${snedData.id}`, newCountryData, {
+        const { sendData } = location.state || {};
+        axios.put(`https://bcknd.ticket-hub.net/api/admin/operator_payment_method/update/${sendData.id}`, newCountryData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

@@ -76,32 +76,51 @@ const PayoutAccount = () => {
 
   const handelcancel = (id, one) => {
     const token = localStorage.getItem('token');
-
+  
     Swal.fire({
-      title: `Are you sure you want to cancel ${one} ?`,
-      icon: 'warning',
+      title: `Are you sure you want to cancel ${one}?`,
+      input: 'textarea',
+      inputLabel: 'Reason for cancellation',
+      inputPlaceholder: 'Type your reason here...',
+      inputAttributes: {
+        'aria-label': 'Type your reason here'
+      },
       showCancelButton: true,
-      confirmButtonText: 'Yes',
+      confirmButtonText: 'Yes, Cancel it',
       cancelButtonText: 'No',
+      icon: 'warning',
+      preConfirm: (reason) => {
+        if (!reason) {
+          Swal.showValidationMessage('You need to provide a reason for cancellation');
+        }
+        return reason;
+      }
     }).then((result) => {
       if (result.isConfirmed) {
-        axios.put(`https://bcknd.ticket-hub.net/api/admin/payoutRequest/cancel/${id}`, {}, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        })
+        const reason = result.value;
+  
+        axios.put(
+          `https://bcknd.ticket-hub.net/api/admin/payoutRequest/cancel/${id}`,
+          { rejected_reason: reason }, // هنا السبب بيتبعت في الـ body
+          {
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+          }
+        )
           .then(() => {
             setUpdate(!update);
-            Swal.fire('canceled!', ` has been canceled successfully.`, 'success');
+            Swal.fire('Canceled!', `Request has been canceled successfully.`, 'success');
           })
           .catch(() => {
-            Swal.fire('Error!', `There was an error while cancel.`, 'error');
+            Swal.fire('Error!', `There was an error while cancelling the request.`, 'error');
           });
-      } else {
-        Swal.fire('cancel', ` it was not Cancelled.`, 'info');
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire('Cancelled', `The request was not cancelled.`, 'info');
       }
     });
-  }
+  };
+  
 
   return (
     <div>
@@ -134,7 +153,7 @@ const PayoutAccount = () => {
                 <th className="w-[158px] h-[56px]  text-[12px] border-b text-left pl-3"> date</th>
                 <th className="w-[158px] h-[56px]  text-[12px] border-b text-left"> amount</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">currency</th>
-                <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">agent</th>
+                {/* <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">agent</th> */}
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left"> method</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-left">Status</th>
                 <th className="w-[158px] h-[56px]  text-[12px]  border-b text-center">Action</th>
@@ -146,16 +165,16 @@ const PayoutAccount = () => {
                   <td className="w-[143px] h-[56px]  text-[12px] px-2 ">{item?.date ?? ''}</td>
                   <td className="w-[158px]   h-[56px]  text-[12px]  ">{item?.amount ?? ''}</td>
                   <td className="w-[158px]  h-[56px]  text-[12px]  ">{item?.currency?.name ?? ''}{item?.currency?.symbol ?? ''}</td>
-                  <td className="w-[158px]   h-[56px]  text-[12px] ">{item?.agent ?? ''}</td>
+                  {/* <td className="w-[158px]   h-[56px]  text-[12px] ">{item?.agent ?? ''}</td> */}
                   <td className="w-[158px]   h-[56px]  text-[12px] ">{item?.payment_method?.name ?? ''}
                     <img src={item?.payment_method?.image_link ?? ''} className='w-5 h-5' /></td>
                   <td className=" w-[158px]    h-[56px]  text-[16px]  text-nine  font-normal  rounded-[8px]">{item?.status ?? ''}</td>
                   {item.status !== 'canceled' ? (
                     <td className="w-[158px]    flex gap-1 justify-center items-center h-12  ">
-                      <button onClick={() => handlecancel(item.id, item.agent)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
+                      <button onClick={() => handlecancel(item.id, item.amount)} className='bg-three py-1 px-2 rounded-[8px] text-white'>
                         confirm
                       </button>
-                      <button className='bg-three py-1 px-2 rounded-[8px] text-white' onClick={() => handelcancel(item.id, item.agent)}>cancel</button>
+                      <button className='bg-three py-1 px-2 rounded-[8px] text-white' onClick={() => handelcancel(item.id, item.amount)}>cancel</button>
                     </td>) : (
                     <td></td>
                   )}
@@ -182,10 +201,10 @@ const PayoutAccount = () => {
                 <strong>currency:</strong>
                 <span>{item?.currency?.name ?? ''}{item?.currency?.symbol ?? ''}</span>
               </div>
-              <div className="flex gap-4">
+              {/* <div className="flex gap-4">
                 <strong>agent:</strong>
                 <span>{item?.agent ?? ''}</span>
-              </div>
+              </div> */}
               <div className="flex gap-4">
                 <strong>Status:</strong>
                 <span className="bg-eight font-normal p-1 rounded-[8px] text-nine">{item?.status ?? ''}</span>

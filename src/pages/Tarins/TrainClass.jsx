@@ -63,9 +63,9 @@ const TrainClass = () => {
     };
 
     const handleEdit = (index) => {
-        const snedData = data.find((item) => item.id === index);
+        const sendData = data.find((item) => item.id === index);
 
-        navigate('/Train/AddTrainClass', { state: { snedData } });
+        navigate('/Train/AddTrainClass', { state: { sendData } });
     }
 
     const filteredData = data.filter((item) => {

@@ -59,8 +59,8 @@ const Hiace = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/Addhiace', { state: { snedData } });
+    const sendData = data.find((item) => item.id === index);
+    navigate('/Addhiace', { state: { sendData } });
   };
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){

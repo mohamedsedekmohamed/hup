@@ -64,9 +64,9 @@ const Nationality = () => {
       });
     };
     const handleEdit = (index) => {
-      const snedData = data.find((item) => item.id === index);
+      const sendData = data.find((item) => item.id === index);
       
-      navigate('/Settings/AddNationality', { state: { snedData } });
+      navigate('/Settings/AddNationality', { state: { sendData } });
     }
     const filteredData = data.filter((item) => {
       if(selectedFilter==="Filter"){

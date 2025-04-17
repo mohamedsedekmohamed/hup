@@ -31,15 +31,15 @@ const AddPaymentMethods = () => {
    
 
     useEffect(() => {
-        const { snedData } = location.state || {};
-        if (snedData) {
-            setname(snedData.name);
-            setValue(snedData.status);
+        const { sendData } = location.state || {};
+        if (sendData) {
+            setname(sendData.name);
+            setValue(sendData.status);
             setEdit(true);
 
-            if (snedData.image) {
-                        setFlag(snedData.image);
-                        setOriginalFlag(snedData.image); // حفظ الصورة الأصلية
+            if (sendData.image) {
+                        setFlag(sendData.image);
+                        setOriginalFlag(sendData.image); // حفظ الصورة الأصلية
                 
         }}
         const timeout = setTimeout(() => {
@@ -84,8 +84,8 @@ const AddPaymentMethods = () => {
     console.log("Data to be sent:", newCountryData);
 
     if (edit) {
-        const { snedData } = location.state || {};
-        axios.put(`https://bcknd.ticket-hub.net/api/admin/payment_method/update/${snedData.id}`, newCountryData, {
+        const { sendData } = location.state || {};
+        axios.put(`https://bcknd.ticket-hub.net/api/admin/payment_method/update/${sendData.id}`, newCountryData, {
             headers: {
                 Authorization: `Bearer ${token}`,
             },

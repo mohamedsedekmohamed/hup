@@ -64,9 +64,9 @@ const OperatorPayment = () => {
   };
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
+    const sendData = data.find((item) => item.id === index);
 
-    navigate('/Settings/AddOperatorPayment', { state: { snedData } });
+    navigate('/Settings/AddOperatorPayment', { state: { sendData } });
   }
 
   const filteredData = data.filter((item) => {

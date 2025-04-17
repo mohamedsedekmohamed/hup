@@ -63,9 +63,9 @@ const BRANDS = () => {
   };
  
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
+    const sendData = data.find((item) => item.id === index);
     
-    navigate('/Car/AddBRANDS', { state: { snedData } });
+    navigate('/Car/AddBRANDS', { state: { sendData } });
   }
   const filteredData = data.filter((item) => {
     if(selectedFilter==="Filter"){

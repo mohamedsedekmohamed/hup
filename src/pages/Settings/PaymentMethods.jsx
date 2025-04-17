@@ -64,9 +64,9 @@ const PaymentMethods = () => {
       };
 
       const handleEdit = (index) => {
-        const snedData = data.find((item) => item.id === index);
+        const sendData = data.find((item) => item.id === index);
         
-        navigate('/Settings/AddPaymentMethods', { state: { snedData } });
+        navigate('/Settings/AddPaymentMethods', { state: { sendData } });
       }
       const filteredData = data.filter((item) => {
         if(selectedFilter==="Filter"){

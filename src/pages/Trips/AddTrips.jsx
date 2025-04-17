@@ -88,45 +88,45 @@ useEffect(()=>{
     // cancellationDate: ''
   });
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setTripName(snedData.name);
-      setBusId(snedData.bus?.id); 
-      settrain_id(snedData.train?.id); 
-      setPickupStationId(snedData.route?.origin?.pickup_station?.id);
-      setDropoffStationId(snedData.route?.destination?.dropoff_station?.id);
-      setCityId(snedData.route?.origin?.city?.id);
-      setdatastart(snedData.start_date);
-      setZoneId(snedData.route?.origin?.zone?.id);
-      setDepartureTime(snedData.departure_time);
-      setArrivalTime(snedData.arrival_time);
-      setAvailableSeats(snedData.available_seats);
-      setCountryId(snedData.route?.origin?.country_id);
-      setToCountryId(snedData.route?.destination?.country_id);
-      setToCityId(snedData.route?.destination?.city?.id); 
-      setToZoneId(snedData.route?.destination?.zone?.id);
-      setDate(snedData.date);
-      setPrice(snedData.price);
-      setStatus(snedData.status);
-      setAgentId(snedData.agent?.id);
-      setMaxBookDate(snedData.max_booking_date);
-      setType(snedData.type);
-      if(snedData.type)setSelected("B")
-      setFixedDate(snedData.fixed_date);
-      setCancellationPolicy(snedData.cancellation_policy?.policy);
-      setCancellationPayAmount(snedData.cancellation_policy?.pay_amount);
-      setCancellationPayValue(snedData.cancellation_policy?.pay_value);
-      setMinCost(snedData.min_cost);
-      setTripType(snedData.trip_type);
-      setCurrencyId(snedData.currency_id);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setTripName(sendData.name);
+      setBusId(sendData.bus?.id); 
+      settrain_id(sendData.train?.id); 
+      setPickupStationId(sendData.route?.origin?.pickup_station?.id);
+      setDropoffStationId(sendData.route?.destination?.dropoff_station?.id);
+      setCityId(sendData.route?.origin?.city?.id);
+      setdatastart(sendData.start_date);
+      setZoneId(sendData.route?.origin?.zone?.id);
+      setDepartureTime(sendData.departure_time);
+      setArrivalTime(sendData.arrival_time);
+      setAvailableSeats(sendData.available_seats);
+      setCountryId(sendData.route?.origin?.country_id);
+      setToCountryId(sendData.route?.destination?.country_id);
+      setToCityId(sendData.route?.destination?.city?.id); 
+      setToZoneId(sendData.route?.destination?.zone?.id);
+      setDate(sendData.date);
+      setPrice(sendData.price);
+      setStatus(sendData.status);
+      setAgentId(sendData.agent?.id);
+      setMaxBookDate(sendData.max_booking_date);
+      setType(sendData.type);
+      if(sendData.type)setSelected("B")
+      setFixedDate(sendData.fixed_date);
+      setCancellationPolicy(sendData.cancellation_policy?.policy);
+      setCancellationPayAmount(sendData.cancellation_policy?.pay_amount);
+      setCancellationPayValue(sendData.cancellation_policy?.pay_value);
+      setMinCost(sendData.min_cost);
+      setTripType(sendData.trip_type);
+      setCurrencyId(sendData.currency_id);
       setSelectedDays(() => {
-        const selected = snedData.days.map(day => day);
+        const selected = sendData.days.map(day => day);
   setSelectedDays(() => {
     const combined =selected
     return Array.from(new Set(combined));
   });
       });
-      setdatastart(snedData.start_date);
+      setdatastart(sendData.start_date);
       setEdit(true);
     }
     const timeout = setTimeout(() => {
@@ -340,8 +340,8 @@ newTrip.day=selectedDays,
         console.log("Selected Days:", selectedDays);
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/trip/update/${snedData.id}`, newTrip, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/trip/update/${sendData.id}`, newTrip, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

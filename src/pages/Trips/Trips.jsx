@@ -61,8 +61,8 @@ const Trips = () => {
     });
   };
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
-    navigate('/AddTrips', { state: { snedData}});  
+    const sendData = data.find((item) => item.id === index);
+    navigate('/AddTrips', { state: { sendData}});  
   }
 
   const filteredData = data.filter((item) => {

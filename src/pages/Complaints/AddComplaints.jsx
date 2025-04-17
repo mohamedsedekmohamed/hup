@@ -43,12 +43,12 @@ const AddComplaints = () => {
 
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setuser(snedData.user_id);
-      setsubject(snedData.subject_id);
-      setmessage(snedData.message);
-      setdata(snedData.date);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setuser(sendData.user_id);
+      setsubject(sendData.subject_id);
+      setmessage(sendData.message);
+      setdata(sendData.date);
       setEdit(true);
     }
     const timeout = setTimeout(() => {
@@ -99,9 +99,9 @@ const AddComplaints = () => {
     console.log('Data to be sent:', newUser);
 
     if (edit) {
-      const { snedData } = location.state || {};
+      const { sendData } = location.state || {};
       axios
-        .put(`https://bcknd.ticket-hub.net/api/admin/station/update/${snedData.id}`, newUser, {
+        .put(`https://bcknd.ticket-hub.net/api/admin/station/update/${sendData.id}`, newUser, {
           headers: {
             Authorization: `Bearer ${token}`,
           },

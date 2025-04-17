@@ -110,9 +110,9 @@ const labelMap = {
   
 
   const handleEdit = (index) => {
-    const snedData = data.find((item) => item.id === index);
+    const sendData = data.find((item) => item.id === index);
 
-    navigate('/AddAgents', { state: { snedData } });
+    navigate('/AddAgents', { state: { sendData } });
   }
   return (
     <div>

@@ -70,18 +70,18 @@ const Addhiace = () => {
 
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setBusNumber(snedData.bus_number);
-      setPic(snedData.bus_image);
-      setCapacity(snedData.capacity);
-      // setBusType(snedData.bus_type_id);
-      setStatus(snedData.status);
-      setAgent(snedData.agent_id);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setBusNumber(sendData.bus_number);
+      setPic(sendData.bus_image);
+      setCapacity(sendData.capacity);
+      // setBusType(sendData.bus_type_id);
+      setStatus(sendData.status);
+      setAgent(sendData.agent_id);
       setEdit(true);
-      if (snedData.bus_image) {
-            setPic(snedData.bus_image);
-            setOriginalFlag(snedData.bus_image);
+      if (sendData.bus_image) {
+            setPic(sendData.bus_image);
+            setOriginalFlag(sendData.bus_image);
       
 
       }
@@ -110,12 +110,12 @@ const Addhiace = () => {
     }
 
 
-    const { snedData } = location.state || {};
+    const { sendData } = location.state || {};
     const token = localStorage.getItem('token');
 
-    if (edit && snedData) {
+    if (edit && sendData) {
       // Update Bus logic
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus/update/${snedData.id}`, newBus, {
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/bus/update/${sendData.id}`, newBus, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

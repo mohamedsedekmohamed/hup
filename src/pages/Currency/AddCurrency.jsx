@@ -23,11 +23,11 @@ const AddCurrency = () => {
     status: '',
   });
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setsymbol(snedData.symbol);
-      setName(snedData.name);
-      setstatus(snedData.status);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setsymbol(sendData.symbol);
+      setName(sendData.name);
+      setstatus(sendData.status);
       setEdit(true);
     }
     const timeout = setTimeout(() => {
@@ -70,8 +70,8 @@ const AddCurrency = () => {
     console.log("Data to be sent:", newUser);
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/currency/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/currency/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

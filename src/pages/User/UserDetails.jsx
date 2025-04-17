@@ -8,16 +8,16 @@ const UserDetails = () => {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setUserData(snedData);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setUserData(sendData);
     }
   }, [location.state]);
 
   const handlegoid = (index) => {
     const sendData = userData.bookings?.[index];
     if (sendData) {
-      navigate('/Userbookingdetails', { state: { snedData: sendData } });
+      navigate('/Userbookingdetails', { state: { sendData: sendData } });
     }
   };
 

@@ -61,8 +61,8 @@ const BusesHistory = () => {
   };
 
   const handleEdit = (id) => {
-    const snedData = data.find((item) => item.id === id);
-    navigate('/Buses/AddBusesHistory', { state: { snedData } });
+    const sendData = data.find((item) => item.id === id);
+    navigate('/Buses/AddBusesHistory', { state: { sendData } });
   };
 
   const filteredData = data.filter((item) => {

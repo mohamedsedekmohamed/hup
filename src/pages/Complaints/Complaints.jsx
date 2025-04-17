@@ -61,8 +61,8 @@ const Complaints = () => {
       });
     };
     const handleEdit = (index) => {
-      const snedData = data.find((item) => item.id === index);
-      navigate('/AddComplaints', { state: { snedData } });
+      const sendData = data.find((item) => item.id === index);
+      navigate('/AddComplaints', { state: { sendData } });
     }
     const handreject=(id,message)=>{
 

@@ -30,15 +30,15 @@ const Addtrains = () => {
     theclass: '',
   });
     useEffect(() => {
-          const { snedData } = location.state || {};
-          if (snedData) {
-              setName(snedData.name);
-              setagent(snedData.agent_id);
-              settype(snedData.type_id);
-              setroute(snedData.route_id);
-              setcountry(snedData.country_id);
-              settheclass(snedData.class_id);
-              setValue(snedData.status);
+          const { sendData } = location.state || {};
+          if (sendData) {
+              setName(sendData.name);
+              setagent(sendData.agent_id);
+              settype(sendData.type_id);
+              setroute(sendData.route_id);
+              setcountry(sendData.country_id);
+              settheclass(sendData.class_id);
+              setValue(sendData.status);
               setEdit(true);
           }
           const timeout = setTimeout(() => {
@@ -92,8 +92,8 @@ const Addtrains = () => {
                 console.log("Data to be sent:", newCountryData);
         
                 if (edit) {
-                    const { snedData } = location.state || {};
-                    axios.put(`https://bcknd.ticket-hub.net/api/admin/train/update/${snedData.id}`, newCountryData, {
+                    const { sendData } = location.state || {};
+                    axios.put(`https://bcknd.ticket-hub.net/api/admin/train/update/${sendData.id}`, newCountryData, {
                         headers: {
                             Authorization: `Bearer ${token}`,
                         },

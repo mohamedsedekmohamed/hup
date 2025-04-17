@@ -35,14 +35,14 @@ const AddUser = () => {
   });
 
   useEffect(() => {
-    const { snedData } = location.state || {};
-    if (snedData) {
-      setName(snedData.name);
-      setPhone(snedData.phone);
-      setCountry(snedData.country_id);
-      setCity(snedData.city_id);
-      setZone(snedData.zone_id);
-      setEmail(snedData.email);
+    const { sendData } = location.state || {};
+    if (sendData) {
+      setName(sendData.name);
+      setPhone(sendData.phone);
+      setCountry(sendData.country_id);
+      setCity(sendData.city_id);
+      setZone(sendData.zone_id);
+      setEmail(sendData.email);
       setEdit(true);
     }
 
@@ -110,8 +110,8 @@ const AddUser = () => {
     }
 
     if (edit) {
-      const { snedData } = location.state || {};
-      axios.put(`https://bcknd.ticket-hub.net/api/admin/user/update/${snedData.id}`, newUser, {
+      const { sendData } = location.state || {};
+      axios.put(`https://bcknd.ticket-hub.net/api/admin/user/update/${sendData.id}`, newUser, {
         headers: {
           Authorization: `Bearer ${token}`,
         },

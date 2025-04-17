@@ -62,9 +62,9 @@ const SubjectComplaints = () => {
       });
     };
     const handleEdit = (index) => {
-      const snedData = data.find((item) => item.id === index);
+      const sendData = data.find((item) => item.id === index);
       
-      navigate('/Settings/AddSubjectComplaints', { state: { snedData } });
+      navigate('/Settings/AddSubjectComplaints', { state: { sendData } });
     }
     const filteredData = data.filter((item) => {
       if(selectedFilter==="Filter"){
