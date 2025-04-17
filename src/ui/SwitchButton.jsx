@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 
-const SwitchButton = ({ value, setValue, num, title }) => {
+const SwitchButton = ({ value, setValue, num, title,avl}) => {
   const kind = num ? "checkbox" : "";
 // useEffect(()=>{
 //   console.log(value)
@@ -10,7 +10,10 @@ const SwitchButton = ({ value, setValue, num, title }) => {
   const toggleValue = () => {
     if (num) {
       setValue(value === "0" ? "1" : "0");
-    } else {
+    }else if (avl){
+      setValue(value === "available" ? "busy" : "available");
+    } 
+    else {
       setValue(value === "active" ? "inactive" : "active");
     }
   };
@@ -37,7 +40,7 @@ const SwitchButton = ({ value, setValue, num, title }) => {
           <label className="switch">
             <input  
               type="checkbox"
-              checked={value === "active"} // تحقق من أن القيمة هي active
+              checked={value === "active"||value ==='available'} // تحقق من أن القيمة هي active
               onChange={toggleValue} 
               className="mr-2" 
             />
@@ -48,9 +51,20 @@ const SwitchButton = ({ value, setValue, num, title }) => {
         </StyledWrapper>
         
       )}
-           {num?( <span className={`${value!=="0"?"text-green-800":"text-red-700"}`}>{value!=="0"?"active":"inactive"} </span>):( <span className={`${value==="active"?"text-green-800":"text-red-700"}`}>{value} </span>)}    
-           
-    </div>
+      {num ? (
+  <span className={`${value !== "0" ? "text-green-800" : "text-red-700"}`}>
+    {value !== "0" ? "active" : "inactive"}
+  </span>
+) : avl ? (
+  <span className={`${value === "available" ? "text-green-800" : "text-red-700"}`}>
+    {value === "available" ? "available" : "busy"}
+  </span>
+) : (
+  <span className={`${value === "active" ? "text-green-800" : "text-red-700"}`}>
+    {value}
+  </span>
+)}
+      </div>
   );
 };
 

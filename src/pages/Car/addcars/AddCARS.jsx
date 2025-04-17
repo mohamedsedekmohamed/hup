@@ -24,7 +24,7 @@ const AddCARS = () => {
     const [caryear, setcaryear] = useState('')
     const [originalFlag, setOriginalFlag] = useState(null);
     const [edit, setEdit] = useState(false);
-    const [valuee, setValue] = useState("inactive");
+    const [valuee, setValue] = useState("busy");
     const handleFileChange = (file) => {
         if (file) {
             setFlag(file);
@@ -174,7 +174,7 @@ const AddCARS = () => {
         setmodel('');
         setbrand('')
         setFlag(null);
-        setValue('inactive');
+        setValue('busy');
         setEdit(false);
     };
     

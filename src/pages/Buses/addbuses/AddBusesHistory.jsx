@@ -93,8 +93,12 @@ const AddBusesHistory = () => {
           }, 3000);
         })
         .catch(error => {
-          console.error('Error updating bus:', error);
+          const statusCode = error.response.status;
+      if (statusCode === 400) {
+        toast.error('Aminit already exists');
+      }
         });
+    
     } else {
       // Add Bus logic
       axios.post('https://bcknd.ticket-hub.net/api/admin/aminity/add', newBus, {
@@ -111,11 +115,14 @@ const AddBusesHistory = () => {
           }, 3000);
         })
         .catch(error => {
-          console.error('Error adding bus:', error);
+          const statusCode = error.response.status;
+      if (statusCode === 400) {
+        toast.error('Aminit already exists');
+      }
         });
     }
     setEdit('')
-    setValue('0')
+    setValue('inactive')
     seticon(null)
     setname('')
   };
