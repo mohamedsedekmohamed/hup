@@ -111,6 +111,7 @@ useEffect(()=>{
       setAgentId(snedData.agent?.id);
       setMaxBookDate(snedData.max_booking_date);
       setType(snedData.type);
+      if(snedData.type)setSelected("B")
       setFixedDate(snedData.fixed_date);
       setCancellationPolicy(snedData.cancellation_policy?.policy);
       setCancellationPayAmount(snedData.cancellation_policy?.pay_amount);
@@ -118,13 +119,19 @@ useEffect(()=>{
       setMinCost(snedData.min_cost);
       setTripType(snedData.trip_type);
       setCurrencyId(snedData.currency_id);
-      // setCancellationDate(snedData.cancellation_policy?.cancelation_hours); // assuming this is what you mean
+      setSelectedDays(() => {
+        const selected = snedData.days.map(day => day);
+  setSelectedDays(() => {
+    const combined =selected
+    return Array.from(new Set(combined));
+  });
+      });
       setdatastart(snedData.start_date);
       setEdit(true);
     }
     const timeout = setTimeout(() => {
       setLoading(false);
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timeout);
   }, [location.state]);
@@ -185,6 +192,7 @@ useEffect(()=>{
     } else if (isNaN(maxBookDate)) {
       formErrors.maxBookDate = 'Max book date should be a number';
     }
+   
     if (selected==="A"&&!date) formErrors.date = 'Date is required';
     if (selected==="B"&& !type) formErrors.type = 'Recurrent Type is required';
     if (selected==="B"&& !datastart) formErrors.datastart = 'start date is required';
@@ -578,7 +586,7 @@ newTrip.day=selectedDays,
           required
         />
 
-     <div className='flex justify-center items-center'>
+     <div className='flex  justify-between items-end w-[200px] md:w-[300px]'>
      <WeekdaySelect selectedDays={selectedDays} setSelectedDays={setSelectedDays} />
 
      </div>

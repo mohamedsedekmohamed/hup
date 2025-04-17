@@ -18,8 +18,7 @@ import IconSetting from '../../IconsImprot/IconSetting';
 import IconTrain from '../../IconsImprot/IconTrain';
 import { FaCarAlt } from "react-icons/fa";
 import { TbCarSuv } from "react-icons/tb";
-import { FiAlignJustify } from "react-icons/fi";
-
+import { IoIosCloseCircle } from "react-icons/io";
 const Dash = ({ activeLink ,open ,setopen}) => {
   const [openFinancial, setOpenFinancial] = useState(false);
   const [openSettings, setOpenSettings] = useState(false);
@@ -189,8 +188,8 @@ const Dash = ({ activeLink ,open ,setopen}) => {
 
   {open&&(
 
-     <div className={`direction-rtl  md:hidden`}>
-        <div className='flex-col w-[200px] z-10    h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
+     <div className={`direction-rtl fixed  z-100   md:hidden`}>
+        <div className='flex-col w-[200px] sm:w-[300px]  h-screen bg-one text-center overflow-y-scroll overflow-x-hidden direction-ltr'>
         <div className='flex '>
           <div className='flex mx-auto justify-center gap-2 my-3'>
             <span className='font-[400] text-white text-[16px]'>Ticket hub</span>
@@ -199,8 +198,8 @@ const Dash = ({ activeLink ,open ,setopen}) => {
           {open &&(
           
           <div className='flex justify-center items-center'>
-            <button className='w-5 h-5' onClick={handleopen}>
-              <FiAlignJustify />
+            <button className='w-10 h-10' onClick={handleopen}>
+              <IoIosCloseCircle  className='text-white w-7 h-7'/>
             </button> 
             
           </div>

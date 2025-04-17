@@ -81,6 +81,14 @@ const AddBuses = () => {
       setBusType(sendData.bus_type_id);
       setStatus(sendData.status);
       setAgent(sendData.agent_id);
+      setSelectedDays(() => {
+        const selected = sendData.amenities.map(item => item.id);
+  setSelectedDays(() => {
+    const combined =selected
+    return Array.from(new Set(combined));
+  });
+      });
+      
       setEdit(true);
       if (sendData.bus_image) {
             setPic(sendData.bus_image);
@@ -161,6 +169,7 @@ const AddBuses = () => {
   };
 
   const resetForm = () => {
+    setSelectedDays([]);
     setAgent('');
     setBusNumber('');
     setBusType('');

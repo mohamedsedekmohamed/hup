@@ -3,13 +3,16 @@ import LoginIn from './Login/LoginIn.jsx';
 import Togo from './foradmin/Togo.jsx';
 import {  useEffect, useState } from 'react';
 function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState();
+  const [isLoggedIn, setIsLoggedIn] =useState(() => {
+    const stored = sessionStorage.getItem('isLoggedIn');
+    return stored === 'true'; // نحولها من string لـ boolean
+  });
 useEffect(() => {
   if(isLoggedIn){
-    setIsLoggedIn(true)
-  }else(
-    localStorage.clear('token')
-  )
+    sessionStorage.setItem('isLoggedIn', 'true');
+    }
+
+  
 }, [isLoggedIn]);
   return (
     

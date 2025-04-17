@@ -22,7 +22,7 @@ const BookingHistory = () => {
       }
     })
       .then(response => {
-        setData(response.data.userBookings);
+        setData(response.data.bookings);
 
       }).catch(() => {
                 toast.error("Error fetching data")
@@ -31,35 +31,52 @@ const BookingHistory = () => {
   }, [update])
 
   const Details = (index) => {
-    const snedData = data.find((item) => item.id === index);  
-    navigate('/Bookingdetails', { state: { snedData}});
+    const sendData = data.find((item) => item.id === index);  
+    navigate('/Bookingdetailsmore', { state: { sendData}});
   }
   const filteredData = data.filter((item) => {
-    if(selectedFilter==="Filter"){
-      return Object.values(item).some(value =>
-        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      );
+    const query = searchQuery.toLowerCase();
+  
+    if (selectedFilter === "Filter" || selectedFilter === "") {
+      return JSON.stringify(item).toLowerCase().includes(query);
     }
-    if (selectedFilter && item[selectedFilter]) {
-      return item[selectedFilter].toString().toLowerCase().includes(searchQuery.toLowerCase());
-    } else if (selectedFilter === '') {
-      return Object.values(item).some(value =>
-        value && value.toString().toLowerCase().includes(searchQuery.toLowerCase())
-      );
+  
+    switch (selectedFilter) {
+      case "Route":
+        return (
+          item.trip?.trip_name?.toLowerCase().includes(query) ||
+          item.destnation_from?.name?.toLowerCase().includes(query) ||
+          item.destnation_to?.name?.toLowerCase().includes(query)
+        );
+  
+      case "Date":
+        return item.date?.toLowerCase().includes(query);
+  
+      case "country":
+        return (
+          item.trip?.country?.name?.toLowerCase().includes(query)
+        );
+  
+      case "Time":
+        return (
+          item.trip?.deputre_time?.toLowerCase().includes(query) 
+        );
+  
+      default:
+        return false;
     }
-    return false;
   });
+  
 
-const cheose = ["Filter","name","email",'phone',"country",'city',"zone"
+const cheose = ["Filter","Route","Date","country",'Time'
 ]
 const labelMap = {
 Filter: "Filter",
-name: "name",
-email:"email",
-phone:"phone",
+name: "Route",
+email:"country",
+phone:"Time",
 country:"country",
-city:"city",
-zone:"zone"
+
 
 
 };
@@ -90,28 +107,32 @@ zone:"zone"
       <table className="w-full border-y border-x border-black ">
       <thead className="w-full">
             <tr className='bg-four w-[1012px] h-[56px]' >
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left pl-3"> name</th>
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left"> gmail</th>
-              <th className="w-[158px] h-[56px]  text-[16px] border-b text-left">country</th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">city </th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">zone </th>
-              <th className="w-[158px] h-[56px]  text-[16px]  border-b text-left">bookings</th>
+            <th className="text-left px-2 ">Route</th>
+              <th className="text-left px-2">Date</th>
+              <th className="text-left ">country </th>
+              <th className="text-left px-2">Time</th>
+              <th className="text-left px-2">Booking</th>
             </tr>
           </thead>
           <tbody>
 
             {filteredData.map((item, index) => (
-                <tr key={index} className='border-y hover:border-3 relative hover:bg-six'>
-                <td className="w-[143px] h-[56px]  text-[14px] px-1 ">{item?.name??"N//A"}</td>
-                <td className="w-[143px] h-[56px]  text-[12px] ">{item?.email??"N//A"}</td>
-                <td className="w-[143px] h-[56px]  text-[14px] ">{item?.country??"N//A"}</td>
-                <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.city??"N//A"}</td>
-                <td className="w-[143px] h-[56px]  text-[14px]  ">{item?.zone??"N//A"}</td>
-                <td className="w-[143px] h-[56px]  lg:text-[12px] xl:text-[16px] px-1 ">
-                <button className='underline bg-three px-2 py-1 rounded-4xl' 
-                onClick={()=>Details(item.id)}>Details</button></td>    
-               
-              </tr>
+                      <tr
+                      key={index}
+                      className="border-y hover:border-4 relative hover:bg-six"
+                    >
+                      <td className="w-[143px] h-[56px]  text-[16px] font-normal text-five px-1 ">
+                  {`${item?.trip?.city?.name??"N//A"}-->${item?.trip?.to_city.name??"N//A"}`}
+                      </td>
+    
+                      <td className="w-[143px] h-[56px]  px-1">{item?.date??"N//A"}</td>
+                      <td className="w-[143px] h-[56px] px-1">{item?.trip?.country.name??"N//A"}</td>
+                      <td className="w-[143px] h-[56px] px-1">{item?.trip?.deputre_time??"N//A"}</td>
+                      <td className="w-[143px] h-[56px] px-1">
+                        <button className="underline bg-three text-white rounded-3xl px-2 py-1" onClick={() => Details(item.id)}>Details</button>
+                      </td>
+                    </tr>
+
             ))}
           </tbody>
         </table>
@@ -122,23 +143,21 @@ zone:"zone"
           {filteredData.map((item, index) => (
             <div key={index} className='flex flex-col gap-4 p-3'>
               <div className="flex gap-4">
-                <strong>name:</strong>
-                <span>{item?.name??"N//A"}</span>
+                <strong>Route:</strong>
+                <span>   
+                   {`${item?.trip?.city?.name??"N//A"}-->${item?.trip?.to_city.name??"N//A"}`}</span>
+              </div>
+             
+            
+             
+              <div className="flex gap-4">
+                <strong>Date:</strong>
+                <span>{item?.date??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
-                <strong>name:</strong>
-                <span>{item?.name??"N//A"}</span>
-              </div>
-             
-              <div className="flex gap-4">
-                <strong>email:</strong>
-                <span>{item?.email??"N//A"}</span>
-              </div>
-             
-              <div className="flex gap-4">
-                <strong>country:</strong>
-                <span>{item?.country??"N//A"}</span>
+                <strong>country residence:</strong>
+                <span>{item?.trip?.country.name??"N//A"}</span>
               </div>
              
               <div className="flex gap-4">
@@ -147,8 +166,8 @@ zone:"zone"
               </div>
              
               <div className="flex gap-4">
-                <strong>zone:</strong>
-                <span>{item?.zone??"N//A"}</span>
+                <strong>Time:</strong>
+                <span>{item?.trip?.deputre_time??"N//A"}</span>
               </div>
               <div className="flex gap-4">
                 <strong>Details:</strong>

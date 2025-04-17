@@ -7,8 +7,9 @@ const Home = ({ setIsLoggedIn, open, setopen }) => {
   const location = useLocation();
  
   const Handle = () => {
-    localStorage.clear('isLoggedIn');
-    localStorage.clear('token');
+    sessionStorage.removeItem('token')
+    sessionStorage.removeItem('isLoggedIn', true)
+
     setIsLoggedIn(false);
   }
 
@@ -16,22 +17,22 @@ const Home = ({ setIsLoggedIn, open, setopen }) => {
       setopen(!open);
 
   }
-useEffect(() => {
-    const handleResize = () => {
-      if (window.innerWidth > 768) {
-        setopen(false);
-      } else {
-        setopen(true);
-      }
-    };
+// useEffect(() => {
+//     const handleResize = () => {
+//       if (window.innerWidth > 768) {
+//         setopen(false);
+//       } else {
+//         setopen(true);
+//       }
+//     };
    
    
-    window.addEventListener('resize', handleResize);
+//     window.addEventListener('resize', handleResize);
 
-    // return () => {
-    //   window.removeEventListener('resize', handleResize);
-    // };
-  }, []);
+//     // return () => {
+//     //   window.removeEventListener('resize', handleResize);
+//     // };
+//   }, []);
   useEffect(() => {
     setopen(false); // إغلاق القائمة عند تغيير المسار
 
@@ -54,11 +55,13 @@ useEffect(() => {
       </div>
       {!open &&(
 
-      <div className='flex items-center md:hidden'>
-        <button className='w-15 h-15 pl-10' onClick={handleopen}>
-          <FiAlignJustify />
+      <div className='flex  w-full  md:hidden'>
+        <button className=' h-15 px-5 flex items-center  w-[50%]' onClick={handleopen}>
+          <FiAlignJustify  className='w-8 text-one h-8 text-right'/>
         </button>
-        
+        <button  className=' h-15 px-5  flex items-center justify-end  w-[50%]' onClick={Handle}>
+    <BiLogOut className=' text-one h-8  w-8'/>
+      </button>
       </div>
                 )}
 

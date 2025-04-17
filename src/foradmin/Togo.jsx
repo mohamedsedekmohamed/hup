@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Route, Routes, useLocation, useNavigate } from 'react-router-dom';
+import { Route, Routes, useLocation } from 'react-router-dom';
 import Dash from '../pages/Dash/Dash.jsx';
 import Home from '../pages/Home/Home.jsx';
 import User from '../pages/User/User.jsx';
@@ -9,7 +9,7 @@ import UserDetails from '../pages/User/UserDetails.jsx';
 import Location from '../pages/Location/Location.jsx';
 import Buses from '../pages/Buses/Buses.jsx';
 import Booking from '../pages/Booking/Booking.jsx';
-import Bookingdetails from '../pages/Booking/Addbooking/Bookingdetails.jsx';
+// import Bookingdetails from '../pages/Booking/Addbooking/Bookingdetails.jsx';
 import Bookingdetailsmore from '../pages/Booking/Addbooking/Bookingdetailsmore.jsx';
 import Trips from '../pages/Trips/Trips.jsx';
 import AddTrips from '../pages/Trips/AddTrips.jsx';
@@ -137,7 +137,7 @@ const Togo = ({ setIsLoggedIn }) => {
           <Route path='/Buses/*' element={<Buses />} />
           <Route path='/Location/*' element={<Location />} />
           <Route path='/Booking/*' element={<Booking />} />
-          <Route path='/Bookingdetails' element={<Bookingdetails />} />
+          {/* <Route path='/Bookingdetails' element={<Bookingdetails />} /> */}
           <Route path='/Bookingdetailsmore' element={<Bookingdetailsmore />} />
           <Route path='/Trips' element={<Trips />} />
           <Route path='/AddTrips' element={<AddTrips />} />
